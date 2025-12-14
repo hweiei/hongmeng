@@ -83,7 +83,11 @@
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.UIExtensionAbility.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.appRecovery.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.InsightIntentContext.d.ts",
-        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.PhotoEditorExtensionAbility.d.ts"
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.PhotoEditorExtensionAbility.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.account.appAccount.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.pasteboard.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.vpnExtension.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.VpnExtensionAbility.d.ts"
       ],
       "error": false
     },
@@ -229,7 +233,28 @@
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\NoteDetailPage.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\viewmodel\\CommentViewModel.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\UserService.ets",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\SplashScreenPage.ets"
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\SplashScreenPage.ets",
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\RegisterPage.ets",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.account.appAccount.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.account.distributedAccount.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.account.osAccount.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.pasteboard.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.power.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.runningLock.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.screenLock.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.settings.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.systemDateTime.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.systemTime.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.thermal.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.wallpaper.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.zlib.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.commonEventManager.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\commonEvent\\commonEventSubscriber.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.resourceschedule.systemload.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.mdns.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.statistics.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.webSocket.d.ts"
       ],
       "error": false
     },
@@ -264,7 +289,9 @@
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\build-tools\\ets-loader\\declarations\\common.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.print.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.application.d.ts",
-        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.file.photoAccessHelper.d.ts"
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.file.photoAccessHelper.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.settings.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.mdns.d.ts"
       ],
       "error": false
     },
@@ -538,7 +565,9 @@
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.uniformDataStruct.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\notification\\notificationRequest.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\notification\\notificationContent.d.ts",
-        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.file.photoAccessHelper.d.ts"
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.file.photoAccessHelper.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.pasteboard.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.wallpaper.d.ts"
       ],
       "error": false
     },
@@ -559,7 +588,8 @@
       "parent": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.multimedia.image.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.UIAbility.d.ts",
-        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\ability\\connectOptions.d.ts"
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\ability\\connectOptions.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.account.appAccount.d.ts"
       ],
       "error": false
     },
@@ -661,7 +691,8 @@
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.common.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\application\\EmbeddableUIAbilityContext.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.notificationManager.d.ts",
-        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.appRecovery.d.ts"
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.appRecovery.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.vpn.d.ts"
       ],
       "error": false
     },
@@ -1041,7 +1072,8 @@
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\ProfilePage.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\ProfilePage.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\NewsEditPage.ets",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\MainPage.ets"
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\MainPage.ets",
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\LocalDataService.ets"
       ],
       "error": false
     },
@@ -1215,7 +1247,8 @@
       "parent": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.arkui.dragController.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\build-tools\\ets-loader\\declarations\\common.d.ts",
-        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.ArkData.d.ts"
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.ArkData.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.pasteboard.d.ts"
       ],
       "error": false
     },
@@ -1294,7 +1327,8 @@
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.common.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.ability.featureAbility.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.ability.ability.d.ts",
-        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.ability.particleAbility.d.ts"
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.ability.particleAbility.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.settings.d.ts"
       ],
       "error": false
     },
@@ -1304,7 +1338,9 @@
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\application\\ExtensionContext.d.ts"
       ],
       "parent": [
-        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.common.d.ts"
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.common.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.vpnExtension.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.VpnExtensionAbility.d.ts"
       ],
       "error": false
     },
@@ -1864,7 +1900,8 @@
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\UserService.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\ProfilePage.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\InteractionService.ts",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\NewsItem.ets"
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\NewsItem.ets",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts"
       ],
       "error": false
     },
@@ -1877,7 +1914,16 @@
       ],
       "parent": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.http.d.ts",
-        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.socket.d.ts"
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.socket.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.ethernet.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.mdns.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.policy.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.sharing.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.statistics.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.vpn.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.webSocket.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.vpnExtension.d.ts"
       ],
       "error": false
     },
@@ -1889,7 +1935,8 @@
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.security.cert.d.ts"
       ],
       "parent": [
-        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.connection.d.ts"
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.connection.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts"
       ],
       "error": false
     },
@@ -1981,7 +2028,8 @@
       ],
       "parent": [
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\FileUtil.ets",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\FileUtil.ets"
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\FileUtil.ets",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
       ],
       "error": false
     },
@@ -2016,7 +2064,8 @@
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts"
       ],
       "parent": [
-        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.util.stream.d.ts"
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.util.stream.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
       ],
       "error": false
     },
@@ -2406,7 +2455,8 @@
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\application\\Context.d.ts"
       ],
       "parent": [
-        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.web.webview.d.ts"
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.web.webview.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
       ],
       "error": false
     },
@@ -2504,7 +2554,7 @@
       ]
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\NewsList.ets": {
-      "mtimeMs": 1765704280765.4746,
+      "mtimeMs": 1765717225247.7915,
       "children": [
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\NewsItem.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\LoadMoreLayout.ets",
@@ -2550,7 +2600,7 @@
       "error": false
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\MainPage.ets": {
-      "mtimeMs": 1765686237308.465,
+      "mtimeMs": 1765717225253.6023,
       "children": [
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\constants\\Constants.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\NewsList.ets",
@@ -2564,7 +2614,7 @@
       "error": false
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\NewsItem.ets": {
-      "mtimeMs": 1765703200458.12,
+      "mtimeMs": 1765717225267.5583,
       "children": [
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\viewmodel\\NewsData.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\constants\\Constants.ets",
@@ -2615,12 +2665,14 @@
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\viewmodel\\UserViewModel.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\MainPage.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\NotePublishPage.ets",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\viewmodel\\CommentViewModel.ets"
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\viewmodel\\CommentViewModel.ets",
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\LocalDataService.ets",
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\DatabaseHelper.ets"
       ],
       "error": false
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\viewmodel\\NewsViewModel.ets": {
-      "mtimeMs": 1765704280750.1155,
+      "mtimeMs": 1765717225242.5835,
       "children": [
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\viewmodel\\NewsData.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\viewmodel\\ResponseResult.ets",
@@ -2778,7 +2830,7 @@
       "error": false
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\NewsEditPage.ets": {
-      "mtimeMs": 1765296376989.4985,
+      "mtimeMs": 1765717225253.6023,
       "children": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\constants\\Constants.ets",
@@ -3958,7 +4010,7 @@
       "error": false
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\DatabaseHelper.ets": {
-      "mtimeMs": 1765702208666.9177,
+      "mtimeMs": 1765717225238.0183,
       "children": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.relationalStore.d.ts",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\User.ets",
@@ -3977,7 +4029,8 @@
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\NoteDetailPage.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\NewsList.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\NewsItem.ets",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\UserService.ets"
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\UserService.ets",
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\LocalDataService.ets"
       ],
       "error": false
     },
@@ -4008,7 +4061,7 @@
       "error": false
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\RegisterPage.ets": {
-      "mtimeMs": 1765702208669.864,
+      "mtimeMs": 1765721957455.7776,
       "children": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
@@ -4086,7 +4139,7 @@
       "error": false
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\LoginPage.ets": {
-      "mtimeMs": 1765702208650.3213,
+      "mtimeMs": 1765720889055.8127,
       "children": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
@@ -4130,14 +4183,15 @@
       "error": false
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\ForgetPage.ets": {
-      "mtimeMs": 1765703569219.326,
+      "mtimeMs": 1765719574093.5076,
       "children": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.preferences.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.common.d.ts",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\DatabaseHelper.ets",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\User.ets"
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\User.ets",
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\UserService.ets"
       ],
       "parent": [],
       "error": false
@@ -5072,7 +5126,7 @@
       ]
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\ProfilePage.ets": {
-      "mtimeMs": 1765702208648.6584,
+      "mtimeMs": 1765720852922.3271,
       "children": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
@@ -5411,7 +5465,7 @@
       ]
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\UserService.ets": {
-      "mtimeMs": 1765702208666.3816,
+      "mtimeMs": 1765722194100.6829,
       "children": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.http.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
@@ -5422,7 +5476,8 @@
       "parent": [
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\RegisterPage.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\LoginPage.ets",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\ProfilePage.ets"
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\ProfilePage.ets",
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\ForgetPage.ets"
       ],
       "error": false
     },
@@ -5443,6 +5498,496 @@
       "parent": [
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\NewsItem.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\NoteDetailPage.ets"
+      ],
+      "error": false
+    },
+    "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\LocalDataService.ets": {
+      "mtimeMs": 1765716977828.3137,
+      "children": [
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\DatabaseHelper.ets",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.common.d.ts",
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\viewmodel\\NewsData.ets"
+      ],
+      "parent": [
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\MainPage.ets",
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\NewsList.ets"
+      ],
+      "error": true,
+      "errorCodes": [
+        -1
+      ]
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.account.appAccount.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.customization.customConfig.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.account.distributedAccount.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.account.osAccount.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.PrintExtensionAbility.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.batteryInfo.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.deviceAttest.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.deviceInfo.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.pasteboard.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.power.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.print.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.request.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.runningLock.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.screenLock.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.settings.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.systemDateTime.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.systemTime.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.thermal.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.usb.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.usbManager.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.wallpaper.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.zlib.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.commonEventManager.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.events.emitter.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@system.battery.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@system.brightness.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@system.device.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@system.request.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.resourceschedule.systemload.d.ts"
+      ],
+      "parent": [
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\LoginPage.ets"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.connection.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.ethernet.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.http.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.mdns.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.policy.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.sharing.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.socket.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.statistics.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.vpn.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.webSocket.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.vpnExtension.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.networkSecurity.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.VpnExtensionAbility.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.netFirewall.d.ts"
+      ],
+      "parent": [
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\LoginPage.ets"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.account.appAccount.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.Want.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.rpc.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.customization.customConfig.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.account.distributedAccount.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.account.osAccount.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.account.osAccount.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.account.distributedAccount.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.PrintExtensionAbility.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.application.Want.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.batteryInfo.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.deviceAttest.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.deviceInfo.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.pasteboard.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.Want.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.multimedia.image.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.data.unifiedDataChannel.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.power.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.runningLock.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.screenLock.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.settings.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\ability\\dataAbilityHelper.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\application\\Context.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.systemDateTime.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.systemTime.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.thermal.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.usb.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.usbManager.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.wallpaper.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.multimedia.image.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.zlib.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.commonEventManager.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\commonEvent\\commonEventData.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\commonEvent\\commonEventSubscriber.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\commonEvent\\commonEventSubscribeInfo.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\commonEvent\\commonEventPublishData.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@system.battery.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@system.brightness.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@system.device.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@system.request.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.resourceschedule.systemload.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.BasicServicesKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.application.Want.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.PrintExtensionAbility.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\commonEvent\\commonEventData.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.commonEventManager.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\commonEvent\\commonEventSubscriber.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\commonEvent\\commonEventSubscribeInfo.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.commonEventManager.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\commonEvent\\commonEventSubscribeInfo.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.commonEventManager.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\commonEvent\\commonEventSubscriber.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\commonEvent\\commonEventPublishData.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.commonEventManager.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.ethernet.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.connection.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.mdns.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.connection.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\application\\Context.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.policy.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.connection.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.sharing.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.connection.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.statistics.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.connection.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.vpn.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.connection.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\application\\UIAbilityContext.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.webSocket.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.connection.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.vpnExtension.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.connection.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\application\\VpnExtensionContext.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.Want.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.networkSecurity.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.VpnExtensionAbility.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\application\\VpnExtensionContext.d.ts",
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.app.ability.Want.d.ts"
+      ],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts"
+      ],
+      "error": false
+    },
+    "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.netFirewall.d.ts": {
+      "mtimeMs": 1755501089000,
+      "children": [],
+      "parent": [
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\kits\\@kit.NetworkKit.d.ts"
       ],
       "error": false
     }

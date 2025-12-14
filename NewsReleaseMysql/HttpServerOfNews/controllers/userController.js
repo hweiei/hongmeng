@@ -138,25 +138,42 @@ exports.deleteUser = async (req, res) => {
     console.log('删除用户请求，用户ID:', userId);
     
     try {
-        // 删除指定ID的用户
-        const result = await db.query('DELETE FROM users WHERE id = ?', [userId]);
+        // 开始事务处理
+        await db.query('BEGIN');
         
-        console.log('删除结果:', result);
-        
-        if (result.affectedRows > 0) {
-            // 删除成功
-            res.json({
-                code: 'success',
-                msg: '用户删除成功',
-                data: null
-            });
-        } else {
-            // 用户不存在
-            res.status(404).json({
-                code: 'error',
-                msg: '用户不存在',
-                data: null
-            });
+        try {
+            // 删除用户的登录历史记录
+            await db.query('DELETE FROM login_history WHERE user_id = ?', [userId]);
+            console.log('用户登录历史记录已删除');
+            
+            // 删除指定ID的用户
+            const result = await db.query('DELETE FROM users WHERE id = ?', [userId]);
+            
+            // 提交事务
+            await db.query('COMMIT');
+            
+            console.log('删除结果:', result);
+            
+            if (result.affectedRows > 0) {
+                // 删除成功
+                res.json({
+                    code: 'success',
+                    msg: '用户删除成功',
+                    data: null
+                });
+            } else {
+                // 用户不存在
+                await db.query('ROLLBACK');
+                res.status(404).json({
+                    code: 'error',
+                    msg: '用户不存在',
+                    data: null
+                });
+            }
+        } catch (error) {
+            // 回滚事务
+            await db.query('ROLLBACK');
+            throw error;
         }
     } catch (error) {
         console.error('删除用户错误:', error);
@@ -171,11 +188,12 @@ exports.deleteUser = async (req, res) => {
 // 获取登录历史
 exports.getLoginHistory = async (req, res) => {
     try {
-        // 获取最近的登录历史，按时间倒序排列
+        // 获取最近的登录历史，只返回仍然存在的用户
         const history = await db.query(`
-            SELECT user_id as id, username, MAX(login_time) as latest_login
-            FROM login_history 
-            GROUP BY user_id, username
+            SELECT lh.user_id as id, lh.username, MAX(lh.login_time) as latest_login
+            FROM login_history lh
+            INNER JOIN users u ON lh.user_id = u.id
+            GROUP BY lh.user_id, lh.username
             ORDER BY latest_login DESC
         `);
         
@@ -193,6 +211,63 @@ exports.getLoginHistory = async (req, res) => {
         });
     } catch (error) {
         console.error('获取登录历史错误:', error);
+        res.status(500).json({
+            code: 'error',
+            msg: '服务器内部错误: ' + error.message,
+            data: null
+        });
+    }
+};
+
+// 更新用户密码
+exports.updatePassword = async (req, res) => {
+    const { username, newPassword } = req.body;
+    
+    console.log('更新密码请求:', { username, newPassword });
+    
+    try {
+        // 检查用户是否存在
+        const users = await db.query(
+            'SELECT id FROM users WHERE username = ?', 
+            [username]
+        );
+        
+        console.log('检查用户是否存在:', users);
+        
+        if (users.length === 0) {
+            console.log('更新密码失败: 用户不存在');
+            res.status(404).json({
+                code: 'error',
+                msg: '用户不存在',
+                data: null
+            });
+            return;
+        }
+        
+        // 更新用户密码
+        console.log('正在更新用户密码');
+        const result = await db.query(
+            'UPDATE users SET password = ? WHERE username = ?', 
+            [newPassword, username]
+        );
+        
+        console.log('更新结果:', result);
+        
+        if (result.affectedRows > 0) {
+            res.json({
+                code: 'success',
+                msg: '密码更新成功',
+                data: null
+            });
+        } else {
+            res.status(500).json({
+                code: 'error',
+                msg: '密码更新失败',
+                data: null
+            });
+        }
+    } catch (error) {
+        console.error('更新密码错误:', error);
         res.status(500).json({
             code: 'error',
             msg: '服务器内部错误: ' + error.message,

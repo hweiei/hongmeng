@@ -22,11 +22,13 @@ import { DatabaseHelper } from '../../pages/zonghezuoye/DatabaseHelper';
 // 定义响应数据类型
 interface ResponseData {
   code: string;
-  data: UserData | null;
+  data: UserData | UserData[] | null;
+  msg?: string;
 }
 
 interface RegisterResponseData {
   code: string;
+  msg?: string;
 }
 
 interface UserData {
@@ -89,7 +91,7 @@ export class UserService {
     if (response.responseCode === 200) {
       const result = JSON.parse(`${response.result}`) as ResponseData;
       if (result.code === 'success' && result.data) {
-        const userData = result.data;
+        const userData = result.data as UserData;
         const user = new User(userData.name || userData.username || '', userData.password);
         user.id = userData.id;
         return user;
@@ -111,7 +113,53 @@ export class UserService {
       user.username === username && user.password === password
     );
     
+    // 检查本地找到的用户是否仍然存在于后端数据库中
+    if (matchedUser) {
+      const isUserValid = await this.checkUserExistsInBackend(matchedUser.username);
+      if (!isUserValid) {
+        // 如果用户在后端不存在，则从本地数据库删除
+        if (matchedUser.id) {
+          await this.dbHelper.deleteUser(matchedUser.id);
+        }
+        return null;
+      }
+    }
+    
     return matchedUser || null;
+  }
+
+  /**
+   * 检查用户是否存在于后端数据库
+   * @param username 用户名
+   * @returns Promise<boolean>
+   */
+  private async checkUserExistsInBackend(username: string): Promise<boolean> {
+    try {
+      const url = `${Constants.SERVER}/users/all`;
+      
+      let httpRequest = http.createHttp();
+      const response = await httpRequest.request(url, {
+        method: http.RequestMethod.GET,
+        readTimeout: Constants.HTTP_READ_TIMEOUT,
+        header: {
+          'Content-Type': ContentType.JSON
+        },
+        connectTimeout: Constants.HTTP_READ_TIMEOUT
+      });
+
+      if (response.responseCode === 200) {
+        const result = JSON.parse(`${response.result}`) as ResponseData;
+        if (result.code === 'success' && result.data) {
+          const users = result.data as UserData[];
+          return users.some(user => user.username === username);
+        }
+      }
+      
+      return false;
+    } catch (error) {
+      console.error('检查用户是否存在于后端失败:', error);
+      return false; // 出错时假设用户存在，避免误删本地数据
+    }
   }
 
   /**
@@ -150,19 +198,14 @@ export class UserService {
         const user = new User(username, password);
         await this.dbHelper.insertUser(user);
         return true;
+      } else {
+        // 网络注册失败，返回false
+        return false;
       }
     } catch (error) {
       console.error('网络注册失败:', error);
-    }
-    
-    // 网络注册失败，只保存到本地
-    try {
-      const user = new User(username, password);
-      const result = await this.dbHelper.insertUser(user);
-      return result > 0;
-    } catch (error) {
-      console.error('本地注册失败:', error);
-      return false;
+      // 将错误重新抛出，让调用者处理
+      throw new Error((error as Error).message);
     }
   }
 
@@ -188,9 +231,86 @@ export class UserService {
 
     if (response.responseCode === 200) {
       const result = JSON.parse(`${response.result}`) as RegisterResponseData;
+      if (result.code === 'success') {
+        return true;
+      } else if (result.msg) {
+        // 如果有错误消息，抛出带有错误消息的异常
+        throw new Error(result.msg);
+      }
+    }
+    
+    return false;
+  }
+
+  /**
+   * 更新用户密码（同步更新本地和远程）
+   * @param username 用户名
+   * @param newPassword 新密码
+   * @returns Promise<boolean>
+   */
+  async updatePassword(username: string, newPassword: string): Promise<boolean> {
+    try {
+      // 首先尝试通过网络更新密码
+      const success = await this.networkUpdatePassword(username, newPassword);
+      if (success) {
+        // 网络更新成功，同步更新本地数据库
+        await this.localUpdatePassword(username, newPassword);
+        return true;
+      } else {
+        // 网络更新失败，返回false
+        return false;
+      }
+    } catch (error) {
+      console.error('网络更新密码失败:', error);
+      // 将错误重新抛出，让调用者处理
+      throw new Error((error as Error).message);
+    }
+  }
+
+  /**
+   * 网络更新密码
+   * @param username 用户名
+   * @param newPassword 新密码
+   * @returns Promise<boolean>
+   */
+  private async networkUpdatePassword(username: string, newPassword: string): Promise<boolean> {
+    // 注意：这是一个简化实现，实际项目中应该有更安全的密码重置机制
+    const url = `${Constants.SERVER}/users/updatePassword`;
+    
+    let httpRequest = http.createHttp();
+    const response = await httpRequest.request(url, {
+      method: http.RequestMethod.PUT,
+      readTimeout: Constants.HTTP_READ_TIMEOUT,
+      header: {
+        'Content-Type': ContentType.JSON
+      },
+      connectTimeout: Constants.HTTP_READ_TIMEOUT,
+      extraData: JSON.stringify({ username, newPassword })
+    });
+
+    if (response.responseCode === 200) {
+      const result = JSON.parse(`${response.result}`) as ResponseData;
       return result.code === 'success';
     }
     
     return false;
+  }
+
+  /**
+   * 本地更新密码
+   * @param username 用户名
+   * @param newPassword 新密码
+   */
+  private async localUpdatePassword(username: string, newPassword: string): Promise<void> {
+    const users = await this.dbHelper.queryAllUsers();
+    const user = users.find(u => u.username === username);
+    
+    if (user) {
+      const updatedUser = new User(username, newPassword);
+      updatedUser.id = user.id;
+      await this.dbHelper.updateUser(updatedUser, user.id as number);
+    } else {
+      throw new Error('用户不存在');
+    }
   }
 }

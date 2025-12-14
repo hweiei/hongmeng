@@ -3,6 +3,7 @@ import { preferences } from '@kit.ArkData';
 import { common } from '@kit.AbilityKit';
 import { DatabaseHelper } from './DatabaseHelper'
 import { User } from './User'
+import { UserService } from '../../common/utils/UserService';
 
 @Entry
 @Component
@@ -89,7 +90,7 @@ struct ForgetPasswordPage {
       return;
     }
 
-    // 检查用户是否存在
+    // 检查用户是否存在（先检查本地数据库，再检查网络）
     const users = await this.dbHelper.queryAllUsers();
     const userExists = users.some(user => user.username === this.username);
 
@@ -163,36 +164,23 @@ struct ForgetPasswordPage {
     }
 
     try {
-      // 查询用户
-      const users = await this.dbHelper.queryAllUsers();
-      const user = users.find(user => user.username === this.username);
+      // 使用 UserService 同步更新密码
+      const userService = new UserService();
+      const success = await userService.updatePassword(this.username, this.newPassword);
 
-      if (user) {
-        // 创建新的 User 实例而不是直接修改原对象
-        const updatedUser = new User(this.username, this.newPassword);
-        updatedUser.id = user.id;
-        // 更新密码
-        const rowsUpdated =
-          await this.dbHelper.updateUser(updatedUser, user.id as number);
+      if (success) {
+        promptAction.showToast({
+          message: '密码重置成功',
+          duration: 2000
+        });
 
-        if (rowsUpdated > 0) {
-          promptAction.showToast({
-            message: '密码重置成功',
-            duration: 2000
-          });
-
-          // 返回登录页面
-          setTimeout(() => {
-            router.back();
-          }, 2000);
-        } else {
-          promptAction.showToast({
-            message: '密码重置失败，请重试'
-          });
-        }
+        // 返回登录页面
+        setTimeout(() => {
+          router.back();
+        }, 2000);
       } else {
         promptAction.showToast({
-          message: '用户不存在'
+          message: '密码重置失败，请重试'
         });
       }
     } catch (err) {

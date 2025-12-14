@@ -234,12 +234,65 @@ class ProfilePage extends ViewPU {
     // 切换用户
     private switchUser(user: User) {
         console.log("切换用户到:", user.toString());
-        // 更新全局上下文中的用户信息
-        GlobalContext.getContext().setObject('loggedInUser', user);
-        // 更新当前用户状态
-        this.currentUser = user;
-        // 显示切换成功的提示
-        promptAction.showToast({ message: `已切换到用户: ${user.username}` });
+        // 首先验证用户是否仍然存在于后端
+        this.validateUserExists(user).then((exists) => {
+            if (exists) {
+                // 更新全局上下文中的用户信息
+                GlobalContext.getContext().setObject('loggedInUser', user);
+                // 更新当前用户状态
+                this.currentUser = user;
+                // 显示切换成功的提示
+                promptAction.showToast({ message: `已切换到用户: ${user.username}` });
+            }
+            else {
+                // 用户不存在，从登录历史中移除
+                this.loginHistory = this.loginHistory.filter(u => u.id !== user.id);
+                promptAction.showToast({ message: '该用户已注销，无法切换' });
+            }
+        });
+    }
+    // 验证用户是否仍然存在于后端
+    private async validateUserExists(user: User): Promise<boolean> {
+        return new Promise((resolve) => {
+            let httpRequest = http.createHttp();
+            const baseUrl = "http://172.17.75.16:9588";
+            const url = `${baseUrl}/users/all`;
+            httpRequest.request(url, {
+                method: http.RequestMethod.GET,
+                header: { 'Content-Type': 'application/json' },
+                readTimeout: 50000,
+                connectTimeout: 50000
+            }, (err, data) => {
+                if (!err && data && data.result) {
+                    try {
+                        let responseData: BackendResponse | undefined;
+                        if (typeof data.result === 'string') {
+                            responseData = JSON.parse(data.result) as BackendResponse;
+                        }
+                        else {
+                            responseData = data.result as BackendResponse;
+                        }
+                        if (responseData && responseData.code === 'success' && responseData.data) {
+                            const usersData = responseData.data as UserData[];
+                            const userExists = usersData.some(u => u.id === user.id && u.username === user.username);
+                            resolve(userExists);
+                        }
+                        else {
+                            resolve(false);
+                        }
+                    }
+                    catch (error) {
+                        console.error('验证用户存在性时解析数据失败:', error);
+                        resolve(false);
+                    }
+                }
+                else {
+                    console.error('验证用户存在性时请求失败:', err);
+                    resolve(false);
+                }
+                httpRequest.destroy();
+            });
+        });
     }
     // 退出登录
     private logout() {
@@ -260,7 +313,11 @@ class ProfilePage extends ViewPU {
                 return;
             }
             // 从后端删除用户
-            await this.deleteUserFromBackend(this.currentUser.id);
+            const success = await this.deleteUserFromBackend(this.currentUser.id);
+            // 如果后端删除成功，也删除本地数据库中的用户数据
+            if (success) {
+                await this.deleteUserFromLocal(this.currentUser.id, this.currentUser.username);
+            }
         }
         catch (err) {
             console.error('注销账户失败:', err);
@@ -274,74 +331,106 @@ class ProfilePage extends ViewPU {
         }
     }
     // 从后端删除用户
-    private async deleteUserFromBackend(userId: number) {
-        let httpRequest = http.createHttp();
-        // 使用实际的IP地址替换localhost
-        const baseUrl = "http://172.17.75.16:9588"; // 可以根据实际情况修改为开发机的实际IP
-        // 构造删除用户的请求URL
-        const url = `${baseUrl}/users/${userId}`;
-        console.log('开始发送删除请求到:', url);
-        httpRequest.request(url, {
-            method: http.RequestMethod.DELETE,
-            header: { 'Content-Type': 'application/json' },
-            readTimeout: 50000,
-            connectTimeout: 50000
-        }, (err, data) => {
-            console.log('删除用户请求回调执行');
-            console.log('错误信息:', JSON.stringify(err));
-            console.log('响应数据:', JSON.stringify(data));
-            if (!err) {
-                console.info('删除用户请求成功:' + JSON.stringify(data));
-                try {
-                    // 检查响应数据是否存在
-                    if (!data || !data.result) {
-                        console.error('删除用户响应数据为空或格式不正确');
-                        promptAction.showToast({ message: '删除响应数据格式错误' });
-                        return;
-                    }
-                    // 尝试解析响应数据
-                    let responseData: DeleteResponse | undefined;
-                    if (typeof data.result === 'string') {
-                        try {
-                            responseData = JSON.parse(data.result) as DeleteResponse;
-                        }
-                        catch (parseErr) {
-                            console.error('JSON解析失败:', parseErr);
-                            promptAction.showToast({ message: '删除响应数据解析失败' });
+    private async deleteUserFromBackend(userId: number): Promise<boolean> {
+        return new Promise((resolve) => {
+            let httpRequest = http.createHttp();
+            // 使用实际的IP地址替换localhost
+            const baseUrl = "http://172.17.75.16:9588"; // 可以根据实际情况修改为开发机的实际IP
+            // 构造删除用户的请求URL
+            const url = `${baseUrl}/users/${userId}`;
+            console.log('开始发送删除请求到:', url);
+            httpRequest.request(url, {
+                method: http.RequestMethod.DELETE,
+                header: { 'Content-Type': 'application/json' },
+                readTimeout: 50000,
+                connectTimeout: 50000
+            }, (err, data) => {
+                console.log('删除用户请求回调执行');
+                console.log('错误信息:', JSON.stringify(err));
+                console.log('响应数据:', JSON.stringify(data));
+                if (!err) {
+                    console.info('删除用户请求成功:' + JSON.stringify(data));
+                    try {
+                        // 检查响应数据是否存在
+                        if (!data || !data.result) {
+                            console.error('删除用户响应数据为空或格式不正确');
+                            promptAction.showToast({ message: '删除响应数据格式错误' });
+                            resolve(false);
                             return;
                         }
-                    }
-                    else {
-                        responseData = data.result as DeleteResponse;
-                    }
-                    console.log('解析后的删除响应数据:', JSON.stringify(responseData));
-                    if (responseData && responseData.code === 'success') {
-                        console.log("账户注销成功");
-                        promptAction.showToast({ message: '账户注销成功' });
-                        // 如果删除的是当前用户，则清除全局用户信息并跳转到登录页
-                        if (userId === this.currentUser.id) {
-                            GlobalContext.getContext().setObject('loggedInUser', new User('', '')); // 设置为空用户
-                            router.pushUrl({ url: 'pages/zonghezuoye/LoginPage' });
+                        // 尝试解析响应数据
+                        let responseData: DeleteResponse | undefined;
+                        if (typeof data.result === 'string') {
+                            try {
+                                responseData = JSON.parse(data.result) as DeleteResponse;
+                            }
+                            catch (parseErr) {
+                                console.error('JSON解析失败:', parseErr);
+                                promptAction.showToast({ message: '删除响应数据解析失败' });
+                                resolve(false);
+                                return;
+                            }
+                        }
+                        else {
+                            responseData = data.result as DeleteResponse;
+                        }
+                        console.log('解析后的删除响应数据:', JSON.stringify(responseData));
+                        if (responseData && responseData.code === 'success') {
+                            console.log("账户注销成功");
+                            promptAction.showToast({ message: '账户注销成功' });
+                            // 如果删除的是当前用户，则清除全局用户信息并跳转到登录页
+                            if (userId === this.currentUser.id) {
+                                GlobalContext.getContext().setObject('loggedInUser', new User('', '')); // 设置为空用户
+                                router.pushUrl({ url: 'pages/zonghezuoye/LoginPage' });
+                            }
+                            resolve(true);
+                        }
+                        else {
+                            const errorMsg = responseData ? (responseData.msg || '未知错误') : '响应数据为空';
+                            console.error('后端返回错误:', errorMsg);
+                            promptAction.showToast({ message: '账户注销失败: ' + errorMsg });
+                            resolve(false);
                         }
                     }
-                    else {
-                        const errorMsg = responseData ? (responseData.msg || '未知错误') : '响应数据为空';
-                        console.error('后端返回错误:', errorMsg);
-                        promptAction.showToast({ message: '账户注销失败: ' + errorMsg });
+                    catch (parseError) {
+                        console.error('解析响应数据失败:', parseError);
+                        promptAction.showToast({ message: '删除数据解析失败: ' + parseError.message });
+                        resolve(false);
                     }
                 }
-                catch (parseError) {
-                    console.error('解析响应数据失败:', parseError);
-                    promptAction.showToast({ message: '删除数据解析失败: ' + parseError.message });
+                else {
+                    console.error('请求失败:' + JSON.stringify(err));
+                    const errorMsg = err.message || '未知网络错误';
+                    promptAction.showToast({ message: '删除请求失败: ' + errorMsg });
+                    resolve(false);
+                }
+                httpRequest.destroy();
+            });
+        });
+    }
+    // 从本地数据库删除用户
+    private async deleteUserFromLocal(userId: number, username: string): Promise<void> {
+        try {
+            console.log('开始从本地数据库删除用户，用户ID:', userId);
+            // 方式1: 通过用户ID删除
+            const rowsDeletedById = await this.dbHelper.deleteUser(userId);
+            console.log('通过ID删除用户，影响行数:', rowsDeletedById);
+            // 如果通过ID删除失败，尝试通过用户名删除
+            if (rowsDeletedById === 0) {
+                console.log('通过ID删除失败，尝试通过用户名删除:', username);
+                // 查询所有用户找到匹配的用户
+                const users = await this.dbHelper.queryAllUsers();
+                const userToDelete = users.find(user => user.username === username);
+                if (userToDelete && userToDelete.id) {
+                    const rowsDeletedByName = await this.dbHelper.deleteUser(userToDelete.id);
+                    console.log('通过用户名删除用户，影响行数:', rowsDeletedByName);
                 }
             }
-            else {
-                console.error('请求失败:' + JSON.stringify(err));
-                const errorMsg = err.message || '未知网络错误';
-                promptAction.showToast({ message: '删除请求失败: ' + errorMsg });
-            }
-            httpRequest.destroy();
-        });
+        }
+        catch (err) {
+            console.error('从本地数据库删除用户失败:', err);
+            // 不抛出错误，因为即使本地删除失败，后端已经删除成功
+        }
     }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {

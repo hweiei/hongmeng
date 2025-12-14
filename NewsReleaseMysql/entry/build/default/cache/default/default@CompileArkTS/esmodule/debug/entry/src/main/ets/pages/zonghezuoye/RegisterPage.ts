@@ -332,18 +332,30 @@ class RegisterPage extends ViewPU {
         });
         // 使用 UserService 进行混合注册
         const userService = new UserService();
-        const success = await userService.register(this.username, this.password);
-        if (success) {
-            promptAction.showToast({ message: '注册成功！', duration: 1500 });
-            // 跳回登录页，并传递用户名密码
-            router.pushUrl({
-                url: 'pages/zonghezuoye/LoginPage',
-                params: { username: this.username, password: this.password }
-            });
+        try {
+            const success = await userService.register(this.username, this.password);
+            if (success) {
+                promptAction.showToast({ message: '注册成功！', duration: 1500 });
+                // 跳回登录页，并传递用户名密码
+                router.pushUrl({
+                    url: 'pages/zonghezuoye/LoginPage',
+                    params: { username: this.username, password: this.password }
+                });
+            }
+            else {
+                promptAction.showToast({ message: '注册失败，请重试' });
+                console.error('用户注册失败');
+            }
         }
-        else {
-            promptAction.showToast({ message: '注册失败，请重试' });
-            console.error('用户注册失败');
+        catch (error) {
+            const errorMessage = (error as Error).message;
+            if (errorMessage && errorMessage.includes('用户名已存在')) {
+                promptAction.showToast({ message: '用户名已存在，请选择其他用户名' });
+            }
+            else {
+                promptAction.showToast({ message: '注册失败，请重试' });
+            }
+            console.error('用户注册失败:', error);
         }
     }
     // 验证用户名

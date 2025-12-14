@@ -17,4 +17,7 @@ router.delete('/:id', userController.deleteUser);
 // 获取登录历史
 router.get('/login-history', userController.getLoginHistory);
 
+// 更新用户密码路由
+router.put('/updatePassword', express.json(), userController.updatePassword);
+
 module.exports = router;
