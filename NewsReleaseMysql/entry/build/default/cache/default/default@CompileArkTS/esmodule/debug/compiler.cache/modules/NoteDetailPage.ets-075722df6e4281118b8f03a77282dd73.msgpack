@@ -1,0 +1,894 @@
+Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚLºif (!("finalizeConstruction" in ViewPU.prototype)) {
+    Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
+}
+import router from "@ohos.router";
+import preferences from "@ohos.data.preferences";
+import { NewsData } from '../../viewmodel/NewsData';
+import Constants from '../../common/constants/Constants';
+import CommentService from '../../common/utils/CommentService';
+import { CommentItem } from '../../view/CommentItem';
+import { GlobalContext } from '../../viewmodel/GlobalContext';
+import { User } from './User';
+class NoteDetailPage extends ViewPU {
+    constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
+        super(parent, __localStorage, elmtId, extraInfo);
+        if (typeof paramsLambda === "function") {
+            this.paramsGenerator_ = paramsLambda;
+        }
+        this.__noteId = new ObservedPropertySimplePU(0, this, "noteId");
+        this.__note = new ObservedPropertyObjectPU(new NewsData(), this, "note");
+        this.__isFavorite = new ObservedPropertySimplePU(false, this, "isFavorite");
+        this.__imageUri = new ObservedPropertySimplePU('', this, "imageUri");
+        this.__comments = new ObservedPropertyObjectPU([], this, "comments");
+        this.__newComment = new ObservedPropertySimplePU('', this, "newComment");
+        this.__isPosting = new ObservedPropertySimplePU(false, this, "isPosting");
+        this.__currentUser = new ObservedPropertyObjectPU(new User('', ''), this, "currentUser");
+        this.context = this.getUIContext().getHostContext();
+        this.pref = preferences.getPreferencesSync(this.context, { name: 'favoriteNotesPrefs' });
+        this.setInitiallyProvidedValue(params);
+        this.finalizeConstruction();
+    }
+    setInitiallyProvidedValue(params) {
+        if (params.noteId !== undefined) {
+            this.noteId = params.noteId;
+        }
+        if (params.note !== undefined) {
+            this.note = params.note;
+        }
+        if (params.isFavorite !== undefined) {
+            this.isFavorite = params.isFavorite;
+        }
+        if (params.imageUri !== undefined) {
+            this.imageUri = params.imageUri;
+        }
+        if (params.comments !== undefined) {
+            this.comments = params.comments;
+        }
+        if (params.newComment !== undefined) {
+            this.newComment = params.newComment;
+        }
+        if (params.isPosting !== undefined) {
+            this.isPosting = params.isPosting;
+        }
+        if (params.currentUser !== undefined) {
+            this.currentUser = params.currentUser;
+        }
+        if (params.context !== undefined) {
+            this.context = params.context;
+        }
+        if (params.pref !== undefined) {
+            this.pref = params.pref;
+        }
+    }
+    updateStateVars(params) {
+    }
+    purgeVariableDependenciesOnElmtId(rmElmtId) {
+        this.__noteId.purgeDependencyOnElmtId(rmElmtId);
+        this.__note.purgeDependencyOnElmtId(rmElmtId);
+        this.__isFavorite.purgeDependencyOnElmtId(rmElmtId);
+        this.__imageUri.purgeDependencyOnElmtId(rmElmtId);
+        this.__comments.purgeDependencyOnElmtId(rmElmtId);
+        this.__newComment.purgeDependencyOnElmtId(rmElmtId);
+        this.__isPosting.purgeDependencyOnElmtId(rmElmtId);
+        this.__currentUser.purgeDependencyOnElmtId(rmElmtId);
+    }
+    aboutToBeDeleted() {
+        this.__noteId.aboutToBeDeleted();
+        this.__note.aboutToBeDeleted();
+        this.__isFavorite.aboutToBeDeleted();
+        this.__imageUri.aboutToBeDeleted();
+        this.__comments.aboutToBeDeleted();
+        this.__newComment.aboutToBeDeleted();
+        this.__isPosting.aboutToBeDeleted();
+        this.__currentUser.aboutToBeDeleted();
+        SubscriberManager.Get().delete(this.id__());
+        this.aboutToBeDeletedInternal();
+    }
+    get noteId() {
+        return this.__noteId.get();
+    }
+    set noteId(newValue) {
+        this.__noteId.set(newValue);
+    }
+    get note() {
+        return this.__note.get();
+    }
+    set note(newValue) {
+        this.__note.set(newValue);
+    }
+    get isFavorite() {
+        return this.__isFavorite.get();
+    }
+    set isFavorite(newValue) {
+        this.__isFavorite.set(newValue);
+    }
+    get imageUri() {
+        return this.__imageUri.get();
+    }
+    set imageUri(newValue) {
+        this.__imageUri.set(newValue);
+    }
+    get comments() {
+        return this.__comments.get();
+    }
+    set comments(newValue) {
+        this.__comments.set(newValue);
+    }
+    get newComment() {
+        return this.__newComment.get();
+    }
+    set newComment(newValue) {
+        this.__newComment.set(newValue);
+    }
+    get isPosting() {
+        return this.__isPosting.get();
+    }
+    set isPosting(newValue) {
+        this.__isPosting.set(newValue);
+    }
+    get currentUser() {
+        return this.__currentUser.get();
+    }
+    set currentUser(newValue) {
+        this.__currentUser.set(newValue);
+    }
+    aboutToAppear() {
+        // è·å–è·¯ç”±å‚æ•°
+        const params = router.getParams();
+        if (params) {
+            // è·å–ç¬”è®°æ•°æ®
+            const noteData = params;
+            this.note = noteData;
+            // è·å–ç¬”è®°IDï¼ˆè¿™é‡Œæˆ‘ä»¬ä½¿ç”¨æ ‡é¢˜+å†…å®¹ä½œä¸ºå”¯ä¸€æ ‡è¯†ï¼‰
+            this.noteId = this.generateNoteId(noteData);
+            // åŠ è½½æ”¶è—çŠ¶æ€
+            this.loadFavoriteStatus();
+            // åŠ è½½è¯„è®ºåˆ—è¡¨
+            this.loadComments();
+            // è·å–å½“å‰ç™»å½•ç”¨æˆ·
+            const user = GlobalContext.getContext().getObject('loggedInUser');
+            if (user) {
+                this.currentUser = user;
+            }
+        }
+    }
+    // ç”Ÿæˆç¬”è®°çš„å”¯ä¸€IDï¼ˆç®€å•å®ç°ï¼Œå®é™…é¡¹ç›®ä¸­å¯èƒ½éœ€è¦æ›´å¤æ‚çš„é€»è¾‘ï¼‰
+    generateNoteId(note) {
+        // ä½¿ç”¨æ ‡é¢˜å’Œå†…å®¹ç”Ÿæˆä¸€ä¸ªç®€å•çš„å“ˆå¸Œå€¼ä½œä¸ºID
+        const str = note.title + note.content;
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash; // è½¬æ¢ä¸º32ä½æ•´æ•°
+        }
+        return Math.abs(hash);
+    }
+    // åŠ è½½æ”¶è—çŠ¶æ€
+    loadFavoriteStatus() {
+        try {
+            const favoriteList = this.pref.getSync('favorites', []);
+            this.isFavorite = favoriteList.includes(this.noteId);
+        }
+        catch (error) {
+            console.error('åŠ è½½æ”¶è—çŠ¶æ€å¤±è´¥:', error);
+            this.isFavorite = false;
+        }
+    }
+    // ä¿å­˜æ”¶è—çŠ¶æ€
+    saveFavoriteStatus() {
+        try {
+            let favoriteList = this.pref.getSync('favorites', []);
+            if (this.isFavorite) {
+                // æ·»åŠ åˆ°æ”¶è—
+                if (!favoriteList.includes(this.noteId)) {
+                    favoriteList.push(this.noteId);
+                }
+            }
+            else {
+                // ä»æ”¶è—ä¸­ç§»é™¤
+                favoriteList = favoriteList.filter(id => id !== this.noteId);
+            }
+            this.pref.putSync('favorites', favoriteList);
+            this.pref.flushSync();
+        }
+        catch (error) {
+            console.error('ä¿å­˜æ”¶è—çŠ¶æ€å¤±è´¥:', error);
+        }
+    }
+    // åˆ‡æ¢æ”¶è—çŠ¶æ€
+    toggleFavorite() {
+        this.isFavorite = !this.isFavorite;
+        this.saveFavoriteStatus();
+    }
+    // åŠ è½½è¯„è®ºåˆ—è¡¨
+    loadComments() {
+        CommentService.getCommentsByNewsId(this.note.id)
+            .then((comments) => {
+            this.comments = comments;
+        })
+            .catch((error) => {
+            console.error('è·å–è¯„è®ºåˆ—è¡¨å¤±è´¥:', error);
+        });
+    }
+    // æäº¤è¯„è®º
+    postComment() {
+        if (!this.newComment.trim()) {
+            // è¯„è®ºå†…å®¹ä¸ºç©ºä¸æäº¤
+            return;
+        }
+        this.isPosting = true;
+        // ä½¿ç”¨å½“å‰ç™»å½•ç”¨æˆ·çš„ç”¨æˆ·åï¼Œå¦‚æœæ²¡æœ‰åˆ™ä½¿ç”¨"åŒ¿åç”¨æˆ·"
+        const username = this.currentUser && this.currentUser.username ? this.currentUser.username : 'åŒ¿åç”¨æˆ·';
+        CommentService.addComment(this.note.id, username, this.newComment)
+            .then((comment) => {
+            // æ·»åŠ æˆåŠŸåæ›´æ–°è¯„è®ºåˆ—è¡¨
+            this.comments = [...this.comments, comment];
+            this.newComment = ''; // æ¸…ç©ºè¾“å…¥æ¡†
+            this.isPosting = false;
+        })
+            .catch((error) => {
+            console.error('å‘è¡¨è¯„è®ºå¤±è´¥:', error);
+            this.isPosting = false;
+            // å¯ä»¥åœ¨è¿™é‡Œæ·»åŠ é”™è¯¯æç¤º
+        });
+    }
+    initialRender() {
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.width('100%');
+            Column.height('100%');
+            Column.backgroundColor(Color.White);
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // é¡¶éƒ¨å¯¼èˆªæ 
+            Row.create();
+            // é¡¶éƒ¨å¯¼èˆªæ 
+            Row.width('100%');
+            // é¡¶éƒ¨å¯¼èˆªæ 
+            Row.height(50);
+            // é¡¶éƒ¨å¯¼èˆªæ 
+            Row.alignSelf(ItemAlign.Start);
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Image.create({ "id": 16777288, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" });
+            Image.width(24);
+            Image.height(24);
+            Image.margin({ top: 10, left: 20 });
+            Image.onClick(() => {
+                router.back();
+            });
+        }, Image);
+        // é¡¶éƒ¨å¯¼èˆªæ 
+        Row.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // ç¬”è®°å†…å®¹åŒºåŸŸï¼ˆå¯æ»šåŠ¨ï¼‰
+            Scroll.create();
+            // ç¬”è®°å†…å®¹åŒºåŸŸï¼ˆå¯æ»šåŠ¨ï¼‰
+            Scroll.width('100%');
+            // ç¬”è®°å†…å®¹åŒºåŸŸï¼ˆå¯æ»šåŠ¨ï¼‰
+            Scroll.layoutWeight(1);
+        }, Scroll);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.width('100%');
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            If.create();
+            // ç¬”è®°å›¾ç‰‡
+            if (this.note.imagesUrl && this.note.imagesUrl.length > 0) {
+                this.ifElseBranchUpdateFunction(0, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Image.create(Constants.SERVER + (typeof this.note.imagesUrl === 'string' ? this.note.imagesUrl : this.note.imagesUrl[0]?.url || ''));
+                        Image.width('100%');
+                        Image.height(300);
+                        Image.objectFit(ImageFit.Cover);
+                        Image.margin({ bottom: 20 });
+                    }, Image);
+                });
+            }
+            // ç¬”è®°æ ‡é¢˜
+            else {
+                this.ifElseBranchUpdateFunction(1, () => {
+                });
+            }
+        }, If);
+        If.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // ç¬”è®°æ ‡é¢˜
+            Text.create(this.note.title);
+            // ç¬”è®°æ ‡é¢˜
+            Text.fontSize(24);
+            // ç¬”è®°æ ‡é¢˜
+            Text.fontWeight(500);
+            // ç¬”è®°æ ‡é¢˜
+            Text.margin({ bottom: 10, left: 20, right: 20 });
+            // ç¬”è®°æ ‡é¢˜
+            Text.width('100%');
+            // ç¬”è®°æ ‡é¢˜
+            Text.textAlign(TextAlign.Start);
+        }, Text);
+        // ç¬”è®°æ ‡é¢˜
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // ç¬”è®°æ¥æº
+            Text.create(this.note.source);
+            // ç¬”è®°æ¥æº
+            Text.fontColor('#666');
+            // ç¬”è®°æ¥æº
+            Text.fontSize(14);
+            // ç¬”è®°æ¥æº
+            Text.margin({ bottom: 20, left: 20, right: 20 });
+            // ç¬”è®°æ¥æº
+            Text.width('100%');
+            // ç¬”è®°æ¥æº
+            Text.textAlign(TextAlign.Start);
+        }, Text);
+        // ç¬”è®°æ¥æº
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // æ”¶è—æŒ‰é’®å’Œç¬”è®°å†…å®¹
+            Row.create();
+            // æ”¶è—æŒ‰é’®å’Œç¬”è®°å†…å®¹
+            Row.width('100%');
+            // æ”¶è—æŒ‰é’®å’Œç¬”è®°å†…å®¹
+            Row.margin({ bottom: 20 });
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Blank.create();
+        }, Blank);
+        Blank.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Button.createWithLabel(this.isFavorite ? 'å·²æ”¶è—' : 'æ”¶è—');
+            Button.width(100);
+            Button.height(32);
+            Button.fontSize(14);
+            Button.margin({ right: 20 });
+            Button.type(ButtonType.Capsule);
+            Button.backgroundColor(this.isFavorite ? '#ff5722' : '#f5f5f5');
+            Button.fontColor(this.isFavorite ? Color.White : Color.Black);
+            Button.onClick(() => {
+                this.toggleFavorite();
+            });
+        }, Button);
+        Button.pop();
+        // æ”¶è—æŒ‰é’®å’Œç¬”è®°å†…å®¹
+        Row.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // ç¬”è®°å†…å®¹
+            Text.create(this.note.content);
+            // ç¬”è®°å†…å®¹
+            Text.fontSize(16);
+            // ç¬”è®°å†…å®¹
+            Text.lineHeight(24);
+            // ç¬”è®°å†…å®¹
+            Text.margin({ left: 20, right: 20, bottom: 20 });
+            // ç¬”è®°å†…å®¹
+            Text.width('100%');
+            // ç¬”è®°å†…å®¹
+            Text.textAlign(TextAlign.Start);
+        }, Text);
+        // ç¬”è®°å†…å®¹
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // è¯„è®ºåŒºåŸŸæ ‡é¢˜
+            Row.create();
+            // è¯„è®ºåŒºåŸŸæ ‡é¢˜
+            Row.width('100%');
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('è¯„è®º (' + this.comments.length + ')');
+            Text.fontSize(18);
+            Text.fontWeight(500);
+            Text.margin({ left: 20, top: 20, bottom: 10 });
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Blank.create();
+        }, Blank);
+        Blank.pop();
+        // è¯„è®ºåŒºåŸŸæ ‡é¢˜
+        Row.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // è¯„è®ºåˆ—è¡¨
+            ForEach.create();
+            const forEachItemGenFunction = _item => {
+                const comment = _item;
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    __Common__.create();
+                    __Common__.margin({ left: 20, right: 20 });
+                }, __Common__);
+                {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        if (isInitialRender) {
+                            let componentCall = new CommentItem(this, { comment: comment }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/zonghezuoye/NoteDetailPage.ets", line: 224, col: 13 });
+                            ViewPU.create(componentCall);
+                            let paramsLambda = () => {
+                                return {
+                                    comment: comment
+                                };
+                            };
+                            componentCall.paramsGenerator_ = paramsLambda;
+                        }
+                        else {
+                            this.updateStateVarsOfChildByElmtId(elmtId, {});
+                        }
+                    }, { name: "CommentItem" });
+                }
+                __Common__.pop();
+            };
+            this.forEachUpdateFunction(elmtId, this.comments, forEachItemGenFunction, (item) => item.id.toString(), false, false);
+        }, ForEach);
+        // è¯„è®ºåˆ—è¡¨
+        ForEach.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            If.create();
+            // å¦‚æœæ²¡æœ‰è¯„è®ºï¼Œæ˜¾ç¤ºæç¤º
+            if (this.comments.length === 0) {
+                this.ifElseBranchUpdateFunction(0, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Text.create('æš‚æ— è¯„è®ºï¼Œå¿«æ¥æŠ¢æ²™å‘å§');
+                        Text.fontSize(14);
+                        Text.fontColor('#999');
+                        Text.margin({ top: 20, bottom: 20 });
+                    }, Text);
+                    Text.pop();
+                });
+            }
+            else {
+                this.ifElseBranchUpdateFunction(1, () => {
+                });
+            }
+        }, If);
+        If.pop();
+        Column.pop();
+        // ç¬”è®°å†…å®¹åŒºåŸŸï¼ˆå¯æ»šåŠ¨ï¼‰
+        Scroll.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // è¯„è®ºè¾“å…¥åŒºåŸŸ
+            Column.create();
+            // è¯„è®ºè¾“å…¥åŒºåŸŸ
+            Column.backgroundColor('#f8f8f8');
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Divider.create();
+            Divider.strokeWidth(0.5);
+            Divider.color('#eee');
+            Divider.width('100%');
+        }, Divider);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Row.create();
+            Row.width('100%');
+            Row.height(60);
+            Row.alignItems(VerticalAlign.Center);
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            TextInput.create({ placeholder: 'è¯·è¾“å…¥è¯„è®ºå†…å®¹', text: this.newComment });
+            TextInput.layoutWeight(1);
+            TextInput.height(40);
+            TextInput.margin({ left: 20 });
+            TextInput.onChange((value) => {
+                this.newComment = value;
+            });
+        }, TextInput);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Button.createWithLabel('å‘é€');
+            Button.width(60);
+            Button.height(40);
+            Button.margin({ left: 10, right: 20 });
+            Button.enabled(!this.isPosting && this.newComment.trim() !== '');
+            Button.type(ButtonType.Capsule);
+            Button.onClick(() => {
+                this.postComment();
+            });
+        }, Button);
+        Button.pop();
+        Row.pop();
+        // è¯„è®ºè¾“å…¥åŒºåŸŸ
+        Column.pop();
+        Column.pop();
+    }
+    rerender() {
+        this.updateDirtyElements();
+    }
+    static getEntryName() {
+        return "NoteDetailPage";
+    }
+}
+registerNamedRoute(() => new NoteDetailPage(undefined, {}), "", { bundleName: "com.example.newsrelease", moduleName: "entry", pagePath: "pages/zonghezuoye/NoteDetailPage", pageFullPath: "entry/src/main/ets/pages/zonghezuoye/NoteDetailPage", integratedHsp: "false", moduleType: "followWithHap" });
+//# sourceMappingURL=NoteDetailPage.js.mapÂ˜ÙQ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsÙ[ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.data.preferences.d.tsÙeD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\viewmodel\NewsData.etsÙmD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\common\constants\Constants.etsÙmD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\common\utils\CommentService.tsÙcD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\view\CommentItem.etsÙjD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\viewmodel\GlobalContext.etsÙiD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\pages\zonghezuoye\User.etsÙsD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\pages\zonghezuoye\NoteDetailPage.etsÔrBšªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo°belongModulePath¬shouldEmitJs¥entryÃÂÙAD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entryÙ;D:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql¥entry¥1.0.0Ô  ÙAD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entryÃÃÚ!rimport { router } from '@kit.ArkUI';
+import { preferences } from '@kit.ArkData';
+import { common } from '@kit.AbilityKit';
+import { NewsData } from '../../viewmodel/NewsData';
+import Constants from '../../common/constants/Constants';
+import Comment from '../../models/Comment';
+import CommentService from '../../common/utils/CommentService';
+import { CommentItem } from '../../view/CommentItem';
+import { GlobalContext } from '../../viewmodel/GlobalContext';
+import { User } from './User';
+
+@Entry
+@Component
+struct NoteDetailPage {
+  @State private noteId: number = 0;
+  @State private note: NewsData = new NewsData();
+  @State private isFavorite: boolean = false;
+  @State private imageUri: string = '';
+  @State private comments: Comment[] = []; // è¯„è®ºåˆ—è¡¨
+  @State private newComment: string = ''; // æ–°è¯„è®ºå†…å®¹
+  @State private isPosting: boolean = false; // æ˜¯å¦æ­£åœ¨æäº¤è¯„è®º
+  @State private currentUser: User = new User('', ''); // å½“å‰ç™»å½•ç”¨æˆ·
+  
+  private context = this.getUIContext().getHostContext() as common.UIAbilityContext;
+  private pref = preferences.getPreferencesSync(this.context, { name: 'favoriteNotesPrefs' });
+
+  aboutToAppear(): void {
+    // è·å–è·¯ç”±å‚æ•°
+    const params = router.getParams();
+    if (params) {
+      // è·å–ç¬”è®°æ•°æ®
+      const noteData = params as NewsData;
+      this.note = noteData;
+      
+      // è·å–ç¬”è®°IDï¼ˆè¿™é‡Œæˆ‘ä»¬ä½¿ç”¨æ ‡é¢˜+å†…å®¹ä½œä¸ºå”¯ä¸€æ ‡è¯†ï¼‰
+      this.noteId = this.generateNoteId(noteData);
+      
+      // åŠ è½½æ”¶è—çŠ¶æ€
+      this.loadFavoriteStatus();
+      
+      // åŠ è½½è¯„è®ºåˆ—è¡¨
+      this.loadComments();
+      
+      // è·å–å½“å‰ç™»å½•ç”¨æˆ·
+      const user = GlobalContext.getContext().getObject('loggedInUser') as User | undefined;
+      if (user) {
+        this.currentUser = user;
+      }
+    }
+  }
+
+  // ç”Ÿæˆç¬”è®°çš„å”¯ä¸€IDï¼ˆç®€å•å®ç°ï¼Œå®é™…é¡¹ç›®ä¸­å¯èƒ½éœ€è¦æ›´å¤æ‚çš„é€»è¾‘ï¼‰
+  private generateNoteId(note: NewsData): number {
+    // ä½¿ç”¨æ ‡é¢˜å’Œå†…å®¹ç”Ÿæˆä¸€ä¸ªç®€å•çš„å“ˆå¸Œå€¼ä½œä¸ºID
+    const str = note.title + note.content;
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // è½¬æ¢ä¸º32ä½æ•´æ•°
+    }
+    return Math.abs(hash);
+  }
+
+  // åŠ è½½æ”¶è—çŠ¶æ€
+  private loadFavoriteStatus(): void {
+    try {
+      const favoriteList = this.pref.getSync('favorites', []) as Array<number>;
+      this.isFavorite = favoriteList.includes(this.noteId);
+    } catch (error) {
+      console.error('åŠ è½½æ”¶è—çŠ¶æ€å¤±è´¥:', error);
+      this.isFavorite = false;
+    }
+  }
+
+  // ä¿å­˜æ”¶è—çŠ¶æ€
+  private saveFavoriteStatus(): void {
+    try {
+      let favoriteList = this.pref.getSync('favorites', []) as Array<number>;
+      
+      if (this.isFavorite) {
+        // æ·»åŠ åˆ°æ”¶è—
+        if (!favoriteList.includes(this.noteId)) {
+          favoriteList.push(this.noteId);
+        }
+      } else {
+        // ä»æ”¶è—ä¸­ç§»é™¤
+        favoriteList = favoriteList.filter(id => id !== this.noteId);
+      }
+      
+      this.pref.putSync('favorites', favoriteList);
+      this.pref.flushSync();
+    } catch (error) {
+      console.error('ä¿å­˜æ”¶è—çŠ¶æ€å¤±è´¥:', error);
+    }
+  }
+
+  // åˆ‡æ¢æ”¶è—çŠ¶æ€
+  private toggleFavorite(): void {
+    this.isFavorite = !this.isFavorite;
+    this.saveFavoriteStatus();
+  }
+
+  // åŠ è½½è¯„è®ºåˆ—è¡¨
+  private loadComments(): void {
+    CommentService.getCommentsByNewsId(this.note.id)
+      .then((comments: Comment[]) => {
+        this.comments = comments;
+      })
+      .catch((error: string) => {
+        console.error('è·å–è¯„è®ºåˆ—è¡¨å¤±è´¥:', error);
+      });
+  }
+
+  // æäº¤è¯„è®º
+  private postComment(): void {
+    if (!this.newComment.trim()) {
+      // è¯„è®ºå†…å®¹ä¸ºç©ºä¸æäº¤
+      return;
+    }
+
+    this.isPosting = true;
+    // ä½¿ç”¨å½“å‰ç™»å½•ç”¨æˆ·çš„ç”¨æˆ·åï¼Œå¦‚æœæ²¡æœ‰åˆ™ä½¿ç”¨"åŒ¿åç”¨æˆ·"
+    const username = this.currentUser && this.currentUser.username ? this.currentUser.username : 'åŒ¿åç”¨æˆ·';
+    
+    CommentService.addComment(this.note.id, username, this.newComment)
+      .then((comment: Comment) => {
+        // æ·»åŠ æˆåŠŸåæ›´æ–°è¯„è®ºåˆ—è¡¨
+        this.comments = [...this.comments, comment];
+        this.newComment = ''; // æ¸…ç©ºè¾“å…¥æ¡†
+        this.isPosting = false;
+      })
+      .catch((error: string) => {
+        console.error('å‘è¡¨è¯„è®ºå¤±è´¥:', error);
+        this.isPosting = false;
+        // å¯ä»¥åœ¨è¿™é‡Œæ·»åŠ é”™è¯¯æç¤º
+      });
+  }
+
+  build() {
+    Column() {
+      // é¡¶éƒ¨å¯¼èˆªæ 
+      Row() {
+        Image($r('app.media.ic_back'))
+          .width(24)
+          .height(24)
+          .margin({ top: 10, left: 20 })
+          .onClick(() => {
+            router.back();
+          })
+      }
+      .width('100%')
+      .height(50)
+      .alignSelf(ItemAlign.Start)
+
+      // ç¬”è®°å†…å®¹åŒºåŸŸï¼ˆå¯æ»šåŠ¨ï¼‰
+      Scroll() {
+        Column() {
+          // ç¬”è®°å›¾ç‰‡
+          if (this.note.imagesUrl && this.note.imagesUrl.length > 0) {
+            Image(Constants.SERVER + (typeof this.note.imagesUrl === 'string' ? this.note.imagesUrl : this.note.imagesUrl[0]?.url || ''))
+              .width('100%')
+              .height(300)
+              .objectFit(ImageFit.Cover)
+              .margin({ bottom: 20 })
+          }
+
+          // ç¬”è®°æ ‡é¢˜
+          Text(this.note.title)
+            .fontSize(24)
+            .fontWeight(500)
+            .margin({ bottom: 10, left: 20, right: 20 })
+            .width('100%')
+            .textAlign(TextAlign.Start)
+
+          // ç¬”è®°æ¥æº
+          Text(this.note.source)
+            .fontColor('#666')
+            .fontSize(14)
+            .margin({ bottom: 20, left: 20, right: 20 })
+            .width('100%')
+            .textAlign(TextAlign.Start)
+
+          // æ”¶è—æŒ‰é’®å’Œç¬”è®°å†…å®¹
+          Row() {
+            Blank()
+            
+            Button(this.isFavorite ? 'å·²æ”¶è—' : 'æ”¶è—')
+              .width(100)
+              .height(32)
+              .fontSize(14)
+              .margin({ right: 20 })
+              .type(ButtonType.Capsule)
+              .backgroundColor(this.isFavorite ? '#ff5722' : '#f5f5f5')
+              .fontColor(this.isFavorite ? Color.White : Color.Black)
+              .onClick(() => {
+                this.toggleFavorite();
+              })
+          }
+          .width('100%')
+          .margin({ bottom: 20 })
+
+          // ç¬”è®°å†…å®¹
+          Text(this.note.content)
+            .fontSize(16)
+            .lineHeight(24)
+            .margin({ left: 20, right: 20, bottom: 20 })
+            .width('100%')
+            .textAlign(TextAlign.Start)
+          
+          // è¯„è®ºåŒºåŸŸæ ‡é¢˜
+          Row() {
+            Text('è¯„è®º (' + this.comments.length + ')')
+              .fontSize(18)
+              .fontWeight(500)
+              .margin({ left: 20, top: 20, bottom: 10 })
+            
+            Blank()
+          }
+          .width('100%')
+          
+          // è¯„è®ºåˆ—è¡¨
+          ForEach(this.comments, (comment: Comment) => {
+            CommentItem({ comment: comment })
+              .margin({ left: 20, right: 20 })
+          }, (item: Comment) => item.id.toString())
+          
+          // å¦‚æœæ²¡æœ‰è¯„è®ºï¼Œæ˜¾ç¤ºæç¤º
+          if (this.comments.length === 0) {
+            Text('æš‚æ— è¯„è®ºï¼Œå¿«æ¥æŠ¢æ²™å‘å§')
+              .fontSize(14)
+              .fontColor('#999')
+              .margin({ top: 20, bottom: 20 })
+          }
+        }
+        .width('100%')
+      }
+      .width('100%')
+      .layoutWeight(1)
+
+      // è¯„è®ºè¾“å…¥åŒºåŸŸ
+      Column() {
+        Divider()
+          .strokeWidth(0.5)
+          .color('#eee')
+          .width('100%')
+        
+        Row() {
+          TextInput({ placeholder: 'è¯·è¾“å…¥è¯„è®ºå†…å®¹', text: this.newComment })
+            .layoutWeight(1)
+            .height(40)
+            .margin({ left: 20 })
+            .onChange((value: string) => {
+              this.newComment = value;
+            })
+          
+          Button('å‘é€')
+            .width(60)
+            .height(40)
+            .margin({ left: 10, right: 20 })
+            .enabled(!this.isPosting && this.newComment.trim() !== '')
+            .type(ButtonType.Capsule)
+            .onClick(() => {
+              this.postComment();
+            })
+        }
+        .width('100%')
+        .height(60)
+        .alignItems(VerticalAlign.Center)
+      }
+      .backgroundColor('#f8f8f8')
+    }
+    .width('100%')
+    .height('100%')
+    .backgroundColor(Color.White)
+  }
+}ÀÔrC˜¬@ohos.router¶@ohos.data.preferences¸../../viewmodel/NewsDataÙ ../../common/constants/Constants¶../../view/CommentItemÙ!../../common/utils/CommentService¦./User½../../viewmodel/GlobalContextÔrD—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÃÙQ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsAÃªoh-resolveÂDAÃÙ[ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.data.preferences.d.tsAÃªoh-resolveÂDAÂÙeD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\viewmodel\NewsData.etsAÃªoh-resolveÂDAÂÙmD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\common\constants\Constants.etsAÃªoh-resolveÂDAÂÙcD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\view\CommentItem.etsAÃªoh-resolveÂDAÂÙmD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\common\utils\CommentService.tsAÃªoh-resolveÂDAÂÙiD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\pages\zonghezuoye\User.etsAÃªoh-resolveÂDAÂÙjD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\viewmodel\GlobalContext.etsAÃªoh-resolveÂ“ÔrE–§version¤fileªsourceRoot§sources¥names¨mappings±NoteDetailPage.js ‘²NoteDetailPage.etsÜê–”    ”  	”  ”  ”!  #”"  $–”   ” 	” ” ”0 *”1 +˜”   ” ”	 	” ” ” ”3 3”4 4–”   ” ” ” ”8 8”9 9–”   ” ” ” ”> >”? ?˜”   ” ”	 	” ” ” ”4 4”5 5˜”   ” ”	 	” ” ” ”= =”> >˜”  	 ” 	”	 		” 	” 	” 	” 	” 	’” ” ‘”  ’”5 "”6 #””3 "”7 &”? .”ÌA 0’”9 '”> ,’”7 $”9 &’”7 '”9 )’”9 &”; (’”8 &”= +˜”: %”> )”ÌB -”ÌC .”ÌE 0”ÌG 2”ÌI 4”ÌJ 5˜” ” ” ”( %”* '”+ (”9 6”; ÌSŸ” ” ”  ”2 /”3 0”7 4”8 5”? <”ÌA >”ÌC Ì@”ÌG ÌD”ÌI ÌF”Ì] ÌZ”Ì_ Ì\”Ì` Ì]‘” 	’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ™” ” 
+” ” ” ” ”' #”) %”* &”” ” ” ” ’” ” –” ” ” ” ”# )”$ *—”  ”  
+”  ”  ”  ”   ”!  ’” "”( ""œ” #” #
+” #” #” #” #” #”- #'”. #(”6 #0”7 #1”8 #2’” %” %–” &” &
+” &”# &”% &”& & ’” (” (–” )” )
+” )” )” )”  )’” +” +” ,” ,” ,” ,”& , ”' ,!”1 ,+”3 ,-”4 ,.”= ,7”> ,8”ÌL ,ÌF”ÌM ,Ì[”ÌN ,Ì\”” -” -
+” -” -—” .” .” .”  .”# .”' .”( . ‘” /‘”	 0’” 1” 1’” 3”& 3$”” 4
+” 4” 4” 4'’” 5”  5œ” 6” 6
+” 6” 6” 6” 6” 6”! 6”% 6!”& 6"”- 6)”. 6*–” 7” 7” 7” 7” 7” 7Ü ” 8” 8	” 8” 8” 8” 8” 8” 8” 8” 8”  8”& 8"”( 8$”) 8%”+ 8'”- 8)›” 9” 9” 9” 9” 9” 9”' 9!”( 9"”) 9#”* 9$”+ 9%Ÿ” :” :
+” :” :” :” :” :” :” :”" :”& : ”' :!”* :$”. :(”/ :)™” ;” ;
+” ;” ;” ;” ;” ;”  ;”+ ;%‘”	 <™” =” =” =” =” =” =” =” =” =’” >” >’” Ì@” Ì@’” ÌA
+” ÌA’” ÌB” ÌBŸ” ÌC” ÌC” ÌC”! ÌC”% ÌC”& ÌC ”* ÌC$”+ ÌC%”2 ÌC,”3 ÌC-”> ÌC8”Ì@ ÌC:”ÌB ÌC<”ÌC ÌCÌN”ÌD ÌCÌO” ÌD” ÌD
+” ÌD” ÌD” ÌD”* ÌD$”+ ÌD%”3 ÌD-”4 ÌD.”8 ÌD2”9 ÌD3”? ÌD9”Ì@ ÌD:”ÌA ÌD;‘”	 ÌE”” ÌE” ÌE” ÌE” ÌEš” ÌF” ÌF” ÌF” ÌF” ÌF”% ÌF”' ÌF!”, ÌF&”- ÌF'”. ÌF(—” ÌG” ÌG
+” ÌG” ÌG” ÌG”# ÌG”$ ÌG‘”	 ÌH’” ÌI” ÌI’” ÌK” ÌK’” ÌL
+” ÌL’” ÌM” ÌMŸ” ÌN” ÌN
+” ÌN” ÌN”# ÌN”$ ÌN”( ÌN"”) ÌN#”0 ÌN*”1 ÌN+”< ÌN6”> ÌN8”Ì@ ÌN:”ÌA ÌNÌL”ÌB ÌNÌM–” ÌP” ÌP
+” ÌP” ÌP” ÌP”! ÌP’” ÌQ” ÌQœ” ÌR” ÌR” ÌR”! ÌR”" ÌR”* ÌR"”+ ÌR#”/ ÌR'”0 ÌR(”6 ÌR.”7 ÌR/”9 ÌR1š” ÌS
+”  ÌS”! ÌS”% ÌS”& ÌS”* ÌS ”+ ÌS!”1 ÌS'”2 ÌS(”3 ÌS)‘” ÌT	‘” ÌU‘” ÌU’” ÌV” ÌVÜ ” ÌW” ÌW” ÌW”+ ÌW#”, ÌW$”2 ÌW*”3 ÌW+”5 ÌW-”6 ÌW.”8 ÌW0”9 ÌW1”; ÌW3”Ì@ ÌW8”ÌD ÌW<”ÌE ÌW=”ÌK ÌWÌC”ÌL ÌWÌD”ÌM ÌWÌE‘” ÌXœ” ÌZ” ÌZ
+” ÌZ” ÌZ” ÌZ” ÌZ” ÌZ”) ÌZ#”+ ÌZ%”7 ÌZ1”8 ÌZ2”9 ÌZ3˜” Ì[” Ì[
+” Ì[” Ì[” Ì[” Ì[”! Ì[”" Ì[‘”	 Ì\”” Ì\” Ì\” Ì\” Ì\š” Ì]” Ì]” Ì]” Ì]” Ì]”% Ì]”' Ì]!”, Ì]&”- Ì]'”. Ì](‘”	 Ì^’” Ì_” Ì_’” Ìa” Ìa’” Ìb
+” Ìbš” Ìc” Ìc” Ìc	” Ìc” Ìc” Ìc” Ìc”  Ìc”* Ìc&”+ Ìc'–” Ìd” Ìd” Ìd	” Ìd”! Ìd”" Ìd’” Ìe” Ìe’” Ìg” Ìg’” Ìh
+” Ìh›” Ìi” Ìi” Ìi”* Ìi&”+ Ìi'”/ Ìi+”0 Ìi,”4 Ìi0”5 Ìi1”7 Ìi3”8 Ìi4—” Ìj” Ìj” Ìj” Ìj” Ìj ” Ìj"” Ìj$—” Ìk” Ìk” Ìk” Ìk” Ìk”$ Ìk ”% Ìk!“” Ìl”	 Ìl”
+ Ìl—” Ìm” Ìm” Ìm” Ìm” Ìm” Ìm” Ìmš” Ìn” Ìn” Ìn” Ìn” Ìn”% Ìn!”' Ìn#”, Ìn(”- Ìn)”. Ìn*”” Ìo”	 Ìo”
+ Ìo” Ìo	’” Ìp” Ìp’” Ìr” Ìr	’” Ìs
+” Ìsš” Ìt” Ìt” Ìt	” Ìt” Ìt” Ìt” Ìt”! Ìt”# Ìt”% Ìt!’” Ìu” Ìu’” Ìv” Ìv‘”	 Ìw—” Ìy” Ìy” Ìy	” Ìy” Ìy” Ìy” Ìy’” Ìz”% Ìz!Ü ” Ì{” Ì{
+” Ì{” Ì{” Ì{” Ì{”) Ì{%”- Ì{)”1 Ì{-”2 Ì{.”= Ì{9”> Ì{:”ÌF Ì{ÌB”ÌG Ì{ÌC”ÌH Ì{ÌD”ÌI Ì{ÌE”ÌM Ì{ÌI”ÌN Ì{ÌJ”ÌY Ì{ÌU”ÌZ Ì{ÌV”Ìb Ì{Ì^”Ìc Ì{Ì_”Ìd Ì{Ì`”Ìe Ì{Ìa”Ìk Ì{Ìg”Ìl Ì{ÌhÜ ” Ì}” Ì}” Ì}”! Ì}”" Ì}”& Ì}"”' Ì}#”+ Ì}'”, Ì}(”. Ì}*”0 Ì},”8 Ì}4”: Ì}6”> Ì}:”? Ì};”ÌI Ì}ÌE”ÌJ Ì}ÌF—” Ì~” Ì~” Ì~” Ì~” Ì~” Ì~” Ì~!’” Ì” Ì” Ì€” Ì€” Ì€” Ì€” Ì€” Ì€”  Ì€”$ Ì€ ”% Ì€!”- Ì€)”/ Ì€+”6 Ì€2”7 Ì€3”8 Ì€4™” Ì” Ì” Ì” Ì” Ì”  Ì”! Ì”" Ì”* Ì&—” Ì‚” Ì‚” Ì‚” Ì‚” Ì‚”" Ì‚”# Ì‚“” Ìƒ”	 Ìƒ”
+ Ìƒ—” Ì„” Ì„” Ì„” Ì„” Ì„” Ì„” Ì„š” Ì…” Ì…” Ì…” Ì…” Ì…”# Ì…”% Ì…!”* Ì…&”+ Ì…'”, Ì…(—” Ì†” Ì†” Ì†” Ì†” Ì†”" Ì†”# Ì†’” Ì‡” Ì‡”” Ìˆ”	 Ìˆ”
+ Ìˆ” Ìˆ	’” Ì‰” Ì‰‘” Ì‹’” ÌŒ” ÌŒ
+–” ÌŒ” ÌŒ
+” Í” Í
+” Í” Í–” ÌŒ” ÌŒ
+” Í” Í” Í”  Í˜” ÌŒ” ÌŒ
+” Í”" Í”# Í”( Í”) Í”. Í ’” Ì” Ì’” Ì” Ì	’” Ì” Ì–” Ì” Ì	” Ì—” Ì—” Ì—” Ì—’” Ì” Ì–” Ì” Ì	” Ì˜” Ì˜” Ì˜” Ì˜’” Ì” Ì˜” Ì” Ì	” Ì™” Ì™” Ì™”# Ì™”$ Ì™”) Ì™ ’” Ì” Ì–” Ì” Ì” Ì” Ì” Ì” Ì–” Ì” Ì” Ì‘” Ì‘” Ì‘” Ì‘” Ì” Ì” Ì’” Ì’” Ì’” Ì’” Ì’”  Ì’”" Ì’”$ Ì’”( Ì’!”* Ì’#”, Ì’%”. Ì’'—” Ì” Ì” Ì“” Ì“” Ì“” Ì“” Ì“–” Ì”” Ì”” Ì”” Ì”” Ì”” Ì”’” Ì•
+” Ì•’” Ì” Ì’” Ì” Ì	’” Ì›” Ì›’” Ìœ” Ìœ’” Ì›” Ì›–” Ìœ” Ìœ” Ìí” Ìí” Ìí” Ìí’” Ì›” Ì›–” Ìœ” Ìœ” Ìî” Ìî”  Ìî”! Ìî’” Ì” Ì–” Ì” Ì” Ìë	” Ìë” Ìë” Ìë’” Ì
+” ÌÜ ” ÌŸ
+” ÌŸ” ÌŸ” ÌŸ” ÌŸ” ÌŸ”# ÌŸ!”' ÌŸ%”+ ÌŸ)”, ÌŸ*”0 ÌŸ.”1 ÌŸ/”: ÌŸ8”; ÌŸ9”ÌA ÌŸ?”ÌD ÌŸÌB”ÌE ÌŸÌC”ÌG ÌŸÌEÜ (” Ì ” Ì ”% Ì ”. Ì ”/ Ì ”5 Ì "”8 Ì %”9 Ì &”Ì@ Ì -”ÌD Ì 1”ÌE Ì 2”ÌI Ì 6”ÌJ Ì 7”ÌS Ì Ì@”ÌX Ì ÌE”Ì` Ì ÌM”Ìa Ì ÌN”Ìb Ì ÌO”Ìc Ì ÌP”Ìg Ì ÌT”Ìh Ì ÌU”Ìl Ì ÌY”Ìm Ì ÌZ”Ìv Ì Ìc”Ìw Ì Ìd”Ìx Ì Ìe”Ìy Ì Ìf”Ì} Ì Ìj”Ì~ Ì Ìk”Ì‚ Ì Ìo”Ìƒ Ì Ìp”ÌŒ Ì Ìy”Ì Ì Ìz”Ì Ì Ì{”Ì Ì Ì|”Ì‘ Ì Ì~”Ì” Ì Ì”Ì˜ Ì Ì…”Ìš Ì Ì‡”Ì› Ì Ìˆ–” Ì ” Ì ” Ì¡”# Ì¡”$ Ì¡”* Ì¡–” Ì ” Ì ” Ì¢”$ Ì¢”% Ì¢”( Ì¢˜” Ì ” Ì ” Ì£”' Ì£”( Ì£”0 Ì£!”1 Ì£"”6 Ì£'š” Ì ” Ì ” Ì¤”$ Ì¤”% Ì¤”' Ì¤”- Ì¤”/ Ì¤ ”1 Ì¤"”3 Ì¤$‘” Ì¥’” Ì§
+” Ì§‘” Ì¥’” Ì§
+” Ì§˜” Ì¨
+” Ì¨” Ì¨” Ì¨” Ì¨”! Ì¨”" Ì¨”' Ì¨’” Ì§
+” Ì§–” Ì¨
+” Ì¨” Ì©” Ì©” Ì©” Ì©’” Ì§
+” Ì§–” Ì¨
+” Ì¨” Ìª” Ìª” Ìª” Ìª’” Ì§
+” Ì§Ü ” Ì¨
+” Ì¨” Ì«” Ì«” Ì«” Ì«”  Ì«”" Ì«”$ Ì« ”& Ì«"”* Ì«&”, Ì«(”. Ì«*”0 Ì«,”5 Ì«1”7 Ì«3”9 Ì«5”; Ì«7’” Ì§
+” Ì§–” Ì¨
+” Ì¨” Ì¬” Ì¬” Ì¬” Ì¬’” Ì§
+” Ì§˜” Ì¨
+” Ì¨” Ì­” Ì­” Ì­”$ Ì­ ”% Ì­!”* Ì­&’” Ì§
+” Ì§’” Ì¨
+” Ì¨’” Ì¯
+” Ì¯˜” Ì°
+” Ì°” Ì°” Ì°” Ì°”! Ì°”" Ì°”( Ì°’” Ì¯
+” Ì¯–” Ì°
+” Ì°” Ì±” Ì±” Ì±”! Ì±’” Ì¯
+” Ì¯–” Ì°
+” Ì°” Ì²” Ì²” Ì²” Ì²’” Ì¯
+” Ì¯Ü ” Ì°
+” Ì°” Ì³” Ì³” Ì³” Ì³”  Ì³”" Ì³”$ Ì³ ”& Ì³"”* Ì³&”, Ì³(”. Ì³*”0 Ì³,”5 Ì³1”7 Ì³3”9 Ì³5”; Ì³7’” Ì¯
+” Ì¯–” Ì°
+” Ì°” Ì´” Ì´” Ì´” Ì´’” Ì¯
+” Ì¯˜” Ì°
+” Ì°” Ìµ” Ìµ” Ìµ”$ Ìµ ”% Ìµ!”* Ìµ&’” Ì¯
+” Ì¯’” Ì°
+” Ì°’” Ì·
+” Ì·’” Ì¸
+” Ì¸’” Ì·
+” Ì·–” Ì¸
+” Ì¸” ÌÇ” ÌÇ” ÌÇ” ÌÇ’” Ì·
+” Ì·š” Ì¸
+” Ì¸” ÌÈ” ÌÈ” ÌÈ” ÌÈ” ÌÈ”! ÌÈ”# ÌÈ”% ÌÈ ’” Ì¹” Ì¹’” Ì¹” Ì¹” Ì»” Ì»”# Ì»”' Ì»”( Ì»”2 Ì»"”3 Ì»#”4 Ì»$”5 Ì»%”: Ì»*”; Ì»+”< Ì»,”= Ì»-”ÌA Ì»1–” Ì»” Ì»” Ì¼” Ì¼” Ì¼” Ì¼–” Ì»” Ì»” Ì½” Ì½” Ì½” Ì½–” Ì»” Ì»” Ì¾” Ì¾” Ì¾” Ì¾š” Ì»” Ì»” Ì¿” Ì¿” Ì¿” Ì¿”! Ì¿”# Ì¿”% Ì¿!”' Ì¿#˜” Ì»” Ì»” ÌÀ” ÌÀ” ÌÀ”" ÌÀ”# ÌÀ”* ÌÀ&Ü ” Ì»” Ì»” ÌÁ”" ÌÁ”# ÌÁ”' ÌÁ#”( ÌÁ$”2 ÌÁ.”3 ÌÁ/”4 ÌÁ0”5 ÌÁ1”> ÌÁ:”? ÌÁ;”Ì@ ÌÁ<”ÌA ÌÁ=”ÌJ ÌÁÌFÜ ” Ì»” Ì»” ÌÂ” ÌÂ” ÌÂ”! ÌÂ”" ÌÂ”, ÌÂ(”- ÌÂ)”. ÌÂ*”/ ÌÂ+”4 ÌÂ0”5 ÌÂ1”: ÌÂ6”; ÌÂ7”< ÌÂ8”= ÌÂ9”ÌB ÌÂ>”ÌC ÌÂ?”ÌH ÌÂÌD—” Ì»” Ì»” ÌÃ” ÌÃ” ÌÃ” ÌÃ”  ÌÃ–” ÌÄ” ÌÄ” ÌÄ”# ÌÄ#”% ÌÄ%”& ÌÄ&’” ÌÅ” ÌÅ’” Ì»” Ì»’” Ì·
+” Ì·’” Ì¸
+” Ì¸’” ÌÊ
+” ÌÊ˜” ÌË
+” ÌË” ÌË” ÌË” ÌË”! ÌË”" ÌË”) ÌË ’” ÌÊ
+” ÌÊ–” ÌË
+” ÌË” ÌÌ” ÌÌ” ÌÌ” ÌÌ’” ÌÊ
+” ÌÊ–” ÌË
+” ÌË” ÌÍ” ÌÍ” ÌÍ” ÌÍ’” ÌÊ
+” ÌÊÜ ” ÌË
+” ÌË” ÌÎ” ÌÎ” ÌÎ” ÌÎ” ÌÎ”  ÌÎ”" ÌÎ”$ ÌÎ ”) ÌÎ%”+ ÌÎ'”- ÌÎ)”/ ÌÎ+”5 ÌÎ1”7 ÌÎ3”9 ÌÎ5”; ÌÎ7’” ÌÊ
+” ÌÊ–” ÌË
+” ÌË” ÌÏ” ÌÏ” ÌÏ” ÌÏ’” ÌÊ
+” ÌÊ˜” ÌË
+” ÌË” ÌĞ” ÌĞ” ÌĞ”$ ÌĞ ”% ÌĞ!”* ÌĞ&’” ÌÊ
+” ÌÊ’” ÌË
+” ÌË’” ÌÒ
+” ÌÒ’” ÌÓ
+” ÌÓ’” ÌÒ
+” ÌÒ–” ÌÓ
+” ÌÓ” ÌÛ” ÌÛ” ÌÛ” ÌÛœ” ÌÔ” ÌÔ” ÌÔ” ÌÔ”! ÌÔ”% ÌÔ”& ÌÔ”. ÌÔ'”/ ÌÔ(”5 ÌÔ.”8 ÌÔ1”; ÌÔ4–” ÌÔ” ÌÔ” ÌÕ” ÌÕ” ÌÕ” ÌÕ–” ÌÔ” ÌÔ” ÌÖ” ÌÖ” ÌÖ” ÌÖÜ ” ÌÔ” ÌÔ” Ì×” Ì×” Ì×” Ì×” Ì×”  Ì×”" Ì× ”$ Ì×"”' Ì×%”) Ì×'”+ Ì×)”- Ì×+”3 Ì×1”5 Ì×3”7 Ì×5”9 Ì×7’” ÌÔ” ÌÔ’” ÌÙ” ÌÙ’” ÌÙ” ÌÙ’” ÌÒ
+” ÌÒ’” ÌÓ
+” ÌÓ’” Ìİ
+” Ìİ’” ÌŞ
+” ÌŞœ” Ìà”% Ìà”& Ìà”( Ìà”, Ìà”. Ìà”0 Ìà ”2 Ìà"”7 Ìà'”9 Ìà)”; Ìà+”= Ìà-˜”4 Ìß”? Ìß”ÌF Ìß”ÌH Ìß”ÌO Ìß!”ÌQ Ìß#”ÌX Ìß*”ÌZ Ìß,””$ Ìß”+ Ìß!”- Ìß#”4 Ìß*Ü ”/ ÌŞ”3 ÌŞ”4 ÌŞ”< ÌŞ”ÌV Ìá”ÌW Ìá”Ì[ Ìá”Ì] Ìá”Ì_ Ìá”Ì` Ìá ”Ìd Ìá$”Ìe Ìá%”Ìg Ìá'”Ìh Ìá(”Ìp Ìá0”Ìr Ìá2’” Ìİ
+” Ìİ’” ÌŞ
+” ÌŞ’” Ìã
+” Ìãš” Ìä
+” Ìä” Ìä” Ìä” Ìä” Ìä”$ Ìä"”) Ìä'”* Ìä(”, Ìä*”” Ìå” Ìå”$ Ìå”1 Ìå–” Ìå” Ìå” Ìæ”% Ìæ”& Ìæ”( Ìæ–” Ìå” Ìå” Ìç”& Ìç”' Ìç”- Ìç” Ìå” Ìå” Ìè”# Ìè”$ Ìè”& Ìè”) Ìè”+ Ìè”- Ìè”/ Ìè!”5 Ìè'”7 Ìè)”9 Ìè+”; Ìè-’” Ìå” Ìå‘” Ìé‘” Ìé’” Ì” Ì’” Ì›” Ì›’” Ìœ” Ìœ’” Ìğ” Ìğ’” Ìñ” Ìñ’” Ìğ” Ìğ–” Ìñ” Ìñ” Í”" Í”# Í”, Í ’” Ìò” Ìò–” Ìò” Ìò” Ìó” Ìó”  Ìó”# Ìó–” Ìò” Ìò” Ìô” Ìô” Ìô”  Ìô–” Ìò” Ìò” Ìõ” Ìõ” Ìõ”  Ìõ’” Ì÷” Ì÷–” Ì÷” Ì÷” Í
+	” Í
+” Í
+” Í
+–” Ì÷” Ì÷” Í	” Í” Í” Í˜” Ì÷” Ì÷” Í	” Í” Í”( Í!”) Í"”/ Í(” Ìø
+” Ìø” Ìø” Ìø”* Ìø!”, Ìø#”5 Ìø,”7 Ìø.”; Ìø2”= Ìø4”ÌA Ìø8”ÌB Ìø9”ÌL ÌøÌC”ÌN ÌøÌE–” Ìø
+” Ìø” Ìù”" Ìù”# Ìù”$ Ìù–” Ìø
+” Ìø” Ìú” Ìú” Ìú” Ìúš” Ìø
+” Ìø” Ìû” Ìû” Ìû” Ìû”# Ìû”% Ìû”' Ìû”) Ìû ™” Ìø
+” Ìø” Ìü” Ìü” Ìü”  Ìü”% Ìü$”' Ìü&”) Ìü(—” Ìı” Ìı” Ìı” Ìı”" Ìı ”' Ìı%”( Ìı&’” Ìş” Ìş”” Í 
+” Í ”# Í ”' Í –” Í 
+” Í ” Í” Í” Í” Í–” Í 
+” Í ” Í” Í” Í” Í” Í 
+” Í ” Í” Í” Í” Í”  Í”" Í”$ Í”& Í ”+ Í%”- Í'”/ Í)”1 Í+Ü ” Í 
+” Í ” Í” Í” Í” Í”  Í”! Í”* Í$”. Í(”2 Í,”3 Í-”= Í7”> Í8”ÌB Í<”ÌD Í>”ÌI ÍÌC”ÌK ÍÌE˜” Í 
+” Í ” Í” Í” Í”" Í”# Í”* Í$—” Í 
+” Í ” Í” Í” Í” Í”  Í–” Í” Í” Í”  Í”" Í ”# Í!’” Í” Í’” Í 
+” Í ’” Ì÷” Ì÷’” Ìğ” Ìğ’” Ìñ” Ìñ’” ÌŒ” ÌŒ
+‘” ÍÔrF–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜó‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
+ ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ì ‘”  ÌŸ ‘”  Ì  ‘”  Ì¡ ‘”  Ì¢ ‘”  Ì£ ‘”  Ì¤ ‘”  Ì¥ ‘”  Ì¦ ‘”  Ì§ ‘”  Ì¨ ‘”  Ì© ‘”  Ìª ‘”  Ì« ‘”  Ì¬ ‘”  Ì­ ‘”  Ì® ‘”  Ì¯ ‘”  Ì° ‘”  Ì± ‘”  Ì² ‘”  Ì³ ‘”  Ì´ ‘”  Ìµ ‘”  Ì¶ ‘”  Ì· ‘”  Ì¸ ‘”  Ì¹ ‘”  Ìº ‘”  Ì» ‘”  Ì¼ ‘”  Ì½ ‘”  Ì¾ ‘”  Ì¿ ‘”  ÌÀ ‘”  ÌÁ ‘”  ÌÂ ‘”  ÌÃ ‘”  ÌÄ ‘”  ÌÅ ‘”  ÌÆ ‘”  ÌÇ ‘”  ÌÈ ‘”  ÌÉ ‘”  ÌÊ ‘”  ÌË ‘”  ÌÌ ‘”  ÌÍ ‘”  ÌÎ ‘”  ÌÏ ‘”  ÌĞ ‘”  ÌÑ ‘”  ÌÒ ‘”  ÌÓ ‘”  ÌÔ ‘”  ÌÕ ‘”  ÌÖ ‘”  Ì× ‘”  ÌØ ‘”  ÌÙ ‘”  ÌÚ ‘”  ÌÛ ‘”  ÌÜ ‘”  Ìİ ‘”  ÌŞ ‘”  Ìß ‘”  Ìà ‘”  Ìá ‘”  Ìâ ‘”  Ìã ‘”  Ìä ‘”  Ìå ‘”  Ìæ ‘”  Ìç ‘”  Ìè ‘”  Ìé ‘”  Ìê ‘”  Ìë ‘”  Ìì ‘”  Ìí ‘”  Ìî ‘”  Ìï ‘”  Ìğ ‘”  Ìñ ‘”  Ìò ‘”  Ìó ‘”  Ìô ‘”  Ìõ ‘”  Ìö ‘”  Ì÷ ‘”  Ìø ‘”  Ìù ‘”  Ìú ‘”  Ìû ‘”  Ìü ‘”  Ìı ‘”  Ìş ‘”  Ìÿ ‘”  Í  ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í	 ‘”  Í
+ ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í  ‘”  Í! ‘”  Í" ‘”  Í# ‘”  Í$ ‘”  Í% ‘”  Í& ‘”  Í' ‘”  Í( ‘”  Í) ‘”  Í* ‘”  Í+ ‘”  Í, ‘”  Í- ‘”  Í. ‘”  Í/ ‘”  Í0 ‘”  Í1 ‘”  Í2 ‘”  Í3 ‘”  Í4 ‘”  Í5 ‘”  Í6 ‘”  Í7 ‘”  Í8 ‘”  Í9 ‘”  Í: ‘”  Í; ‘”  Í< ‘”  Í= ‘”  Í> ‘”  Í? ‘”  Í@ ‘”  ÍA ‘”  ÍB ‘”  ÍC ‘”  ÍD ‘”  ÍE ‘”  ÍF ‘”  ÍG ‘”  ÍH ‘”  ÍI ‘”  ÍJ ‘”  ÍK ‘”  ÍL ‘”  ÍM ‘”  ÍN ‘”  ÍO ‘”  ÍP ‘”  ÍQ ‘”  ÍR ‘”  ÍS ‘”  ÍT ‘”  ÍU ‘”  ÍV ‘”  ÍW ‘”  ÍX ‘”  ÍY ‘”  ÍZ ‘”  Í[ ‘”  Í\ ‘”  Í] ‘”  Í^ ‘”  Í_ ‘”  Í` ‘”  Ía ‘”  Íb ‘”  Íc ‘”  Íd ‘”  Íe ‘”  Íf ‘”  Íg ‘”  Íh ‘”  Íi ‘”  Íj ‘”  Ík ‘”  Íl ‘”  Ím ‘”  Ín ‘”  Ío ‘”  Íp ‘”  Íq ‘”  Ír ‘”  Ís ‘”  Ít ‘”  Íu ‘”  Ív ‘”  Íw ‘”  Íx ‘”  Íy ‘”  Íz ‘”  Í{ ‘”  Í| ‘”  Í} ‘”  Í~ ‘”  Í ‘”  Í€ ‘”  Í ‘”  Í‚ ‘”  Íƒ ‘”  Í„ ‘”  Í… ‘”  Í† ‘”  Í‡ ‘”  Íˆ ‘”  Í‰ ‘”  ÍŠ ‘”  Í‹ ‘”  ÍŒ ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í‘ ‘”  Í’ ‘”  Í“ ‘”  Í” ‘”  Í• ‘”  Í– ‘”  Í— ‘”  Í˜ ‘”  Í™ ‘”  Íš ‘”  Í› ‘”  Íœ ‘”  Í ‘”  Í ‘”  ÍŸ ‘”  Í  ‘”  Í¡ ‘”  Í¢ ‘”  Í£ ‘”  Í¤ ‘”  Í¥ ‘”  Í¦ ‘”  Í§ ‘”  Í¨ ‘”  Í© ‘”  Íª ‘”  Í« ‘”  Í¬ ‘”  Í­ ‘”  Í® ‘”  Í¯ ‘”  Í° ‘”  Í± ‘”  Í² ‘”  Í³ ‘”  Í´ ‘”  Íµ ‘”  Í¶ ‘”  Í· ‘”  Í¸ ‘”  Í¹ ‘”  Íº ‘”  Í» ‘”  Í¼ ‘”  Í½ ‘”  Í¾ ‘”  Í¿ ‘”  ÍÀ ‘”  ÍÁ ‘”  ÍÂ ‘”  ÍÃ ‘”  ÍÄ ‘”  ÍÅ ‘”  ÍÆ ‘”  ÍÇ ‘”  ÍÈ ‘”  ÍÉ ‘”  ÍÊ ‘”  ÍË ‘”  ÍÌ ‘”  ÍÍ ‘”  ÍÎ ‘”  ÍÏ ‘”  ÍĞ ‘”  ÍÑ ‘”  ÍÒ ‘”  ÍÓ ‘”  ÍÔ ‘”  ÍÕ ‘”  ÍÖ ‘”  Í× ‘”  ÍØ ‘”  ÍÙ ‘”  ÍÚ ‘”  ÍÛ ‘”  ÍÜ ‘”  Íİ ‘”  ÍŞ ‘”  Íß ‘”  Íà ‘”  Íá ‘”  Íâ ‘”  Íã ‘”  Íä ‘”  Íå ‘”  Íæ ‘”  Íç ‘”  Íè ‘”  Íé ‘”  Íê ‘”  Íë ‘”  Íì ‘”  Íí ‘”  Íî ‘”  Íï ‘”  Íğ ‘”  Íñ ‘”  Íò ÔrG’§missing¦pluginÃ¦genAbcÂÔ  ÔrH”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache˜ÔrI•¤type¥start£endªspecifiers¦source±ImportDeclarationÌ€Ì¢‘ÔrJ”¤type¥start£end¥local¶ImportDefaultSpecifierÌ‡ÌÔrK”¤type¥start£end¤nameªIdentifierÌ‡Ì¦routerÔrL•¤type¥start£end¥value£raw§LiteralÌ“Ì¡¬@ohos.router®"@ohos.router"I±ImportDeclarationÌ¤ÌÕ‘J¶ImportDefaultSpecifierÌ«Ì¶KªIdentifierÌ«Ì¶«preferencesL§LiteralÌ¼ÌÔ¶@ohos.data.preferences¸"@ohos.data.preferences"I±ImportDeclarationÌ×Í‘ÔrM•¤type¥start£end¨imported¥local¯ImportSpecifierÌàÌèKªIdentifierÌàÌè¨NewsDataKªIdentifierÌàÌè¨NewsDataL§LiteralÌğÍ
+¸../../viewmodel/NewsDataº'../../viewmodel/NewsData'I±ImportDeclarationÍÍF‘J¶ImportDefaultSpecifierÍÍKªIdentifierÍÍ©ConstantsL§LiteralÍ#ÍEÙ ../../common/constants/ConstantsÙ"'../../common/constants/Constants'I±ImportDeclarationÍHÍ‡‘J¶ImportDefaultSpecifierÍOÍ]KªIdentifierÍOÍ]®CommentServiceL§LiteralÍcÍ†Ù!../../common/utils/CommentServiceÙ#'../../common/utils/CommentService'I±ImportDeclarationÍ‰Í¾‘M¯ImportSpecifierÍ’ÍKªIdentifierÍ’Í«CommentItemKªIdentifierÍ’Í«CommentItemL§LiteralÍ¥Í½¶../../view/CommentItem¸'../../view/CommentItem'I±ImportDeclarationÍÀÍş‘M¯ImportSpecifierÍÉÍÖKªIdentifierÍÉÍÖ­GlobalContextKªIdentifierÍÉÍÖ­GlobalContextL§LiteralÍŞÍı½../../viewmodel/GlobalContext¿'../../viewmodel/GlobalContext'I±ImportDeclarationÍ Í‘M¯ImportSpecifierÍ	ÍKªIdentifierÍ	Í¤UserKªIdentifierÍ	Í¤UserL§LiteralÍÍ¦./User¨'./User'
