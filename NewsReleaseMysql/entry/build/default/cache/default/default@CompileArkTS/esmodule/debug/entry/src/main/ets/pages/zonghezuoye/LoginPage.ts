@@ -23,6 +23,7 @@ import { DatabaseHelper } from "@bundle:com.example.newsrelease/entry/ets/pages/
 import type { User } from './User';
 import { GlobalContext } from "@bundle:com.example.newsrelease/entry/ets/viewmodel/GlobalContext";
 import { UserService } from "@bundle:com.example.newsrelease/entry/ets/common/utils/UserService";
+import type { LoginData } from "@bundle:com.example.newsrelease/entry/ets/common/utils/UserService";
 class LoginPage extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
         super(parent, __localStorage, elmtId, extraInfo);
@@ -229,7 +230,7 @@ class LoginPage extends ViewPU {
         });
         // 使用 UserService 进行混合登录验证（网络优先，本地备用）
         const userService = new UserService();
-        const matchedUser = await userService.login(this.username, this.password);
+        const matchedUser: LoginData | null = await userService.login(this.username, this.password);
         if (matchedUser) {
             // 登录成功
             promptAction.showToast({

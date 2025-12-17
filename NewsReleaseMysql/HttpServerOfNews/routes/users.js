@@ -20,4 +20,10 @@ router.get('/login-history', userController.getLoginHistory);
 // 更新用户密码路由
 router.put('/updatePassword', express.json(), userController.updatePassword);
 
+// 获取用户详细信息
+router.get('/profile/:id', userController.getUserProfile);
+
+// 更新用户详细信息
+router.put('/profile/:id', express.json(), userController.updateUserProfile);
+
 module.exports = router;

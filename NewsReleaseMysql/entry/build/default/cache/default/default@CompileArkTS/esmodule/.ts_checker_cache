@@ -925,7 +925,8 @@
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\MainPage.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\NoteDetailPage.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\NotePublishPage.ets",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\NewsItem.ets"
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\NewsItem.ets",
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\UserService.ets"
       ],
       "error": false
     },
@@ -2921,7 +2922,8 @@
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\CommentList.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\CommentItem.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\LoginPage.ets",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\IndexPage.ets"
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\IndexPage.ets",
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\ProfilePage.ets"
       ],
       "error": false
     },
@@ -4061,7 +4063,7 @@
       "error": false
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\RegisterPage.ets": {
-      "mtimeMs": 1765721957455.7776,
+      "mtimeMs": 1765806977427.1733,
       "children": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
@@ -4139,7 +4141,7 @@
       "error": false
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\LoginPage.ets": {
-      "mtimeMs": 1765720889055.8127,
+      "mtimeMs": 1765807052922.8528,
       "children": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
@@ -4148,6 +4150,7 @@
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\DatabaseHelper.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\User.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\viewmodel\\GlobalContext.ets",
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\UserService.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\UserService.ets"
       ],
       "parent": [],
@@ -4183,7 +4186,7 @@
       "error": false
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\ForgetPage.ets": {
-      "mtimeMs": 1765719574093.5076,
+      "mtimeMs": 1765933820998.0532,
       "children": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
@@ -4303,7 +4306,8 @@
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\view\\NewsItem.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\NoteDetailPage.ets",
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\MainPage.ets",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\LoginPage.ets"
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\LoginPage.ets",
+        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\ProfilePage.ets"
       ],
       "error": false
     },
@@ -5126,7 +5130,7 @@
       ]
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\ProfilePage.ets": {
-      "mtimeMs": 1765720852922.3271,
+      "mtimeMs": 1765808464248.6177,
       "children": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
@@ -5465,13 +5469,11 @@
       ]
     },
     "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\utils\\UserService.ets": {
-      "mtimeMs": 1765722194100.6829,
+      "mtimeMs": 1765807168790.561,
       "children": [
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.net.http.d.ts",
         "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.base.d.ts",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\common\\constants\\Constants.ets",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\User.ets",
-        "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\DatabaseHelper.ets"
+        "D:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.promptAction.d.ts"
       ],
       "parent": [
         "D:\\GRuan\\NewsReleaseMysql\\NewsReleaseMysql\\NewsReleaseMysql\\entry\\src\\main\\ets\\pages\\zonghezuoye\\RegisterPage.ets",

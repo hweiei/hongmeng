@@ -7,7 +7,7 @@ exports.login = async (req, res) => {
     console.log('登录请求:', { username, password });
     
     try {
-        // 查询匹配的用户 (适配实际的数据库表结构)
+        // 查询匹配的用户
         const results = await db.query(
             'SELECT id, username, password FROM users WHERE username = ? AND password = ?', 
             [username, password]
@@ -61,9 +61,9 @@ exports.login = async (req, res) => {
 
 // 用户注册
 exports.register = async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, email, phone, fullName } = req.body;
     
-    console.log('注册请求:', { username, password });
+    console.log('注册请求:', { username, password, email, phone, fullName });
     
     try {
         // 检查用户名是否已存在 (适配实际的数据库表结构)
@@ -84,23 +84,46 @@ exports.register = async (req, res) => {
             return;
         }
         
-        // 创建新用户 (适配实际的数据库表结构)
-        console.log('正在插入新用户');
-        const result = await db.query(
-            'INSERT INTO users (username, password) VALUES (?, ?)', 
-            [username, password]
-        );
+        // 开始事务处理
+        await db.query('BEGIN');
         
-        console.log('插入结果:', result);
-        
-        res.json({
-            code: 'success',
-            msg: '注册成功',
-            data: {
-                id: result.insertId,
-                username: username
+        try {
+            // 创建新用户 (适配实际的数据库表结构)
+            console.log('正在插入新用户');
+            const result = await db.query(
+                'INSERT INTO users (username, password) VALUES (?, ?)', 
+                [username, password]
+            );
+            
+            const userId = result.insertId;
+            console.log('用户插入结果:', result);
+            
+            // 同时创建用户详细信息记录
+            if (userId) {
+                console.log('正在插入用户详细信息');
+                await db.query(
+                    'INSERT INTO user_profiles (user_id, full_name, email, phone) VALUES (?, ?, ?, ?)',
+                    [userId, fullName, email, phone]
+                );
+                console.log('用户详细信息插入成功');
             }
-        });
+            
+            // 提交事务
+            await db.query('COMMIT');
+            
+            res.json({
+                code: 'success',
+                msg: '注册成功',
+                data: {
+                    id: userId,
+                    username: username
+                }
+            });
+        } catch (error) {
+            // 回滚事务
+            await db.query('ROLLBACK');
+            throw error;
+        }
     } catch (error) {
         console.error('注册错误:', error);
         res.status(500).json({
@@ -111,7 +134,7 @@ exports.register = async (req, res) => {
     }
 };
 
-// 获取所有用户（用于测试）
+// 获取所有用户（测试）
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await db.query('SELECT id, username FROM users');
@@ -268,6 +291,141 @@ exports.updatePassword = async (req, res) => {
         }
     } catch (error) {
         console.error('更新密码错误:', error);
+        res.status(500).json({
+            code: 'error',
+            msg: '服务器内部错误: ' + error.message,
+            data: null
+        });
+    }
+};
+
+// 获取用户详细信息
+exports.getUserProfile = async (req, res) => {
+    const userId = req.params.id;
+    
+    console.log('获取用户详细信息请求，用户ID:', userId);
+    
+    try {
+        // 获取用户基本信息
+        const users = await db.query(
+            'SELECT id, username FROM users WHERE id = ?', 
+            [userId]
+        );
+        
+        if (users.length === 0) {
+            console.log('用户不存在');
+            res.status(404).json({
+                code: 'error',
+                msg: '用户不存在',
+                data: null
+            });
+            return;
+        }
+        
+        const user = users[0];
+        
+        // 获取用户详细信息
+        const profiles = await db.query(
+            'SELECT full_name, email, phone, avatar_url, bio FROM user_profiles WHERE user_id = ?', 
+            [userId]
+        );
+        
+        let userProfile = {};
+        if (profiles.length > 0) {
+            userProfile = profiles[0];
+        }
+        
+        // 合并基本信息和详细信息
+        const result = {
+            id: user.id,
+            username: user.username,
+            fullName: userProfile.full_name || '',
+            email: userProfile.email || '',
+            phone: userProfile.phone || '',
+            avatarUrl: userProfile.avatar_url || '',
+            bio: userProfile.bio || ''
+        };
+        
+        console.log('获取用户详细信息成功:', result);
+        res.json({
+            code: 'success',
+            msg: '获取用户信息成功',
+            data: result
+        });
+    } catch (error) {
+        console.error('获取用户详细信息错误:', error);
+        res.status(500).json({
+            code: 'error',
+            msg: '服务器内部错误: ' + error.message,
+            data: null
+        });
+    }
+};
+
+// 更新用户详细信息
+exports.updateUserProfile = async (req, res) => {
+    const userId = req.params.id;
+    const { fullName, email, phone, avatarUrl, bio } = req.body;
+    
+    console.log('更新用户详细信息请求，用户ID:', userId, '数据:', { fullName, email, phone, avatarUrl, bio });
+    
+    try {
+        // 检查用户是否存在
+        const users = await db.query(
+            'SELECT id FROM users WHERE id = ?', 
+            [userId]
+        );
+        
+        if (users.length === 0) {
+            console.log('更新用户详细信息失败: 用户不存在');
+            res.status(404).json({
+                code: 'error',
+                msg: '用户不存在',
+                data: null
+            });
+            return;
+        }
+        
+        // 检查用户详细信息是否存在
+        const profiles = await db.query(
+            'SELECT id FROM user_profiles WHERE user_id = ?', 
+            [userId]
+        );
+        
+        let result;
+        if (profiles.length > 0) {
+            // 更新用户详细信息
+            console.log('正在更新用户详细信息');
+            result = await db.query(
+                'UPDATE user_profiles SET full_name = ?, email = ?, phone = ?, avatar_url = ?, bio = ? WHERE user_id = ?', 
+                [fullName, email, phone, avatarUrl, bio, userId]
+            );
+        } else {
+            // 插入新的用户详细信息
+            console.log('正在插入新的用户详细信息');
+            result = await db.query(
+                'INSERT INTO user_profiles (user_id, full_name, email, phone, avatar_url, bio) VALUES (?, ?, ?, ?, ?, ?)', 
+                [userId, fullName, email, phone, avatarUrl, bio]
+            );
+        }
+        
+        console.log('更新/插入结果:', result);
+        
+        if (result.affectedRows > 0) {
+            res.json({
+                code: 'success',
+                msg: '用户信息更新成功',
+                data: null
+            });
+        } else {
+            res.status(500).json({
+                code: 'error',
+                msg: '用户信息更新失败',
+                data: null
+            });
+        }
+    } catch (error) {
+        console.error('更新用户详细信息错误:', error);
         res.status(500).json({
             code: 'error',
             msg: '服务器内部错误: ' + error.message,

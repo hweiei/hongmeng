@@ -87,7 +87,7 @@ struct RegisterPage {
     // 使用 UserService 进行混合注册
     const userService = new UserService();
     try {
-      const success = await userService.register(this.username, this.password);
+      const success = await userService.register(this.username, this.password, this.email, this.phone, this.username);
 
       if (success) {
         promptAction.showToast({ message: '注册成功！', duration: 1500 });

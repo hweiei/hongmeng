@@ -22,6 +22,28 @@ interface DeleteResponse {
   msg: string;
 }
 
+// 定义用户详细信息接口
+interface UserProfileData {
+  id: number;
+  username: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  avatarUrl: string;
+  bio: string;
+}
+
+interface UserProfileResponse {
+  code: string;
+  msg: string;
+  data?: UserProfileData | null;
+}
+
+interface UpdateProfileResponse {
+  code: string;
+  msg: string;
+}
+
 @Entry
 @Component
 struct ProfilePage {
@@ -30,6 +52,26 @@ struct ProfilePage {
   @State loginHistory: User[] = []; // 登录历史记录
   @State isLoadingHistory: boolean = true;
   @State showHistoryDropdown: boolean = false; // 控制下拉列表显示状态
+  @State userProfile: UserProfileData = {
+    id: 0,
+    username: '',
+    fullName: '',
+    email: '',
+    phone: '',
+    avatarUrl: '',
+    bio: ''
+  }; // 用户详细信息
+  @State isLoadingProfile: boolean = true;
+  
+  // 编辑状态变量
+  @State isEditingFullName: boolean = false;
+  @State isEditingEmail: boolean = false;
+  @State isEditingPhone: boolean = false;
+  @State isEditingBio: boolean = false;
+  @State tempFullName: string = '';
+  @State tempEmail: string = '';
+  @State tempPhone: string = '';
+  @State tempBio: string = '';
   
   private context = getContext(this) as common.UIAbilityContext;
   private dbHelper = DatabaseHelper.getInstance();
@@ -41,6 +83,8 @@ struct ProfilePage {
     if (user) {
       this.currentUser = user;
       console.log("获取到当前用户:", user.toString());
+      // 加载用户详细信息
+      await this.loadUserProfile();
     } else {
       console.log("未获取到当前用户");
     }
@@ -55,6 +99,265 @@ struct ProfilePage {
     } catch (err) {
       console.error("数据库初始化失败:", err);
     }
+  }
+
+  // 加载用户详细信息
+  private async loadUserProfile() {
+    try {
+      this.isLoadingProfile = true;
+      await this.fetchUserProfileFromBackend();
+      this.isLoadingProfile = false;
+    } catch (err) {
+      console.error('加载用户详细信息失败:', err);
+      promptAction.showToast({ message: '加载用户信息失败' });
+      this.isLoadingProfile = false;
+    }
+  }
+
+  // 从后端获取用户详细信息
+  private async fetchUserProfileFromBackend() {
+    if (!this.currentUser.id) {
+      console.log("用户ID无效");
+      // 即使用户ID无效，也要设置isLoadingProfile为false
+      this.isLoadingProfile = false;
+      return;
+    }
+    
+    let httpRequest = http.createHttp();
+    // 使用实际的IP地址替换localhost，确保在设备上可以访问
+    const baseUrl = "http://172.17.75.16:9588"; // 可以根据实际情况修改为开发机的实际IP
+    
+    console.log('开始发送请求到:', `${baseUrl}/users/profile/${this.currentUser.id}`);
+    
+    httpRequest.request(
+      `${baseUrl}/users/profile/${this.currentUser.id}`,
+      {
+        method: http.RequestMethod.GET,
+        header: { 'Content-Type': 'application/json' },
+        readTimeout: 50000,
+        connectTimeout: 50000
+      },
+      (err, data) => {
+        console.log('获取用户信息网络请求回调执行');
+        console.log('错误信息:', JSON.stringify(err));
+        console.log('响应数据:', JSON.stringify(data));
+        
+        if (!err) {
+          console.info('后端用户信息请求成功:' + JSON.stringify(data));
+          try {
+            // 检查响应数据是否存在
+            if (!data || !data.result) {
+              console.error('响应数据为空或格式不正确');
+              promptAction.showToast({ message: '响应数据格式错误' });
+              this.isLoadingProfile = false;
+              return;
+            }
+            
+            // 尝试解析响应数据
+            let responseData: UserProfileResponse | undefined;
+            if (typeof data.result === 'string') {
+              try {
+                responseData = JSON.parse(data.result) as UserProfileResponse;
+              } catch (parseErr) {
+                console.error('JSON解析失败:', parseErr);
+                promptAction.showToast({ message: '数据解析失败' });
+                this.isLoadingProfile = false;
+                return;
+              }
+            } else {
+              responseData = data.result as UserProfileResponse;
+            }
+            
+            console.log('解析后的响应数据:', JSON.stringify(responseData));
+            
+            if (responseData && responseData.code === 'success' && responseData.data) {
+              // 解析用户数据
+              this.userProfile = responseData.data;
+              console.log('解析后的用户信息:', JSON.stringify(this.userProfile));
+            } else {
+              const errorMsg = responseData ? (responseData.msg || '未知错误') : '响应数据为空';
+              console.error('后端返回错误:', errorMsg);
+              // 即使出现错误，也更新加载状态
+              if (errorMsg !== '用户不存在') {
+                promptAction.showToast({ message: '获取用户信息失败: ' + errorMsg });
+              }
+            }
+          } catch (parseError) {
+            console.error('解析响应数据失败:', parseError);
+            promptAction.showToast({ message: '数据解析失败: ' + (parseError as Error).message });
+          }
+        } else {
+          console.error('请求失败:' + JSON.stringify(err));
+          const errorMsg = err.message || '未知网络错误';
+          promptAction.showToast({ message: '网络请求失败: ' + errorMsg });
+        }
+        this.isLoadingProfile = false;
+        httpRequest.destroy();
+      }
+    );
+  }
+
+  // 更新用户详细信息到后端
+  private async updateUserProfileToBackend() {
+    if (!this.currentUser.id) {
+      console.log("用户ID无效");
+      promptAction.showToast({ message: '用户信息异常' });
+      return;
+    }
+    
+    let httpRequest = http.createHttp();
+    const baseUrl = "http://172.17.75.16:9588";
+    
+    console.log('开始发送更新请求到:', `${baseUrl}/users/profile/${this.currentUser.id}`);
+    
+    httpRequest.request(
+      `${baseUrl}/users/profile/${this.currentUser.id}`,
+      {
+        method: http.RequestMethod.PUT,
+        header: { 'Content-Type': 'application/json' },
+        extraData: JSON.stringify({
+          fullName: this.userProfile.fullName,
+          email: this.userProfile.email,
+          phone: this.userProfile.phone,
+          avatarUrl: this.userProfile.avatarUrl,
+          bio: this.userProfile.bio
+        }),
+        readTimeout: 50000,
+        connectTimeout: 50000
+      },
+      (err, data) => {
+        console.log('更新用户信息网络请求回调执行');
+        console.log('错误信息:', JSON.stringify(err));
+        console.log('响应数据:', JSON.stringify(data));
+        
+        if (!err) {
+          console.info('后端更新用户信息请求成功:' + JSON.stringify(data));
+          try {
+            // 检查响应数据是否存在
+            if (!data || !data.result) {
+              console.error('响应数据为空或格式不正确');
+              promptAction.showToast({ message: '响应数据格式错误' });
+              return;
+            }
+            
+            // 尝试解析响应数据
+            let responseData: UpdateProfileResponse | undefined;
+            if (typeof data.result === 'string') {
+              try {
+                responseData = JSON.parse(data.result) as UpdateProfileResponse;
+              } catch (parseErr) {
+                console.error('JSON解析失败:', parseErr);
+                promptAction.showToast({ message: '数据解析失败' });
+                return;
+              }
+            } else {
+              responseData = data.result as UpdateProfileResponse;
+            }
+            
+            console.log('解析后的响应数据:', JSON.stringify(responseData));
+            
+            if (responseData && responseData.code === 'success') {
+              console.log('用户信息更新成功');
+              promptAction.showToast({ message: '信息更新成功' });
+              // 重新加载用户信息
+              this.loadUserProfile();
+            } else {
+              const errorMsg = responseData ? (responseData.msg || '未知错误') : '响应数据为空';
+              console.error('后端返回错误:', errorMsg);
+              promptAction.showToast({ message: '更新失败: ' + errorMsg });
+            }
+          } catch (parseError) {
+            console.error('解析响应数据失败:', parseError);
+            promptAction.showToast({ message: '数据解析失败: ' + (parseError as Error).message });
+          }
+        } else {
+          console.error('请求失败:' + JSON.stringify(err));
+          const errorMsg = err.message || '未知网络错误';
+          promptAction.showToast({ message: '网络请求失败: ' + errorMsg });
+        }
+        httpRequest.destroy();
+      }
+    );
+  }
+
+  // 开始编辑姓名
+  private startEditFullName() {
+    this.tempFullName = this.userProfile.fullName;
+    this.isEditingFullName = true;
+  }
+
+  // 保存姓名
+  private saveFullName() {
+    if (this.tempFullName !== this.userProfile.fullName) {
+      this.userProfile.fullName = this.tempFullName;
+      this.updateUserProfileToBackend();
+    }
+    this.isEditingFullName = false;
+  }
+
+  // 取消编辑姓名
+  private cancelEditFullName() {
+    this.isEditingFullName = false;
+  }
+
+  // 开始编辑邮箱
+  private startEditEmail() {
+    this.tempEmail = this.userProfile.email;
+    this.isEditingEmail = true;
+  }
+
+  // 保存邮箱
+  private saveEmail() {
+    if (this.tempEmail !== this.userProfile.email) {
+      this.userProfile.email = this.tempEmail;
+      this.updateUserProfileToBackend();
+    }
+    this.isEditingEmail = false;
+  }
+
+  // 取消编辑邮箱
+  private cancelEditEmail() {
+    this.isEditingEmail = false;
+  }
+
+  // 开始编辑手机号
+  private startEditPhone() {
+    this.tempPhone = this.userProfile.phone;
+    this.isEditingPhone = true;
+  }
+
+  // 保存手机号
+  private savePhone() {
+    if (this.tempPhone !== this.userProfile.phone) {
+      this.userProfile.phone = this.tempPhone;
+      this.updateUserProfileToBackend();
+    }
+    this.isEditingPhone = false;
+  }
+
+  // 取消编辑手机号
+  private cancelEditPhone() {
+    this.isEditingPhone = false;
+  }
+
+  // 开始编辑个人简介
+  private startEditBio() {
+    this.tempBio = this.userProfile.bio;
+    this.isEditingBio = true;
+  }
+
+  // 保存个人简介
+  private saveBio() {
+    if (this.tempBio !== this.userProfile.bio) {
+      this.userProfile.bio = this.tempBio;
+      this.updateUserProfileToBackend();
+    }
+    this.isEditingBio = false;
+  }
+
+  // 取消编辑个人简介
+  private cancelEditBio() {
+    this.isEditingBio = false;
   }
 
   // 加载登录历史
@@ -157,6 +460,8 @@ struct ProfilePage {
         GlobalContext.getContext().setObject('loggedInUser', user);
         // 更新当前用户状态
         this.currentUser = user;
+        // 加载新用户的详细信息
+        this.loadUserProfile();
         // 显示切换成功的提示
         promptAction.showToast({ message: `已切换到用户: ${user.username}` });
       } else {
@@ -444,6 +749,238 @@ struct ProfilePage {
               }
               .width('100%')
               .margin({ bottom: 10 })
+              
+              // 姓名
+              Row() {
+                Text('姓名:')
+                  .fontSize(14)
+                  .fontColor('#666666')
+                  .width('30%')
+                  .textAlign(TextAlign.Start)
+                
+                if (!this.isEditingFullName) {
+                  Row() {
+                    Text(this.userProfile.fullName || '未设置')
+                      .fontSize(14)
+                      .width('60%')
+                      .textAlign(TextAlign.Start)
+                    
+                    Image($r('app.media.ic_back'))
+                      .width(16)
+                      .height(16)
+                      .onClick(() => {
+                        this.startEditFullName();
+                      })
+                  }
+                  .width('70%')
+                } else {
+                  Column() {
+                    TextInput({ placeholder: '请输入姓名', text: this.tempFullName })
+                      .width('100%')
+                      .height(30)
+                      .borderRadius(4)
+                      .onChange((value: string) => {
+                        this.tempFullName = value;
+                      })
+                    
+                    Row() {
+                      Button('取消')
+                        .fontSize(12)
+                        .backgroundColor('#CCCCCC')
+                        .onClick(() => {
+                          this.cancelEditFullName();
+                        })
+                        .margin({ right: 10 })
+                      
+                      Button('保存')
+                        .fontSize(12)
+                        .backgroundColor('#007DFF')
+                        .fontColor('#FFFFFF')
+                        .onClick(() => {
+                          this.saveFullName();
+                        })
+                    }
+                    .margin({ top: 5 })
+                  }
+                  .width('70%')
+                }
+              }
+              .width('100%')
+              .margin({ bottom: 10 })
+              
+              // 邮箱
+              Row() {
+                Text('邮箱:')
+                  .fontSize(14)
+                  .fontColor('#666666')
+                  .width('30%')
+                  .textAlign(TextAlign.Start)
+                
+                if (!this.isEditingEmail) {
+                  Row() {
+                    Text(this.userProfile.email || '未设置')
+                      .fontSize(14)
+                      .width('60%')
+                      .textAlign(TextAlign.Start)
+                    
+                    Image($r('app.media.ic_back'))
+                      .width(16)
+                      .height(16)
+                      .onClick(() => {
+                        this.startEditEmail();
+                      })
+                  }
+                  .width('70%')
+                } else {
+                  Column() {
+                    TextInput({ placeholder: '请输入邮箱', text: this.tempEmail })
+                      .width('100%')
+                      .height(30)
+                      .borderRadius(4)
+                      .onChange((value: string) => {
+                        this.tempEmail = value;
+                      })
+                    
+                    Row() {
+                      Button('取消')
+                        .fontSize(12)
+                        .backgroundColor('#CCCCCC')
+                        .onClick(() => {
+                          this.cancelEditEmail();
+                        })
+                        .margin({ right: 10 })
+                      
+                      Button('保存')
+                        .fontSize(12)
+                        .backgroundColor('#007DFF')
+                        .fontColor('#FFFFFF')
+                        .onClick(() => {
+                          this.saveEmail();
+                        })
+                    }
+                    .margin({ top: 5 })
+                  }
+                  .width('70%')
+                }
+              }
+              .width('100%')
+              .margin({ bottom: 10 })
+              
+              // 手机号
+              Row() {
+                Text('手机号:')
+                  .fontSize(14)
+                  .fontColor('#666666')
+                  .width('30%')
+                  .textAlign(TextAlign.Start)
+                
+                if (!this.isEditingPhone) {
+                  Row() {
+                    Text(this.userProfile.phone || '未设置')
+                      .fontSize(14)
+                      .width('60%')
+                      .textAlign(TextAlign.Start)
+                    
+                    Image($r('app.media.ic_back'))
+                      .width(16)
+                      .height(16)
+                      .onClick(() => {
+                        this.startEditPhone();
+                      })
+                  }
+                  .width('70%')
+                } else {
+                  Column() {
+                    TextInput({ placeholder: '请输入手机号', text: this.tempPhone })
+                      .width('100%')
+                      .height(30)
+                      .borderRadius(4)
+                      .onChange((value: string) => {
+                        this.tempPhone = value;
+                      })
+                    
+                    Row() {
+                      Button('取消')
+                        .fontSize(12)
+                        .backgroundColor('#CCCCCC')
+                        .onClick(() => {
+                          this.cancelEditPhone();
+                        })
+                        .margin({ right: 10 })
+                      
+                      Button('保存')
+                        .fontSize(12)
+                        .backgroundColor('#007DFF')
+                        .fontColor('#FFFFFF')
+                        .onClick(() => {
+                          this.savePhone();
+                        })
+                    }
+                    .margin({ top: 5 })
+                  }
+                  .width('70%')
+                }
+              }
+              .width('100%')
+              .margin({ bottom: 10 })
+              
+              // 个人简介
+              Row() {
+                Text('个人简介:')
+                  .fontSize(14)
+                  .fontColor('#666666')
+                  .width('30%')
+                  .textAlign(TextAlign.Start)
+                
+                if (!this.isEditingBio) {
+                  Row() {
+                    Text(this.userProfile.bio || '未设置')
+                      .fontSize(14)
+                      .width('60%')
+                      .textAlign(TextAlign.Start)
+                    
+                    Image($r('app.media.ic_back'))
+                      .width(16)
+                      .height(16)
+                      .onClick(() => {
+                        this.startEditBio();
+                      })
+                  }
+                  .width('70%')
+                } else {
+                  Column() {
+                    TextArea({ placeholder: '请输入个人简介', text: this.tempBio })
+                      .width('100%')
+                      .height(60)
+                      .borderRadius(4)
+                      .onChange((value: string) => {
+                        this.tempBio = value;
+                      })
+                    
+                    Row() {
+                      Button('取消')
+                        .fontSize(12)
+                        .backgroundColor('#CCCCCC')
+                        .onClick(() => {
+                          this.cancelEditBio();
+                        })
+                        .margin({ right: 10 })
+                      
+                      Button('保存')
+                        .fontSize(12)
+                        .backgroundColor('#007DFF')
+                        .fontColor('#FFFFFF')
+                        .onClick(() => {
+                          this.saveBio();
+                        })
+                    }
+                    .margin({ top: 5 })
+                  }
+                  .width('70%')
+                }
+              }
+              .width('100%')
+              .margin({ bottom: 10 })
             }
             .width('90%')
             .padding(20)
@@ -627,3 +1164,9 @@ struct ProfilePage {
     .backgroundColor('#F5F5F5')
   }
 }
+
+
+
+
+
+

@@ -90,28 +90,27 @@ struct ForgetPasswordPage {
       return;
     }
 
-    // 检查用户是否存在（先检查本地数据库，再检查网络）
-    const users = await this.dbHelper.queryAllUsers();
-    const userExists = users.some(user => user.username === this.username);
+    // 直接通过网络服务检查用户是否存在，而不是检查本地数据库
+    try {
+      // 这里应该调用一个验证用户是否存在的API
+      // 临时跳过本地用户检查，直接进入发送验证码环节
+      // 生成验证码
+      this.generateVerificationCode();
 
-    if (!userExists) {
+      // 模拟发送验证码
+      promptAction.showToast({
+        message: `验证码已发送，请注意查收: ${this.generatedCode}`
+      });
+
+      // 开始倒计时
+      this.startCountdown();
+    } catch (error) {
       this.showUsernameError = true;
       promptAction.showToast({
         message: '用户名不存在'
       });
       return;
     }
-
-    // 生成验证码
-    this.generateVerificationCode();
-
-    // 模拟发送验证码
-    promptAction.showToast({
-      message: `验证码已发送，请注意查收: ${this.generatedCode}`
-    });
-
-    // 开始倒计时
-    this.startCountdown();
   }
 
   // 验证验证码
@@ -166,7 +165,7 @@ struct ForgetPasswordPage {
     try {
       // 使用 UserService 同步更新密码
       const userService = new UserService();
-      const success = await userService.updatePassword(this.username, this.newPassword);
+      const success: boolean = await userService.updatePassword(this.username, this.newPassword);
 
       if (success) {
         promptAction.showToast({

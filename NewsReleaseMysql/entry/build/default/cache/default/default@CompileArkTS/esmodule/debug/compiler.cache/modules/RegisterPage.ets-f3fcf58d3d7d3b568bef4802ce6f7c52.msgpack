@@ -1,4 +1,4 @@
-Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚsèif (!("finalizeConstruction" in ViewPU.prototype)) {
+Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚtif (!("finalizeConstruction" in ViewPU.prototype)) {
     Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
 }
 import promptAction from "@ohos.promptAction";
@@ -281,7 +281,7 @@ class RegisterPage extends ViewPU {
         // ä½¿ç”¨ UserService è¿›è¡Œæ··åˆæ³¨å†Œ
         const userService = new UserService();
         try {
-            const success = await userService.register(this.username, this.password);
+            const success = await userService.register(this.username, this.password, this.email, this.phone, this.username);
             if (success) {
                 promptAction.showToast({ message: 'æ³¨å†ŒæˆåŠŸï¼', duration: 1500 });
                 // è·³å›ç™»å½•é¡µï¼Œå¹¶ä¼ é€’ç”¨æˆ·åå¯†ç 
@@ -737,7 +737,7 @@ class RegisterPage extends ViewPU {
     }
 }
 registerNamedRoute(() => new RegisterPage(undefined, {}), "", { bundleName: "com.example.newsrelease", moduleName: "entry", pagePath: "pages/zonghezuoye/RegisterPage", pageFullPath: "entry/src/main/ets/pages/zonghezuoye/RegisterPage", integratedHsp: "false", moduleType: "followWithHap" });
-//# sourceMappingURL=RegisterPage.js.mapÂ”ÙW hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.promptAction.d.tsÙQ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsÙsD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\pages\zonghezuoye\DatabaseHelper.etsÙkD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\common\utils\UserService.etsÙqD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\pages\zonghezuoye\RegisterPage.etsÔrBšªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo°belongModulePath¬shouldEmitJs¥entryÃÂÙAD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entryÙ;D:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql¥entry¥1.0.0Ô  ÙAD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entryÃÃÚ3<import { promptAction, router } from '@kit.ArkUI';
+//# sourceMappingURL=RegisterPage.js.mapÂ”ÙW hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.promptAction.d.tsÙQ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsÙsD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\pages\zonghezuoye\DatabaseHelper.etsÙkD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\common\utils\UserService.etsÙqD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\pages\zonghezuoye\RegisterPage.etsÔrBšªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo°belongModulePath¬shouldEmitJs¥entryÃÂÙAD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entryÙ;D:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql¥entry¥1.0.0Ô  ÙAD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entryÃÃÚ3cimport { promptAction, router } from '@kit.ArkUI';
 import { DatabaseHelper } from './DatabaseHelper';
 import { User } from './User'
 import { common } from '@kit.AbilityKit';
@@ -826,7 +826,7 @@ struct RegisterPage {
     // ä½¿ç”¨ UserService è¿›è¡Œæ··åˆæ³¨å†Œ
     const userService = new UserService();
     try {
-      const success = await userService.register(this.username, this.password);
+      const success = await userService.register(this.username, this.password, this.email, this.phone, this.username);
 
       if (success) {
         promptAction.showToast({ message: 'æ³¨å†ŒæˆåŠŸï¼', duration: 1500 });
@@ -1138,7 +1138,7 @@ struct RegisterPage {
     .height('100%')
     .backgroundColor('#F8F9FA');
   }
-}ÀÔrC”²@ohos.promptAction¬@ohos.router°./DatabaseHelper¾../../common/utils/UserServiceÔrD—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÃÙW hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.promptAction.d.tsÔrE‘¯hostModulesInfo˜ÔrF’²hostDependencyName®hostModuleName²@ohos.promptAction¥entryF²@ohos.promptAction¥entryF²@ohos.promptAction¥entryF²@ohos.promptAction¥entryF²@ohos.promptAction¥entryF²@ohos.promptAction¥entryF²@ohos.promptAction¥entryF²@ohos.promptAction¥entryÃªoh-resolveÂDAÃÙQ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsEšF¬@ohos.router¥entryF¬@ohos.router¥entryF¬@ohos.router¥entryF¬@ohos.router¥entryF¬@ohos.router¥entryF¬@ohos.router¥entryF¬@ohos.router¥entryF¬@ohos.router¥entryF¬@ohos.router¥entryF¬@ohos.router¥entryÃªoh-resolveÂDAÂÙsD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\pages\zonghezuoye\DatabaseHelper.etsAÃªoh-resolveÂDAÂÙkD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\common\utils\UserService.etsAÃªoh-resolveÂ“ÔrG–§version¤fileªsourceRoot§sources¥names¨mappings¯RegisterPage.js ‘°RegisterPage.etsÜÛ–”    ”  	”  ”  %”-  1”.  2–”    ”  ”  ”  %”!  1”"  2˜”   ” ”	 	” ” ” ”1 1”2 2˜”   ” ”	 	” ” ” ”< <”= =’” 	” 	‘”  ’”7 ”9 ’”7 ”9 ’”> #”Ì@ %’”4 ”6 ’”4 ”6 ’”5 ”;  ’”6 "”8 $’”7 ”< "’”Ì@ &”ÌE +’”ÌH .”ÌM 3’”= #”ÌB (’”= #”ÌB (’”Ì@ &”ÌE +’”8 ”ÌG ,’” %”4 :’” %”< ÌB’”  "”8  >’” !"”+ !1•” $”& $#”' $$”2 $/”4 $1’”4 &”6 &’”= '"”> '#‘” =’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	”! "’” 	”! "’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” &	” &’” &	” &’” '	” '’” '	” '”” )”	 )”
+}ÀÔrC”²@ohos.promptAction¬@ohos.router°./DatabaseHelper¾../../common/utils/UserServiceÔrD—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÃÙW hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.promptAction.d.tsÔrE‘¯hostModulesInfo˜ÔrF’²hostDependencyName®hostModuleName²@ohos.promptAction¥entryF²@ohos.promptAction¥entryF²@ohos.promptAction¥entryF²@ohos.promptAction¥entryF²@ohos.promptAction¥entryF²@ohos.promptAction¥entryF²@ohos.promptAction¥entryF²@ohos.promptAction¥entryÃªoh-resolveÂDAÃÙQ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsAÃªoh-resolveÂDAÂÙsD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\pages\zonghezuoye\DatabaseHelper.etsAÃªoh-resolveÂDAÂÙkD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\common\utils\UserService.etsAÃªoh-resolveÂ“ÔrG–§version¤fileªsourceRoot§sources¥names¨mappings¯RegisterPage.js ‘°RegisterPage.etsÜÛ–”    ”  	”  ”  %”-  1”.  2–”    ”  ”  ”  %”!  1”"  2˜”   ” ”	 	” ” ” ”1 1”2 2˜”   ” ”	 	” ” ” ”< <”= =’” 	” 	‘”  ’”7 ”9 ’”7 ”9 ’”> #”Ì@ %’”4 ”6 ’”4 ”6 ’”5 ”;  ’”6 "”8 $’”7 ”< "’”Ì@ &”ÌE +’”ÌH .”ÌM 3’”= #”ÌB (’”= #”ÌB (’”Ì@ &”ÌE +’”8 ”ÌG ,’” %”4 :’” %”< ÌB’”  "”8  >’” !"”+ !1•” $”& $#”' $$”2 $/”4 $1’”4 &”6 &’”= '"”> '#‘” =’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	”! "’” 	”! "’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” 	” ’” &	” &’” &	” &’” '	” '’” '	” '”” )”	 )”
  )” )’” *” *™” +” +
 ” +” +”& +”' +”+ +#”, +?”- +Ì@” -” -
 ” -” -” -”  -”* -"”+ -#”2 -*”3 -+”4 -,”5 --”? -7” .” .” .	” .” .” .”# .”$ .”, .$”- .%”: .2”< .4”= .5” /” /” /” /” /”) /!”+ /#”/ /'”0 /(”5 /-”6 /.”< /4”= /5”> /6‘”	 0”” 0” 0” 0” 0š” 1” 1” 1” 1” 1”' 1”) 1!”, 1$”- 1%”. 1&œ” 2” 2” 2”" 2”# 2”% 2”, 2$”. 2&”7 2/”9 21”: 22”; 23‘”	 3’” 4 ” 4’” 5” 5˜” 6” 6” 6	” 6” 6” 6” 6” 6’” 7” 7’” 8”0 8.’” 9” 9’” :”ÌG :ÌE’” ;” ;’” <”< <:’” =”
@@ -1147,7 +1147,7 @@ struct RegisterPage {
 ”	 ÌJ”
  ÌJ” ÌJ˜” ÌK” ÌK” ÌK	” ÌK” ÌK” ÌK”  ÌK”" ÌK” ÌL” ÌL” ÌL”" ÌL”# ÌL”% ÌL”, ÌL&”. ÌL(”2 ÌL,”3 ÌL-”< ÌL6”> ÌL8”? ÌL9”Ì@ ÌL:’” ÌM” ÌM‘”	 ÌN’” ÌP” ÌP•” ÌQ” ÌQ” ÌQ” ÌQ” ÌQ”” ÌR” ÌR” ÌR” ÌR”” ÌS” ÌS” ÌS” ÌS“”	 ÌT”
  ÌT” ÌT’” ÌV”  ÌV˜” ÌW” ÌW
-” ÌW” ÌW”  ÌW”+ ÌW'”- ÌW)”. ÌW*’” ÌX” ÌXÜ ” ÌY” ÌY” ÌY” ÌY”" ÌY”- ÌY'”. ÌY(”6 ÌY0”7 ÌY1”; ÌY5”< ÌY6”ÌD ÌY>”ÌF ÌYÌ@”ÌJ ÌYÌD”ÌK ÌYÌE”ÌS ÌYÌM”ÌT ÌYÌN”ÌU ÌYÌO”” Ì[” Ì[
+” ÌW” ÌW”  ÌW”+ ÌW'”- ÌW)”. ÌW*’” ÌX” ÌXÜ ” ÌY” ÌY” ÌY” ÌY”" ÌY”- ÌY'”. ÌY(”6 ÌY0”7 ÌY1”; ÌY5”< ÌY6”ÌD ÌY>”ÌF ÌYÌ@”ÌJ ÌYÌD”ÌK ÌYÌE”ÌS ÌYÌM”ÌU ÌYÌO”ÌY ÌYÌS”ÌZ ÌYÌT”Ì_ ÌYÌY”Ìa ÌYÌ[”Ìe ÌYÌ_”Ìf ÌYÌ`”Ìk ÌYÌe”Ìm ÌYÌg”Ìq ÌYÌk”Ìr ÌYÌl”Ìz ÌYÌt”Ì{ ÌYÌu”Ì| ÌYÌv”” Ì[” Ì[
 ” Ì[” Ì[Ü ” Ì\” Ì\” Ì\”& Ì\”' Ì\”) Ì\!”0 Ì\(”2 Ì\*”9 Ì\1”; Ì\3”ÌC Ì\;”ÌE Ì\=”ÌI Ì\ÌA”ÌK Ì\ÌC”ÌL Ì\ÌD”ÌM Ì\ÌE’” Ì]”! Ì]•” Ì^” Ì^” Ì^” Ì^” Ì^”” Ì_
 ” Ì_” Ì_”6 Ì_,Ü ” Ì`
 ” Ì`” Ì`” Ì`”& Ì`”( Ì`”, Ì`"”- Ì`#”5 Ì`+”7 Ì`-”? Ì`5”ÌA Ì`7”ÌE Ì`;”ÌF Ì`<”ÌN Ì`ÌD”ÌP Ì`ÌF“” Ìa	” Ìa

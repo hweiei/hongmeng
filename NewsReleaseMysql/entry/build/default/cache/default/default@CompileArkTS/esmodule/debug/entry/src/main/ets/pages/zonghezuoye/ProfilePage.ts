@@ -7,6 +7,16 @@ interface ProfilePage_Params {
     loginHistory?: User[];
     isLoadingHistory?: boolean;
     showHistoryDropdown?: boolean;
+    userProfile?: UserProfileData;
+    isLoadingProfile?: boolean;
+    isEditingFullName?: boolean;
+    isEditingEmail?: boolean;
+    isEditingPhone?: boolean;
+    isEditingBio?: boolean;
+    tempFullName?: string;
+    tempEmail?: string;
+    tempPhone?: string;
+    tempBio?: string;
     context?;
     dbHelper?;
 }
@@ -31,6 +41,25 @@ interface DeleteResponse {
     code: string;
     msg: string;
 }
+// 定义用户详细信息接口
+interface UserProfileData {
+    id: number;
+    username: string;
+    fullName: string;
+    email: string;
+    phone: string;
+    avatarUrl: string;
+    bio: string;
+}
+interface UserProfileResponse {
+    code: string;
+    msg: string;
+    data?: UserProfileData | null;
+}
+interface UpdateProfileResponse {
+    code: string;
+    msg: string;
+}
 class ProfilePage extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
         super(parent, __localStorage, elmtId, extraInfo);
@@ -42,6 +71,24 @@ class ProfilePage extends ViewPU {
         this.__loginHistory = new ObservedPropertyObjectPU([], this, "loginHistory");
         this.__isLoadingHistory = new ObservedPropertySimplePU(true, this, "isLoadingHistory");
         this.__showHistoryDropdown = new ObservedPropertySimplePU(false, this, "showHistoryDropdown");
+        this.__userProfile = new ObservedPropertyObjectPU({
+            id: 0,
+            username: '',
+            fullName: '',
+            email: '',
+            phone: '',
+            avatarUrl: '',
+            bio: ''
+        }, this, "userProfile");
+        this.__isLoadingProfile = new ObservedPropertySimplePU(true, this, "isLoadingProfile");
+        this.__isEditingFullName = new ObservedPropertySimplePU(false, this, "isEditingFullName");
+        this.__isEditingEmail = new ObservedPropertySimplePU(false, this, "isEditingEmail");
+        this.__isEditingPhone = new ObservedPropertySimplePU(false, this, "isEditingPhone");
+        this.__isEditingBio = new ObservedPropertySimplePU(false, this, "isEditingBio");
+        this.__tempFullName = new ObservedPropertySimplePU('', this, "tempFullName");
+        this.__tempEmail = new ObservedPropertySimplePU('', this, "tempEmail");
+        this.__tempPhone = new ObservedPropertySimplePU('', this, "tempPhone");
+        this.__tempBio = new ObservedPropertySimplePU('', this, "tempBio");
         this.context = getContext(this) as common.UIAbilityContext;
         this.dbHelper = DatabaseHelper.getInstance();
         this.setInitiallyProvidedValue(params);
@@ -63,6 +110,36 @@ class ProfilePage extends ViewPU {
         if (params.showHistoryDropdown !== undefined) {
             this.showHistoryDropdown = params.showHistoryDropdown;
         }
+        if (params.userProfile !== undefined) {
+            this.userProfile = params.userProfile;
+        }
+        if (params.isLoadingProfile !== undefined) {
+            this.isLoadingProfile = params.isLoadingProfile;
+        }
+        if (params.isEditingFullName !== undefined) {
+            this.isEditingFullName = params.isEditingFullName;
+        }
+        if (params.isEditingEmail !== undefined) {
+            this.isEditingEmail = params.isEditingEmail;
+        }
+        if (params.isEditingPhone !== undefined) {
+            this.isEditingPhone = params.isEditingPhone;
+        }
+        if (params.isEditingBio !== undefined) {
+            this.isEditingBio = params.isEditingBio;
+        }
+        if (params.tempFullName !== undefined) {
+            this.tempFullName = params.tempFullName;
+        }
+        if (params.tempEmail !== undefined) {
+            this.tempEmail = params.tempEmail;
+        }
+        if (params.tempPhone !== undefined) {
+            this.tempPhone = params.tempPhone;
+        }
+        if (params.tempBio !== undefined) {
+            this.tempBio = params.tempBio;
+        }
         if (params.context !== undefined) {
             this.context = params.context;
         }
@@ -78,6 +155,16 @@ class ProfilePage extends ViewPU {
         this.__loginHistory.purgeDependencyOnElmtId(rmElmtId);
         this.__isLoadingHistory.purgeDependencyOnElmtId(rmElmtId);
         this.__showHistoryDropdown.purgeDependencyOnElmtId(rmElmtId);
+        this.__userProfile.purgeDependencyOnElmtId(rmElmtId);
+        this.__isLoadingProfile.purgeDependencyOnElmtId(rmElmtId);
+        this.__isEditingFullName.purgeDependencyOnElmtId(rmElmtId);
+        this.__isEditingEmail.purgeDependencyOnElmtId(rmElmtId);
+        this.__isEditingPhone.purgeDependencyOnElmtId(rmElmtId);
+        this.__isEditingBio.purgeDependencyOnElmtId(rmElmtId);
+        this.__tempFullName.purgeDependencyOnElmtId(rmElmtId);
+        this.__tempEmail.purgeDependencyOnElmtId(rmElmtId);
+        this.__tempPhone.purgeDependencyOnElmtId(rmElmtId);
+        this.__tempBio.purgeDependencyOnElmtId(rmElmtId);
     }
     aboutToBeDeleted() {
         this.__currentUser.aboutToBeDeleted();
@@ -85,6 +172,16 @@ class ProfilePage extends ViewPU {
         this.__loginHistory.aboutToBeDeleted();
         this.__isLoadingHistory.aboutToBeDeleted();
         this.__showHistoryDropdown.aboutToBeDeleted();
+        this.__userProfile.aboutToBeDeleted();
+        this.__isLoadingProfile.aboutToBeDeleted();
+        this.__isEditingFullName.aboutToBeDeleted();
+        this.__isEditingEmail.aboutToBeDeleted();
+        this.__isEditingPhone.aboutToBeDeleted();
+        this.__isEditingBio.aboutToBeDeleted();
+        this.__tempFullName.aboutToBeDeleted();
+        this.__tempEmail.aboutToBeDeleted();
+        this.__tempPhone.aboutToBeDeleted();
+        this.__tempBio.aboutToBeDeleted();
         SubscriberManager.Get().delete(this.id__());
         this.aboutToBeDeletedInternal();
     }
@@ -123,6 +220,77 @@ class ProfilePage extends ViewPU {
     set showHistoryDropdown(newValue: boolean) {
         this.__showHistoryDropdown.set(newValue);
     }
+    private __userProfile: ObservedPropertyObjectPU<UserProfileData>; // 用户详细信息
+    get userProfile() {
+        return this.__userProfile.get();
+    }
+    set userProfile(newValue: UserProfileData) {
+        this.__userProfile.set(newValue);
+    }
+    private __isLoadingProfile: ObservedPropertySimplePU<boolean>;
+    get isLoadingProfile() {
+        return this.__isLoadingProfile.get();
+    }
+    set isLoadingProfile(newValue: boolean) {
+        this.__isLoadingProfile.set(newValue);
+    }
+    // 编辑状态变量
+    private __isEditingFullName: ObservedPropertySimplePU<boolean>;
+    get isEditingFullName() {
+        return this.__isEditingFullName.get();
+    }
+    set isEditingFullName(newValue: boolean) {
+        this.__isEditingFullName.set(newValue);
+    }
+    private __isEditingEmail: ObservedPropertySimplePU<boolean>;
+    get isEditingEmail() {
+        return this.__isEditingEmail.get();
+    }
+    set isEditingEmail(newValue: boolean) {
+        this.__isEditingEmail.set(newValue);
+    }
+    private __isEditingPhone: ObservedPropertySimplePU<boolean>;
+    get isEditingPhone() {
+        return this.__isEditingPhone.get();
+    }
+    set isEditingPhone(newValue: boolean) {
+        this.__isEditingPhone.set(newValue);
+    }
+    private __isEditingBio: ObservedPropertySimplePU<boolean>;
+    get isEditingBio() {
+        return this.__isEditingBio.get();
+    }
+    set isEditingBio(newValue: boolean) {
+        this.__isEditingBio.set(newValue);
+    }
+    private __tempFullName: ObservedPropertySimplePU<string>;
+    get tempFullName() {
+        return this.__tempFullName.get();
+    }
+    set tempFullName(newValue: string) {
+        this.__tempFullName.set(newValue);
+    }
+    private __tempEmail: ObservedPropertySimplePU<string>;
+    get tempEmail() {
+        return this.__tempEmail.get();
+    }
+    set tempEmail(newValue: string) {
+        this.__tempEmail.set(newValue);
+    }
+    private __tempPhone: ObservedPropertySimplePU<string>;
+    get tempPhone() {
+        return this.__tempPhone.get();
+    }
+    set tempPhone(newValue: string) {
+        this.__tempPhone.set(newValue);
+    }
+    private __tempBio: ObservedPropertySimplePU<string>;
+    get tempBio() {
+        return this.__tempBio.get();
+    }
+    set tempBio(newValue: string) {
+        this.__tempBio.set(newValue);
+    }
     private context;
     private dbHelper;
     async aboutToAppear() {
@@ -132,6 +300,8 @@ class ProfilePage extends ViewPU {
         if (user) {
             this.currentUser = user;
             console.log("获取到当前用户:", user.toString());
+            // 加载用户详细信息
+            await this.loadUserProfile();
         }
         else {
             console.log("未获取到当前用户");
@@ -147,6 +317,239 @@ class ProfilePage extends ViewPU {
         catch (err) {
             console.error("数据库初始化失败:", err);
         }
+    }
+    // 加载用户详细信息
+    private async loadUserProfile() {
+        try {
+            this.isLoadingProfile = true;
+            await this.fetchUserProfileFromBackend();
+            this.isLoadingProfile = false;
+        }
+        catch (err) {
+            console.error('加载用户详细信息失败:', err);
+            promptAction.showToast({ message: '加载用户信息失败' });
+            this.isLoadingProfile = false;
+        }
+    }
+    // 从后端获取用户详细信息
+    private async fetchUserProfileFromBackend() {
+        if (!this.currentUser.id) {
+            console.log("用户ID无效");
+            // 即使用户ID无效，也要设置isLoadingProfile为false
+            this.isLoadingProfile = false;
+            return;
+        }
+        let httpRequest = http.createHttp();
+        // 使用实际的IP地址替换localhost，确保在设备上可以访问
+        const baseUrl = "http://172.17.75.16:9588"; // 可以根据实际情况修改为开发机的实际IP
+        console.log('开始发送请求到:', `${baseUrl}/users/profile/${this.currentUser.id}`);
+        httpRequest.request(`${baseUrl}/users/profile/${this.currentUser.id}`, {
+            method: http.RequestMethod.GET,
+            header: { 'Content-Type': 'application/json' },
+            readTimeout: 50000,
+            connectTimeout: 50000
+        }, (err, data) => {
+            console.log('获取用户信息网络请求回调执行');
+            console.log('错误信息:', JSON.stringify(err));
+            console.log('响应数据:', JSON.stringify(data));
+            if (!err) {
+                console.info('后端用户信息请求成功:' + JSON.stringify(data));
+                try {
+                    // 检查响应数据是否存在
+                    if (!data || !data.result) {
+                        console.error('响应数据为空或格式不正确');
+                        promptAction.showToast({ message: '响应数据格式错误' });
+                        this.isLoadingProfile = false;
+                        return;
+                    }
+                    // 尝试解析响应数据
+                    let responseData: UserProfileResponse | undefined;
+                    if (typeof data.result === 'string') {
+                        try {
+                            responseData = JSON.parse(data.result) as UserProfileResponse;
+                        }
+                        catch (parseErr) {
+                            console.error('JSON解析失败:', parseErr);
+                            promptAction.showToast({ message: '数据解析失败' });
+                            this.isLoadingProfile = false;
+                            return;
+                        }
+                    }
+                    else {
+                        responseData = data.result as UserProfileResponse;
+                    }
+                    console.log('解析后的响应数据:', JSON.stringify(responseData));
+                    if (responseData && responseData.code === 'success' && responseData.data) {
+                        // 解析用户数据
+                        this.userProfile = responseData.data;
+                        console.log('解析后的用户信息:', JSON.stringify(this.userProfile));
+                    }
+                    else {
+                        const errorMsg = responseData ? (responseData.msg || '未知错误') : '响应数据为空';
+                        console.error('后端返回错误:', errorMsg);
+                        // 即使出现错误，也更新加载状态
+                        if (errorMsg !== '用户不存在') {
+                            promptAction.showToast({ message: '获取用户信息失败: ' + errorMsg });
+                        }
+                    }
+                }
+                catch (parseError) {
+                    console.error('解析响应数据失败:', parseError);
+                    promptAction.showToast({ message: '数据解析失败: ' + (parseError as Error).message });
+                }
+            }
+            else {
+                console.error('请求失败:' + JSON.stringify(err));
+                const errorMsg = err.message || '未知网络错误';
+                promptAction.showToast({ message: '网络请求失败: ' + errorMsg });
+            }
+            this.isLoadingProfile = false;
+            httpRequest.destroy();
+        });
+    }
+    // 更新用户详细信息到后端
+    private async updateUserProfileToBackend() {
+        if (!this.currentUser.id) {
+            console.log("用户ID无效");
+            promptAction.showToast({ message: '用户信息异常' });
+            return;
+        }
+        let httpRequest = http.createHttp();
+        const baseUrl = "http://172.17.75.16:9588";
+        console.log('开始发送更新请求到:', `${baseUrl}/users/profile/${this.currentUser.id}`);
+        httpRequest.request(`${baseUrl}/users/profile/${this.currentUser.id}`, {
+            method: http.RequestMethod.PUT,
+            header: { 'Content-Type': 'application/json' },
+            extraData: JSON.stringify({
+                fullName: this.userProfile.fullName,
+                email: this.userProfile.email,
+                phone: this.userProfile.phone,
+                avatarUrl: this.userProfile.avatarUrl,
+                bio: this.userProfile.bio
+            }),
+            readTimeout: 50000,
+            connectTimeout: 50000
+        }, (err, data) => {
+            console.log('更新用户信息网络请求回调执行');
+            console.log('错误信息:', JSON.stringify(err));
+            console.log('响应数据:', JSON.stringify(data));
+            if (!err) {
+                console.info('后端更新用户信息请求成功:' + JSON.stringify(data));
+                try {
+                    // 检查响应数据是否存在
+                    if (!data || !data.result) {
+                        console.error('响应数据为空或格式不正确');
+                        promptAction.showToast({ message: '响应数据格式错误' });
+                        return;
+                    }
+                    // 尝试解析响应数据
+                    let responseData: UpdateProfileResponse | undefined;
+                    if (typeof data.result === 'string') {
+                        try {
+                            responseData = JSON.parse(data.result) as UpdateProfileResponse;
+                        }
+                        catch (parseErr) {
+                            console.error('JSON解析失败:', parseErr);
+                            promptAction.showToast({ message: '数据解析失败' });
+                            return;
+                        }
+                    }
+                    else {
+                        responseData = data.result as UpdateProfileResponse;
+                    }
+                    console.log('解析后的响应数据:', JSON.stringify(responseData));
+                    if (responseData && responseData.code === 'success') {
+                        console.log('用户信息更新成功');
+                        promptAction.showToast({ message: '信息更新成功' });
+                        // 重新加载用户信息
+                        this.loadUserProfile();
+                    }
+                    else {
+                        const errorMsg = responseData ? (responseData.msg || '未知错误') : '响应数据为空';
+                        console.error('后端返回错误:', errorMsg);
+                        promptAction.showToast({ message: '更新失败: ' + errorMsg });
+                    }
+                }
+                catch (parseError) {
+                    console.error('解析响应数据失败:', parseError);
+                    promptAction.showToast({ message: '数据解析失败: ' + (parseError as Error).message });
+                }
+            }
+            else {
+                console.error('请求失败:' + JSON.stringify(err));
+                const errorMsg = err.message || '未知网络错误';
+                promptAction.showToast({ message: '网络请求失败: ' + errorMsg });
+            }
+            httpRequest.destroy();
+        });
+    }
+    // 开始编辑姓名
+    private startEditFullName() {
+        this.tempFullName = this.userProfile.fullName;
+        this.isEditingFullName = true;
+    }
+    // 保存姓名
+    private saveFullName() {
+        if (this.tempFullName !== this.userProfile.fullName) {
+            this.userProfile.fullName = this.tempFullName;
+            this.updateUserProfileToBackend();
+        }
+        this.isEditingFullName = false;
+    }
+    // 取消编辑姓名
+    private cancelEditFullName() {
+        this.isEditingFullName = false;
+    }
+    // 开始编辑邮箱
+    private startEditEmail() {
+        this.tempEmail = this.userProfile.email;
+        this.isEditingEmail = true;
+    }
+    // 保存邮箱
+    private saveEmail() {
+        if (this.tempEmail !== this.userProfile.email) {
+            this.userProfile.email = this.tempEmail;
+            this.updateUserProfileToBackend();
+        }
+        this.isEditingEmail = false;
+    }
+    // 取消编辑邮箱
+    private cancelEditEmail() {
+        this.isEditingEmail = false;
+    }
+    // 开始编辑手机号
+    private startEditPhone() {
+        this.tempPhone = this.userProfile.phone;
+        this.isEditingPhone = true;
+    }
+    // 保存手机号
+    private savePhone() {
+        if (this.tempPhone !== this.userProfile.phone) {
+            this.userProfile.phone = this.tempPhone;
+            this.updateUserProfileToBackend();
+        }
+        this.isEditingPhone = false;
+    }
+    // 取消编辑手机号
+    private cancelEditPhone() {
+        this.isEditingPhone = false;
+    }
+    // 开始编辑个人简介
+    private startEditBio() {
+        this.tempBio = this.userProfile.bio;
+        this.isEditingBio = true;
+    }
+    // 保存个人简介
+    private saveBio() {
+        if (this.tempBio !== this.userProfile.bio) {
+            this.userProfile.bio = this.tempBio;
+            this.updateUserProfileToBackend();
+        }
+        this.isEditingBio = false;
+    }
+    // 取消编辑个人简介
+    private cancelEditBio() {
+        this.isEditingBio = false;
     }
     // 加载登录历史
     private async loadLoginHistory() {
@@ -241,6 +644,8 @@ class ProfilePage extends ViewPU {
                 GlobalContext.getContext().setObject('loggedInUser', user);
                 // 更新当前用户状态
                 this.currentUser = user;
+                // 加载新用户的详细信息
+                this.loadUserProfile();
                 // 显示切换成功的提示
                 promptAction.showToast({ message: `已切换到用户: ${user.username}` });
             }
@@ -586,6 +991,362 @@ class ProfilePage extends ViewPU {
         }, Text);
         Text.pop();
         // 用户名
+        Row.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // 姓名
+            Row.create();
+            // 姓名
+            Row.width('100%');
+            // 姓名
+            Row.margin({ bottom: 10 });
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('姓名:');
+            Text.fontSize(14);
+            Text.fontColor('#666666');
+            Text.width('30%');
+            Text.textAlign(TextAlign.Start);
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            If.create();
+            if (!this.isEditingFullName) {
+                this.ifElseBranchUpdateFunction(0, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Row.create();
+                        Row.width('70%');
+                    }, Row);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Text.create(this.userProfile.fullName || '未设置');
+                        Text.fontSize(14);
+                        Text.width('60%');
+                        Text.textAlign(TextAlign.Start);
+                    }, Text);
+                    Text.pop();
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Image.create({ "id": 16777288, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" });
+                        Image.width(16);
+                        Image.height(16);
+                        Image.onClick(() => {
+                            this.startEditFullName();
+                        });
+                    }, Image);
+                    Row.pop();
+                });
+            }
+            else {
+                this.ifElseBranchUpdateFunction(1, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Column.create();
+                        Column.width('70%');
+                    }, Column);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        TextInput.create({ placeholder: '请输入姓名', text: this.tempFullName });
+                        TextInput.width('100%');
+                        TextInput.height(30);
+                        TextInput.borderRadius(4);
+                        TextInput.onChange((value: string) => {
+                            this.tempFullName = value;
+                        });
+                    }, TextInput);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Row.create();
+                        Row.margin({ top: 5 });
+                    }, Row);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Button.createWithLabel('取消');
+                        Button.fontSize(12);
+                        Button.backgroundColor('#CCCCCC');
+                        Button.onClick(() => {
+                            this.cancelEditFullName();
+                        });
+                        Button.margin({ right: 10 });
+                    }, Button);
+                    Button.pop();
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Button.createWithLabel('保存');
+                        Button.fontSize(12);
+                        Button.backgroundColor('#007DFF');
+                        Button.fontColor('#FFFFFF');
+                        Button.onClick(() => {
+                            this.saveFullName();
+                        });
+                    }, Button);
+                    Button.pop();
+                    Row.pop();
+                    Column.pop();
+                });
+            }
+        }, If);
+        If.pop();
+        // 姓名
+        Row.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // 邮箱
+            Row.create();
+            // 邮箱
+            Row.width('100%');
+            // 邮箱
+            Row.margin({ bottom: 10 });
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('邮箱:');
+            Text.fontSize(14);
+            Text.fontColor('#666666');
+            Text.width('30%');
+            Text.textAlign(TextAlign.Start);
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            If.create();
+            if (!this.isEditingEmail) {
+                this.ifElseBranchUpdateFunction(0, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Row.create();
+                        Row.width('70%');
+                    }, Row);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Text.create(this.userProfile.email || '未设置');
+                        Text.fontSize(14);
+                        Text.width('60%');
+                        Text.textAlign(TextAlign.Start);
+                    }, Text);
+                    Text.pop();
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Image.create({ "id": 16777288, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" });
+                        Image.width(16);
+                        Image.height(16);
+                        Image.onClick(() => {
+                            this.startEditEmail();
+                        });
+                    }, Image);
+                    Row.pop();
+                });
+            }
+            else {
+                this.ifElseBranchUpdateFunction(1, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Column.create();
+                        Column.width('70%');
+                    }, Column);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        TextInput.create({ placeholder: '请输入邮箱', text: this.tempEmail });
+                        TextInput.width('100%');
+                        TextInput.height(30);
+                        TextInput.borderRadius(4);
+                        TextInput.onChange((value: string) => {
+                            this.tempEmail = value;
+                        });
+                    }, TextInput);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Row.create();
+                        Row.margin({ top: 5 });
+                    }, Row);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Button.createWithLabel('取消');
+                        Button.fontSize(12);
+                        Button.backgroundColor('#CCCCCC');
+                        Button.onClick(() => {
+                            this.cancelEditEmail();
+                        });
+                        Button.margin({ right: 10 });
+                    }, Button);
+                    Button.pop();
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Button.createWithLabel('保存');
+                        Button.fontSize(12);
+                        Button.backgroundColor('#007DFF');
+                        Button.fontColor('#FFFFFF');
+                        Button.onClick(() => {
+                            this.saveEmail();
+                        });
+                    }, Button);
+                    Button.pop();
+                    Row.pop();
+                    Column.pop();
+                });
+            }
+        }, If);
+        If.pop();
+        // 邮箱
+        Row.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // 手机号
+            Row.create();
+            // 手机号
+            Row.width('100%');
+            // 手机号
+            Row.margin({ bottom: 10 });
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('手机号:');
+            Text.fontSize(14);
+            Text.fontColor('#666666');
+            Text.width('30%');
+            Text.textAlign(TextAlign.Start);
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            If.create();
+            if (!this.isEditingPhone) {
+                this.ifElseBranchUpdateFunction(0, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Row.create();
+                        Row.width('70%');
+                    }, Row);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Text.create(this.userProfile.phone || '未设置');
+                        Text.fontSize(14);
+                        Text.width('60%');
+                        Text.textAlign(TextAlign.Start);
+                    }, Text);
+                    Text.pop();
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Image.create({ "id": 16777288, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" });
+                        Image.width(16);
+                        Image.height(16);
+                        Image.onClick(() => {
+                            this.startEditPhone();
+                        });
+                    }, Image);
+                    Row.pop();
+                });
+            }
+            else {
+                this.ifElseBranchUpdateFunction(1, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Column.create();
+                        Column.width('70%');
+                    }, Column);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        TextInput.create({ placeholder: '请输入手机号', text: this.tempPhone });
+                        TextInput.width('100%');
+                        TextInput.height(30);
+                        TextInput.borderRadius(4);
+                        TextInput.onChange((value: string) => {
+                            this.tempPhone = value;
+                        });
+                    }, TextInput);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Row.create();
+                        Row.margin({ top: 5 });
+                    }, Row);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Button.createWithLabel('取消');
+                        Button.fontSize(12);
+                        Button.backgroundColor('#CCCCCC');
+                        Button.onClick(() => {
+                            this.cancelEditPhone();
+                        });
+                        Button.margin({ right: 10 });
+                    }, Button);
+                    Button.pop();
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Button.createWithLabel('保存');
+                        Button.fontSize(12);
+                        Button.backgroundColor('#007DFF');
+                        Button.fontColor('#FFFFFF');
+                        Button.onClick(() => {
+                            this.savePhone();
+                        });
+                    }, Button);
+                    Button.pop();
+                    Row.pop();
+                    Column.pop();
+                });
+            }
+        }, If);
+        If.pop();
+        // 手机号
+        Row.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // 个人简介
+            Row.create();
+            // 个人简介
+            Row.width('100%');
+            // 个人简介
+            Row.margin({ bottom: 10 });
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('个人简介:');
+            Text.fontSize(14);
+            Text.fontColor('#666666');
+            Text.width('30%');
+            Text.textAlign(TextAlign.Start);
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            If.create();
+            if (!this.isEditingBio) {
+                this.ifElseBranchUpdateFunction(0, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Row.create();
+                        Row.width('70%');
+                    }, Row);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Text.create(this.userProfile.bio || '未设置');
+                        Text.fontSize(14);
+                        Text.width('60%');
+                        Text.textAlign(TextAlign.Start);
+                    }, Text);
+                    Text.pop();
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Image.create({ "id": 16777288, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" });
+                        Image.width(16);
+                        Image.height(16);
+                        Image.onClick(() => {
+                            this.startEditBio();
+                        });
+                    }, Image);
+                    Row.pop();
+                });
+            }
+            else {
+                this.ifElseBranchUpdateFunction(1, () => {
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Column.create();
+                        Column.width('70%');
+                    }, Column);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        TextArea.create({ placeholder: '请输入个人简介', text: this.tempBio });
+                        TextArea.width('100%');
+                        TextArea.height(60);
+                        TextArea.borderRadius(4);
+                        TextArea.onChange((value: string) => {
+                            this.tempBio = value;
+                        });
+                    }, TextArea);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Row.create();
+                        Row.margin({ top: 5 });
+                    }, Row);
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Button.createWithLabel('取消');
+                        Button.fontSize(12);
+                        Button.backgroundColor('#CCCCCC');
+                        Button.onClick(() => {
+                            this.cancelEditBio();
+                        });
+                        Button.margin({ right: 10 });
+                    }, Button);
+                    Button.pop();
+                    this.observeComponentCreation2((elmtId, isInitialRender) => {
+                        Button.createWithLabel('保存');
+                        Button.fontSize(12);
+                        Button.backgroundColor('#007DFF');
+                        Button.fontColor('#FFFFFF');
+                        Button.onClick(() => {
+                            this.saveBio();
+                        });
+                    }, Button);
+                    Button.pop();
+                    Row.pop();
+                    Column.pop();
+                });
+            }
+        }, If);
+        If.pop();
+        // 个人简介
         Row.pop();
         // 个人信息详情
         Column.pop();

@@ -5,7 +5,7 @@ import { DatabaseHelper } from './DatabaseHelper'
 import { User } from './User'
 import { GlobalContext } from '../../viewmodel/GlobalContext';
 import { UserService } from '../../common/utils/UserService';
-
+import { LoginData } from '../../common/utils/UserService';
 
 @Entry
 @Component
@@ -86,7 +86,6 @@ struct LoginPage {
   /**
    * 登录处理函数
    */
-
   private async login(): Promise<void> {
     // 验证表单
     if (!this.validateForm()) {
@@ -102,9 +101,9 @@ struct LoginPage {
       duration: 1000
     });
 
-    // 使用 UserService 进行混合登录验证（网络优先，本地备用）
+    // 使用 UserService 进行网络登录验证
     const userService = new UserService();
-    const matchedUser = await userService.login(this.username, this.password);
+    const matchedUser: LoginData | null = await userService.login(this.username, this.password);
 
     if (matchedUser) {
       // 登录成功
