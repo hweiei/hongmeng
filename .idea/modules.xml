@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/NewsReleaseMysql.iml" filepath="$PROJECT_DIR$/.idea/NewsReleaseMysql.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NewsReleaseMysql.iml" filepath="$PROJECT_DIR$/.idea/modules/NewsReleaseMysql.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/entry/entry.iml" filepath="$PROJECT_DIR$/.idea/modules/entry/entry.iml" />
     </modules>
   </component>
 </project>

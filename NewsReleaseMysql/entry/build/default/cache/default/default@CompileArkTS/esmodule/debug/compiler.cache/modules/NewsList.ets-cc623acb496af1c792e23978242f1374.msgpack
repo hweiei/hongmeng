@@ -1,767 +1,0 @@
-Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚVÉif (!("finalizeConstruction" in ViewPU.prototype)) {
-    Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
-}
-/*
- * Copyright (c) 2023 Huawei Device Co., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-import NewsItem from './NewsItem';
-import LoadMoreLayout from './LoadMoreLayout';
-import Constants from '../common/constants/Constants';
-import NewsViewModel from '../viewmodel/NewsViewModel';
-import { showToast } from '../common/utils/ToastUtil';
-import FailureLayout from './FailureLayout';
-import LoadingLayout from './LoadingLayout';
-import NoMoreLayout from './NoMoreLayout';
-import RefreshListViewModel from '../viewmodel/RefreshListViewModel';
-import preferences from "@ohos.data.preferences";
-import { GlobalContext } from '../viewmodel/GlobalContext';
-export default class NewsList extends ViewPU {
-    constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
-        super(parent, __localStorage, elmtId, extraInfo);
-        if (typeof paramsLambda === "function") {
-            this.paramsGenerator_ = paramsLambda;
-        }
-        this.index = 0;
-        this.__currentIndex = new SynchedPropertySimpleTwoWayPU(params.currentIndex, this, "currentIndex");
-        this.__refreshStore = new ObservedPropertyObjectPU(new RefreshListViewModel(), this, "refreshStore");
-        this.__searchTerm = new ObservedPropertySimplePU('', this, "searchTerm");
-        this.__showFavoritesOnly = new ObservedPropertySimplePU(false, this, "showFavoritesOnly");
-        this.__favoriteNotes = new ObservedPropertyObjectPU([], this, "favoriteNotes");
-        this.context = getContext(this);
-        this.pref = preferences.getPreferencesSync(this.context, { name: 'favoriteNotesPrefs' });
-        this.setInitiallyProvidedValue(params);
-        this.declareWatch("currentIndex", this.changeCategory);
-        this.finalizeConstruction();
-    }
-    setInitiallyProvidedValue(params) {
-        if (params.index !== undefined) {
-            this.index = params.index;
-        }
-        if (params.refreshStore !== undefined) {
-            this.refreshStore = params.refreshStore;
-        }
-        if (params.searchTerm !== undefined) {
-            this.searchTerm = params.searchTerm;
-        }
-        if (params.showFavoritesOnly !== undefined) {
-            this.showFavoritesOnly = params.showFavoritesOnly;
-        }
-        if (params.favoriteNotes !== undefined) {
-            this.favoriteNotes = params.favoriteNotes;
-        }
-        if (params.context !== undefined) {
-            this.context = params.context;
-        }
-        if (params.pref !== undefined) {
-            this.pref = params.pref;
-        }
-    }
-    updateStateVars(params) {
-    }
-    purgeVariableDependenciesOnElmtId(rmElmtId) {
-        this.__currentIndex.purgeDependencyOnElmtId(rmElmtId);
-        this.__refreshStore.purgeDependencyOnElmtId(rmElmtId);
-        this.__searchTerm.purgeDependencyOnElmtId(rmElmtId);
-        this.__showFavoritesOnly.purgeDependencyOnElmtId(rmElmtId);
-        this.__favoriteNotes.purgeDependencyOnElmtId(rmElmtId);
-    }
-    aboutToBeDeleted() {
-        this.__currentIndex.aboutToBeDeleted();
-        this.__refreshStore.aboutToBeDeleted();
-        this.__searchTerm.aboutToBeDeleted();
-        this.__showFavoritesOnly.aboutToBeDeleted();
-        this.__favoriteNotes.aboutToBeDeleted();
-        SubscriberManager.Get().delete(this.id__());
-        this.aboutToBeDeletedInternal();
-    }
-    get currentIndex() {
-        return this.__currentIndex.get();
-    }
-    set currentIndex(newValue) {
-        this.__currentIndex.set(newValue);
-    }
-    get refreshStore() {
-        return this.__refreshStore.get();
-    }
-    set refreshStore(newValue) {
-        this.__refreshStore.set(newValue);
-    }
-    get searchTerm() {
-        return this.__searchTerm.get();
-    }
-    set searchTerm(newValue) {
-        this.__searchTerm.set(newValue);
-    }
-    get showFavoritesOnly() {
-        return this.__showFavoritesOnly.get();
-    }
-    set showFavoritesOnly(newValue) {
-        this.__showFavoritesOnly.set(newValue);
-    }
-    get favoriteNotes() {
-        return this.__favoriteNotes.get();
-    }
-    set favoriteNotes(newValue) {
-        this.__favoriteNotes.set(newValue);
-    }
-    aboutToAppear() {
-        // åŠ è½½æ•°æ®
-        this.changeCategory();
-        // åŠ è½½æ”¶è—åˆ—è¡¨
-        this.loadFavoriteNotes();
-    }
-    // åŠ è½½æ”¶è—ç¬”è®°åˆ—è¡¨
-    loadFavoriteNotes() {
-        try {
-            this.favoriteNotes = this.pref.getSync('favorites', []);
-        }
-        catch (error) {
-            console.error('åŠ è½½æ”¶è—åˆ—è¡¨å¤±è´¥:', error);
-            this.favoriteNotes = [];
-        }
-    }
-    changeCategory() {
-        if (this.currentIndex !== this.index) {
-            return;
-        }
-        this.refreshStore.currentPage = 1;
-        // å¦‚æœæ˜¯"æˆ‘çš„"æ ‡ç­¾é¡µ(index=1)ï¼Œåˆ™åªè·å–å½“å‰ç”¨æˆ·çš„ç¬”è®°
-        if (this.currentIndex === 1) {
-            NewsViewModel.getNewsList(this.refreshStore.currentPage, this.refreshStore.pageSize).then((data) => {
-                // è¿‡æ»¤å‡ºå½“å‰ç”¨æˆ·çš„ç¬”è®°
-                const currentUser = GlobalContext.getContext().getObject('loggedInUser');
-                if (currentUser && currentUser.username) {
-                    data = data.filter(item => item.source === currentUser.username);
-                }
-                this.handleNewsData(data);
-            }).catch((err) => {
-                showToast(err);
-                this.refreshStore.pageState = 2 /* PageState.Fail */;
-            });
-        }
-        else {
-            // å…¨éƒ¨æ ‡ç­¾é¡µï¼Œè·å–æ‰€æœ‰ç¬”è®°
-            NewsViewModel.getNewsList(this.refreshStore.currentPage, this.refreshStore.pageSize).then((data) => {
-                this.handleNewsData(data);
-            }).catch((err) => {
-                showToast(err);
-                this.refreshStore.pageState = 2 /* PageState.Fail */;
-            });
-        }
-    }
-    handleNewsData(data) {
-        this.refreshStore.pageState = 1 /* PageState.Success */;
-        if (data.length === this.refreshStore.pageSize) {
-            this.refreshStore.currentPage++;
-            this.refreshStore.hasMore = true;
-        }
-        else {
-            this.refreshStore.hasMore = false;
-        }
-        this.refreshStore.newsData = data;
-    }
-    reloadAction() {
-        this.refreshStore.pageState = 0 /* PageState.Loading */;
-        this.changeCategory();
-    }
-    // è·å–è¿‡æ»¤å’Œæœç´¢åçš„ç¬”è®°åˆ—è¡¨
-    getFilteredNotes() {
-        let result = [...this.refreshStore.newsData];
-        // æ ¹æ®æœç´¢è¯è¿‡æ»¤
-        if (this.searchTerm.trim()) {
-            const term = this.searchTerm.toLowerCase();
-            result = result.filter(item => item.title.toLowerCase().includes(term) ||
-                item.content.toLowerCase().includes(term));
-        }
-        // æ ¹æ®æ”¶è—çŠ¶æ€è¿‡æ»¤
-        if (this.showFavoritesOnly) {
-            result = result.filter(item => {
-                // ç”Ÿæˆç¬”è®°IDå¹¶æ£€æŸ¥æ˜¯å¦åœ¨æ”¶è—åˆ—è¡¨ä¸­
-                const noteId = this.generateNoteId(item);
-                return this.favoriteNotes.includes(noteId);
-            });
-        }
-        return result;
-    }
-    // ç”Ÿæˆç¬”è®°çš„å”¯ä¸€ID
-    generateNoteId(note) {
-        // ä½¿ç”¨æ ‡é¢˜å’Œå†…å®¹ç”Ÿæˆä¸€ä¸ªç®€å•çš„å“ˆå¸Œå€¼ä½œä¸ºID
-        const str = note.title + note.content;
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            const char = str.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash; // è½¬æ¢ä¸º32ä½æ•´æ•°
-        }
-        return Math.abs(hash);
-    }
-    initialRender() {
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.width(Constants.FULL_PERCENT);
-            Column.height(Constants.FULL_PERCENT);
-            Column.justifyContent(FlexAlign.Center);
-            Column.onTouch((event) => {
-                if (event) {
-                    if (this.refreshStore.pageState === 1 /* PageState.Success */) {
-                        this.refreshStore.listTouchEvent(event);
-                    }
-                }
-            });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // æœç´¢æ å’Œç­›é€‰æŒ‰é’®
-            Row.create();
-            // æœç´¢æ å’Œç­›é€‰æŒ‰é’®
-            Row.width('90%');
-            // æœç´¢æ å’Œç­›é€‰æŒ‰é’®
-            Row.margin({ top: 10, bottom: 10 });
-            // æœç´¢æ å’Œç­›é€‰æŒ‰é’®
-            Row.alignItems(VerticalAlign.Center);
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // æœç´¢æ¡†
-            Search.create({ value: this.searchTerm, placeholder: 'æœç´¢ç¬”è®°...' });
-            // æœç´¢æ¡†
-            Search.onChange((value) => {
-                this.searchTerm = value;
-            });
-            // æœç´¢æ¡†
-            Search.width('70%');
-            // æœç´¢æ¡†
-            Search.margin({ right: 10 });
-            // æœç´¢æ¡†
-            Search.backgroundColor('#f5f5f5');
-            // æœç´¢æ¡†
-            Search.borderRadius(20);
-        }, Search);
-        // æœç´¢æ¡†
-        Search.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // ç­›é€‰æŒ‰é’®
-            Button.createWithLabel(this.showFavoritesOnly ? 'å…¨éƒ¨' : 'æ”¶è—');
-            // ç­›é€‰æŒ‰é’®
-            Button.width('25%');
-            // ç­›é€‰æŒ‰é’®
-            Button.type(ButtonType.Capsule);
-            // ç­›é€‰æŒ‰é’®
-            Button.backgroundColor(this.showFavoritesOnly ? '#ff5722' : '#f5f5f5');
-            // ç­›é€‰æŒ‰é’®
-            Button.fontColor(this.showFavoritesOnly ? Color.White : Color.Black);
-            // ç­›é€‰æŒ‰é’®
-            Button.onClick(() => {
-                this.showFavoritesOnly = !this.showFavoritesOnly;
-                // åˆ‡æ¢æ—¶é‡æ–°åŠ è½½æ”¶è—åˆ—è¡¨
-                if (this.showFavoritesOnly) {
-                    this.loadFavoriteNotes();
-                }
-            });
-        }, Button);
-        // ç­›é€‰æŒ‰é’®
-        Button.pop();
-        // æœç´¢æ å’Œç­›é€‰æŒ‰é’®
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            If.create();
-            if (this.refreshStore.pageState === 0 /* PageState.Loading */) {
-                this.ifElseBranchUpdateFunction(0, () => {
-                    {
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            if (isInitialRender) {
-                                let componentCall = new LoadingLayout(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/NewsList.ets", line: 181, col: 9 });
-                                ViewPU.create(componentCall);
-                                let paramsLambda = () => {
-                                    return {};
-                                };
-                                componentCall.paramsGenerator_ = paramsLambda;
-                            }
-                            else {
-                                this.updateStateVarsOfChildByElmtId(elmtId, {});
-                            }
-                        }, { name: "LoadingLayout" });
-                    }
-                });
-            }
-            else if (this.refreshStore.pageState === 1 /* PageState.Success */) {
-                this.ifElseBranchUpdateFunction(1, () => {
-                    this.ListLayout.bind(this)();
-                });
-            }
-            else {
-                this.ifElseBranchUpdateFunction(2, () => {
-                    {
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            if (isInitialRender) {
-                                let componentCall = new FailureLayout(this, { reloadAction: () => {
-                                        this.reloadAction();
-                                    } }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/NewsList.ets", line: 185, col: 9 });
-                                ViewPU.create(componentCall);
-                                let paramsLambda = () => {
-                                    return {
-                                        reloadAction: () => {
-                                            this.reloadAction();
-                                        }
-                                    };
-                                };
-                                componentCall.paramsGenerator_ = paramsLambda;
-                            }
-                            else {
-                                this.updateStateVarsOfChildByElmtId(elmtId, {});
-                            }
-                        }, { name: "FailureLayout" });
-                    }
-                });
-            }
-        }, If);
-        If.pop();
-        Column.pop();
-    }
-    ListLayout(parent = null) {
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // é‡‡ç”¨åŒåˆ—ç€‘å¸ƒæµå¸ƒå±€ï¼Œæ¨¡ä»¿å°çº¢ä¹¦é£æ ¼
-            Column.create();
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Grid.create();
-            Grid.columnsTemplate('1fr 1fr');
-            Grid.rowsGap({ "id": 16777264, "type": 10002, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" });
-            Grid.columnsGap({ "id": 16777264, "type": 10002, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" });
-            Grid.padding({
-                left: { "id": 16777264, "type": 10002, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" },
-                right: { "id": 16777264, "type": 10002, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" },
-                top: { "id": 16777264, "type": 10002, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }
-            });
-            Grid.backgroundColor({ "id": 16777255, "type": 10001, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" });
-            Grid.edgeEffect(EdgeEffect.None);
-            Grid.onScrollIndex((start, end) => {
-                // ç›‘å¬å½“å‰åˆ—è¡¨çš„ç¬¬ä¸€ä¸ªç´¢å¼•
-                this.refreshStore.startIndex = start;
-                this.refreshStore.endIndex = end;
-            });
-        }, Grid);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            ForEach.create();
-            const forEachItemGenFunction = _item => {
-                const item = _item;
-                {
-                    const itemCreation2 = (elmtId, isInitialRender) => {
-                        GridItem.create(() => { }, false);
-                        GridItem.borderRadius({ "id": 16777273, "type": 10002, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" });
-                        GridItem.backgroundColor({ "id": 16777258, "type": 10001, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" });
-                    };
-                    const observedDeepRender = () => {
-                        this.observeComponentCreation2(itemCreation2, GridItem);
-                        {
-                            this.observeComponentCreation2((elmtId, isInitialRender) => {
-                                if (isInitialRender) {
-                                    let componentCall = new NewsItem(this, { newsData: item }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/NewsList.ets", line: 208, col: 13 });
-                                    ViewPU.create(componentCall);
-                                    let paramsLambda = () => {
-                                        return {
-                                            newsData: item
-                                        };
-                                    };
-                                    componentCall.paramsGenerator_ = paramsLambda;
-                                }
-                                else {
-                                    this.updateStateVarsOfChildByElmtId(elmtId, {});
-                                }
-                            }, { name: "NewsItem" });
-                        }
-                        GridItem.pop();
-                    };
-                    observedDeepRender();
-                }
-            };
-            this.forEachUpdateFunction(elmtId, this.getFilteredNotes(), forEachItemGenFunction, (item, index) => JSON.stringify(item) + index, false, true);
-        }, ForEach);
-        ForEach.pop();
-        {
-            const itemCreation2 = (elmtId, isInitialRender) => {
-                GridItem.create(() => { }, false);
-            };
-            const observedDeepRender = () => {
-                this.observeComponentCreation2(itemCreation2, GridItem);
-                this.observeComponentCreation2((elmtId, isInitialRender) => {
-                    Row.create();
-                    Row.width('100%');
-                }, Row);
-                this.observeComponentCreation2((elmtId, isInitialRender) => {
-                    If.create();
-                    if (this.refreshStore.hasMore && !this.showFavoritesOnly && !this.searchTerm) {
-                        this.ifElseBranchUpdateFunction(0, () => {
-                            this.observeComponentCreation2((elmtId, isInitialRender) => {
-                                // åªæœ‰åœ¨æ˜¾ç¤ºå…¨éƒ¨ç¬”è®°ä¸”æ²¡æœ‰æœç´¢æ—¶æ‰æ˜¾ç¤ºåŠ è½½æ›´å¤š
-                                Blank.create();
-                                // åªæœ‰åœ¨æ˜¾ç¤ºå…¨éƒ¨ç¬”è®°ä¸”æ²¡æœ‰æœç´¢æ—¶æ‰æ˜¾ç¤ºåŠ è½½æ›´å¤š
-                                Blank.width('50%');
-                            }, Blank);
-                            // åªæœ‰åœ¨æ˜¾ç¤ºå…¨éƒ¨ç¬”è®°ä¸”æ²¡æœ‰æœç´¢æ—¶æ‰æ˜¾ç¤ºåŠ è½½æ›´å¤š
-                            Blank.pop();
-                            {
-                                this.observeComponentCreation2((elmtId, isInitialRender) => {
-                                    if (isInitialRender) {
-                                        let componentCall = new LoadMoreLayout(this, { loadMoreLayoutClass: this.refreshStore.loadingMoreClass }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/NewsList.ets", line: 222, col: 15 });
-                                        ViewPU.create(componentCall);
-                                        let paramsLambda = () => {
-                                            return {
-                                                loadMoreLayoutClass: this.refreshStore.loadingMoreClass
-                                            };
-                                        };
-                                        componentCall.paramsGenerator_ = paramsLambda;
-                                    }
-                                    else {
-                                        this.updateStateVarsOfChildByElmtId(elmtId, {
-                                            loadMoreLayoutClass: this.refreshStore.loadingMoreClass
-                                        });
-                                    }
-                                }, { name: "LoadMoreLayout" });
-                            }
-                        });
-                    }
-                    else {
-                        this.ifElseBranchUpdateFunction(1, () => {
-                            this.observeComponentCreation2((elmtId, isInitialRender) => {
-                                __Common__.create();
-                                __Common__.width('100%');
-                            }, __Common__);
-                            {
-                                this.observeComponentCreation2((elmtId, isInitialRender) => {
-                                    if (isInitialRender) {
-                                        let componentCall = new NoMoreLayout(this, {}, undefined, elmtId, () => { }, { page: "entry/src/main/ets/view/NewsList.ets", line: 225, col: 15 });
-                                        ViewPU.create(componentCall);
-                                        let paramsLambda = () => {
-                                            return {};
-                                        };
-                                        componentCall.paramsGenerator_ = paramsLambda;
-                                    }
-                                    else {
-                                        this.updateStateVarsOfChildByElmtId(elmtId, {});
-                                    }
-                                }, { name: "NoMoreLayout" });
-                            }
-                            __Common__.pop();
-                        });
-                    }
-                }, If);
-                If.pop();
-                Row.pop();
-                // åŠ è½½æ›´å¤šæˆ–æ²¡æœ‰æ›´å¤šæ•°æ®çš„æç¤º
-                GridItem.pop();
-            };
-            observedDeepRender();
-        }
-        Grid.pop();
-        // é‡‡ç”¨åŒåˆ—ç€‘å¸ƒæµå¸ƒå±€ï¼Œæ¨¡ä»¿å°çº¢ä¹¦é£æ ¼
-        Column.pop();
-    }
-    rerender() {
-        this.updateDirtyElements();
-    }
-}
-//# sourceMappingURL=NewsList.js.mapÂ›Ù`D:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\view\NewsItem.etsÙfD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\view\LoadMoreLayout.etsÙmD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\common\constants\Constants.etsÙjD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\viewmodel\NewsViewModel.etsÙiD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\common\utils\ToastUtil.etsÙeD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\view\FailureLayout.etsÙeD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\view\LoadingLayout.etsÙdD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\view\NoMoreLayout.etsÙqD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\viewmodel\RefreshListViewModel.etsÙ[ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.data.preferences.d.tsÙjD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\viewmodel\GlobalContext.etsÙ`D:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\view\NewsList.etsÔrB›ªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo°belongModulePath¯hostModulesInfo¬shouldEmitJs¥entryÃÂÙAD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entryÙ;D:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql¥entry¥1.0.0Ô  ÙAD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry‘ÔrC’²hostDependencyName®hostModuleName°../view/NewsList¥entryÃÃÚ!É/*
- * Copyright (c) 2023 Huawei Device Co., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import NewsItem from './NewsItem';
-import LoadMoreLayout from './LoadMoreLayout';
-import RefreshLayout from './RefreshLayout';
-import { NewsData } from '../viewmodel/NewsData';
-import Constants, { PageState } from '../common/constants/Constants';
-import NewsViewModel from '../viewmodel/NewsViewModel';
-import { showToast } from '../common/utils/ToastUtil';
-import FailureLayout from './FailureLayout';
-import LoadingLayout from './LoadingLayout';
-import NoMoreLayout from './NoMoreLayout';
-import RefreshListViewModel from '../viewmodel/RefreshListViewModel';
-import { preferences } from '@kit.ArkData';
-import { common } from '@kit.AbilityKit';
-import { GlobalContext } from '../viewmodel/GlobalContext';
-import { User } from '../pages/zonghezuoye/User';
-
-/**
- * æ–°é—»åˆ—è¡¨ç»„ä»¶
- */
-@Component
-export default struct NewsList {
-  index: number = 0;
-  @Watch('changeCategory') @Link currentIndex: number;
-  @State refreshStore: RefreshListViewModel = new RefreshListViewModel();
-  @State searchTerm: string = ''; // æœç´¢å…³é”®è¯
-  @State showFavoritesOnly: boolean = false; // æ˜¯å¦åªæ˜¾ç¤ºæ”¶è—çš„ç¬”è®°
-  @State favoriteNotes: number[] = []; // æ”¶è—çš„ç¬”è®°IDåˆ—è¡¨
-
-  private context = getContext(this) as common.UIAbilityContext;
-  private pref = preferences.getPreferencesSync(this.context, { name: 'favoriteNotesPrefs' });
-
-  aboutToAppear(): void {
-    // åŠ è½½æ•°æ®
-    this.changeCategory();
-    // åŠ è½½æ”¶è—åˆ—è¡¨
-    this.loadFavoriteNotes();
-  }
-
-  // åŠ è½½æ”¶è—ç¬”è®°åˆ—è¡¨
-  private loadFavoriteNotes(): void {
-    try {
-      this.favoriteNotes = this.pref.getSync('favorites', []) as Array<number>;
-    } catch (error) {
-      console.error('åŠ è½½æ”¶è—åˆ—è¡¨å¤±è´¥:', error);
-      this.favoriteNotes = [];
-    }
-  }
-
-  changeCategory() {
-    if (this.currentIndex !== this.index) {
-      return;
-    }
-    this.refreshStore.currentPage = 1;
-    
-    // å¦‚æœæ˜¯"æˆ‘çš„"æ ‡ç­¾é¡µ(index=1)ï¼Œåˆ™åªè·å–å½“å‰ç”¨æˆ·çš„ç¬”è®°
-    if (this.currentIndex === 1) {
-      NewsViewModel.getNewsList(this.refreshStore.currentPage, this.refreshStore.pageSize).then((data: NewsData[]) => {
-        // è¿‡æ»¤å‡ºå½“å‰ç”¨æˆ·çš„ç¬”è®°
-        const currentUser = GlobalContext.getContext().getObject('loggedInUser') as User | undefined;
-        if (currentUser && currentUser.username) {
-          data = data.filter(item => item.source === currentUser.username);
-        }
-        this.handleNewsData(data);
-      }).catch((err: string | Resource) => {
-        showToast(err);
-        this.refreshStore.pageState = PageState.Fail;
-      });
-    } else {
-      // å…¨éƒ¨æ ‡ç­¾é¡µï¼Œè·å–æ‰€æœ‰ç¬”è®°
-      NewsViewModel.getNewsList(this.refreshStore.currentPage, this.refreshStore.pageSize).then((data: NewsData[]) => {
-        this.handleNewsData(data);
-      }).catch((err: string | Resource) => {
-        showToast(err);
-        this.refreshStore.pageState = PageState.Fail;
-      });
-    }
-  }
-
-  private handleNewsData(data: NewsData[]) {
-    this.refreshStore.pageState = PageState.Success;
-    if (data.length === this.refreshStore.pageSize) {
-      this.refreshStore.currentPage++;
-      this.refreshStore.hasMore = true;
-    } else {
-      this.refreshStore.hasMore = false;
-    }
-    this.refreshStore.newsData = data;
-  }
-
-  reloadAction() {
-    this.refreshStore.pageState = PageState.Loading;
-    this.changeCategory();
-  }
-
-  // è·å–è¿‡æ»¤å’Œæœç´¢åçš„ç¬”è®°åˆ—è¡¨
-  private getFilteredNotes(): NewsData[] {
-    let result = [...this.refreshStore.newsData];
-    
-    // æ ¹æ®æœç´¢è¯è¿‡æ»¤
-    if (this.searchTerm.trim()) {
-      const term = this.searchTerm.toLowerCase();
-      result = result.filter(item => 
-        item.title.toLowerCase().includes(term) || 
-        item.content.toLowerCase().includes(term)
-      );
-    }
-    
-    // æ ¹æ®æ”¶è—çŠ¶æ€è¿‡æ»¤
-    if (this.showFavoritesOnly) {
-      result = result.filter(item => {
-        // ç”Ÿæˆç¬”è®°IDå¹¶æ£€æŸ¥æ˜¯å¦åœ¨æ”¶è—åˆ—è¡¨ä¸­
-        const noteId = this.generateNoteId(item);
-        return this.favoriteNotes.includes(noteId);
-      });
-    }
-    
-    return result;
-  }
-
-  // ç”Ÿæˆç¬”è®°çš„å”¯ä¸€ID
-  private generateNoteId(note: NewsData): number {
-    // ä½¿ç”¨æ ‡é¢˜å’Œå†…å®¹ç”Ÿæˆä¸€ä¸ªç®€å•çš„å“ˆå¸Œå€¼ä½œä¸ºID
-    const str = note.title + note.content;
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash; // è½¬æ¢ä¸º32ä½æ•´æ•°
-    }
-    return Math.abs(hash);
-  }
-
-  build() {
-    Column() {
-      // æœç´¢æ å’Œç­›é€‰æŒ‰é’®
-      Row() {
-        // æœç´¢æ¡†
-        Search({ value: this.searchTerm, placeholder: 'æœç´¢ç¬”è®°...' })
-          .onChange((value: string) => {
-            this.searchTerm = value;
-          })
-          .width('70%')
-          .margin({ right: 10 })
-          .backgroundColor('#f5f5f5')
-          .borderRadius(20)
-        
-        // ç­›é€‰æŒ‰é’®
-        Button(this.showFavoritesOnly ? 'å…¨éƒ¨' : 'æ”¶è—')
-          .width('25%')
-          .type(ButtonType.Capsule)
-          .backgroundColor(this.showFavoritesOnly ? '#ff5722' : '#f5f5f5')
-          .fontColor(this.showFavoritesOnly ? Color.White : Color.Black)
-          .onClick(() => {
-            this.showFavoritesOnly = !this.showFavoritesOnly;
-            // åˆ‡æ¢æ—¶é‡æ–°åŠ è½½æ”¶è—åˆ—è¡¨
-            if (this.showFavoritesOnly) {
-              this.loadFavoriteNotes();
-            }
-          })
-      }
-      .width('90%')
-      .margin({ top: 10, bottom: 10 })
-      .alignItems(VerticalAlign.Center)
-
-      if (this.refreshStore.pageState === PageState.Loading) {
-        LoadingLayout()
-      } else if (this.refreshStore.pageState === PageState.Success) {
-        this.ListLayout()
-      } else {
-        FailureLayout({ reloadAction: () => {
-          this.reloadAction();
-        } })
-      }
-    }
-    .width(Constants.FULL_PERCENT)
-    .height(Constants.FULL_PERCENT)
-    .justifyContent(FlexAlign.Center)
-    .onTouch((event?: TouchEvent) => {
-      if (event) {
-        if (this.refreshStore.pageState === PageState.Success) {
-          this.refreshStore.listTouchEvent(event);
-        }
-      }
-    })
-  }
-
-  @Builder ListLayout() {
-    // é‡‡ç”¨åŒåˆ—ç€‘å¸ƒæµå¸ƒå±€ï¼Œæ¨¡ä»¿å°çº¢ä¹¦é£æ ¼
-    Column() {
-      Grid() {
-        ForEach(this.getFilteredNotes(), (item: NewsData) => {
-          GridItem() {
-            NewsItem({ newsData: item })
-          }
-          .borderRadius($r('app.float.item_border_radius'))
-          .backgroundColor($r('app.color.white'))
-        }, (item: NewsData, index?: number) => JSON.stringify(item) + index)
-
-        // åŠ è½½æ›´å¤šæˆ–æ²¡æœ‰æ›´å¤šæ•°æ®çš„æç¤º
-        GridItem() {
-          Row() {
-            if (this.refreshStore.hasMore && !this.showFavoritesOnly && !this.searchTerm) {
-              // åªæœ‰åœ¨æ˜¾ç¤ºå…¨éƒ¨ç¬”è®°ä¸”æ²¡æœ‰æœç´¢æ—¶æ‰æ˜¾ç¤ºåŠ è½½æ›´å¤š
-              Blank()
-                .width('50%')
-              
-              LoadMoreLayout({ loadMoreLayoutClass: this.refreshStore.loadingMoreClass })
-
-            } else {
-              NoMoreLayout()
-                .width('100%')
-            }
-          }
-          .width('100%')
-        }
-      }
-      .columnsTemplate('1fr 1fr') // åŒåˆ—å¸ƒå±€
-      .rowsGap($r('app.float.common_padding'))
-      .columnsGap($r('app.float.common_padding'))
-      .padding({
-        left: $r('app.float.common_padding'),
-        right: $r('app.float.common_padding'),
-        top: $r('app.float.common_padding')
-      })
-      .backgroundColor($r('app.color.listColor'))
-      .edgeEffect(EdgeEffect.None)
-      .onScrollIndex((start: number, end: number) => {
-        // ç›‘å¬å½“å‰åˆ—è¡¨çš„ç¬¬ä¸€ä¸ªç´¢å¼•
-        this.refreshStore.startIndex = start;
-        this.refreshStore.endIndex = end;
-      })
-    }
-  }
-}ÀÔrD›¶@ohos.data.preferences½../common/constants/Constantsª./NewsItemº../viewmodel/NewsViewModel¹../common/utils/ToastUtil°./LoadMoreLayout¯./FailureLayoutº../viewmodel/GlobalContext¯./LoadingLayoutÙ!../viewmodel/RefreshListViewModel®./NoMoreLayoutÔrE—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÃÙ[ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.data.preferences.d.tsAÃªoh-resolveÂEAÂÙmD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\common\constants\Constants.etsAÃªoh-resolveÂEAÂÙ`D:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\view\NewsItem.etsAÃªoh-resolveÂEAÂÙjD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\viewmodel\NewsViewModel.etsAÃªoh-resolveÂEAÂÙiD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\common\utils\ToastUtil.etsAÃªoh-resolveÂEAÂÙfD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\view\LoadMoreLayout.etsAÃªoh-resolveÂEAÂÙeD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\view\FailureLayout.etsAÃªoh-resolveÂEAÂÙjD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\viewmodel\GlobalContext.etsAÃªoh-resolveÂEAÂÙeD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\view\LoadingLayout.etsAÃªoh-resolveÂEAÂÙqD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\viewmodel\RefreshListViewModel.etsAÃªoh-resolveÂEAÂÙdD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\view\NoMoreLayout.etsAÃªoh-resolveÂ“ÔrF–§version¤fileªsourceRoot§sources¥names¨mappings«NewsList.js ‘¬NewsList.etsÜÔ‘”    ‘” –”   ” ” ” ”! !”" "–”   ” ” ” ”- -”. .–”   ” ” ” %”5 ÌD”6 ÌE–”   ” ” ” ”6 6”7 7˜”   ” ”	 	” ” ” ”5 5”6 6–”   ” ” ” ”+ +”, ,–”   ” ” ” ”+ +”, ,–”   ” ” ” ”) )”* *–”   ” ” ”! !”ÌD ÌD”ÌE ÌE–”   ” 	” ” ”0 *”1 +˜”   ” ”	 	” ” ” ”: :”; ;–”  # ” #” #” #” #” #‘” " ’” $” $””; &.”? &2”ÌS &ÌF”ÌU &ÌH’”9 '”; ' ’”Ì@ (&”ÌE (+’”< )#”> )%•” +”! +”" +”& +#”' +?Ÿ” ,” ,”  ,”2 ,/”3 ,0”7 ,4”8 ,5”? ,<”ÌA ,>”ÌC ,Ì@”ÌG ,ÌD”ÌI ,ÌF”Ì] ,ÌZ”Ì_ ,Ì\”Ì` ,Ì]‘” 1’” %!” %-’” %!” %-’” &	” &’” &	” &’” '	” '’” '	” '’” (	” (’” (	” (’” )	” )’” )	” )’” .” .’” /” /–” 0” 0” 0	” 0” 0” 0’” 1” 1–” 2” 2” 2	” 2”  2”! 2’” 3” 3’” 5” 5’” 6
-” 6’” 7” 7Ü ” 8” 8
-” 8” 8”! 8”% 8”& 8 ”* 8$”+ 8%”2 8,”3 8-”> 88”Ì@ 8:”ÌB 8<”ÌC 8ÌN”ÌD 8ÌO‘”	 9”” 9” 9” 9” 9š” :” :” :” :” :”% :”' :!”, :&”- :'”. :(—” ;” ;
-” ;” ;”! ;”# ;”$ ;‘”	 <’” =” =’” ?” ?š” Ì@” Ì@” Ì@” Ì@” Ì@”" Ì@”& Ì@"”' Ì@#”, Ì@(”. Ì@*’” ÌA” ÌA‘”	 ÌB™” ÌC” ÌC” ÌC	” ÌC” ÌC”% ÌC!”( ÌC$”) ÌC%”* ÌC&’” ÌE”* ÌE&˜” ÌF” ÌF” ÌF” ÌF” ÌF”" ÌF”# ÌF”% ÌF!Ü ” ÌG” ÌG” ÌG”% ÌG”& ÌG ”* ÌG$”+ ÌG%”7 ÌG1”8 ÌG2”ÌC ÌG=”ÌE ÌG?”ÌI ÌGÌC”ÌJ ÌGÌD”ÌV ÌGÌP”ÌW ÌGÌQ”Ì_ ÌGÌY”Ì` ÌGÌZ”Ìa ÌGÌ[”Ìe ÌGÌ_”Ìf ÌGÌ`”Ìg ÌGÌa”Ìk ÌGÌq”Ìm ÌGÌs”Ìo ÌGÌu’” ÌH” ÌH” ÌI” ÌI”! ÌI”$ ÌI”1 ÌI)”2 ÌI*”< ÌI4”> ÌI6”? ÌI7”ÌH ÌIÌ@”ÌI ÌIÌA”ÌW ÌIÌO”ÌX ÌIÌd”ÌY ÌIÌe˜” ÌJ” ÌJ” ÌJ”# ÌJ”. ÌJ&”/ ÌJ'”7 ÌJ/”9 ÌJ1Ü ” ÌK
-” ÌK” ÌK” ÌK”  ÌK”& ÌK”' ÌK”+ ÌK!”, ÌK"”. ÌK$”/ ÌK%”3 ÌK)”4 ÌK*”: ÌK0”? ÌK5”ÌJ ÌKÌ@”ÌK ÌKÌA”ÌS ÌKÌI”ÌT ÌKÌJ”ÌU ÌKÌK‘” ÌL	˜” ÌM” ÌM” ÌM”# ÌM”$ ÌM”( ÌM ”) ÌM!”* ÌM"š” ÌN” ÌN” ÌN” ÌN	” ÌN” ÌN” ÌN” ÌN&” ÌN(” ÌN*–” ÌO” ÌO” ÌO” ÌO” ÌO” ÌO˜” ÌP” ÌP” ÌP”! ÌP”" ÌP”+ ÌP#”ÌD ÌP4”ÌE ÌP5”” ÌQ” ÌQ” ÌQ” ÌQ	‘”	 ÌR‘” ÌR’” ÌS” ÌSÜ ” ÌT” ÌT” ÌT”% ÌT”& ÌT ”* ÌT$”+ ÌT%”7 ÌT1”8 ÌT2”ÌC ÌT=”ÌE ÌT?”ÌI ÌTÌC”ÌJ ÌTÌD”ÌV ÌTÌP”ÌW ÌTÌQ”Ì_ ÌTÌY”Ì` ÌTÌZ”Ìa ÌTÌ[”Ìe ÌTÌ_”Ìf ÌTÌ`”Ìg ÌTÌa”Ìk ÌTÌq”Ìm ÌTÌs”Ìo ÌTÌu˜” ÌU” ÌU” ÌU”# ÌU”$ ÌU”( ÌU ”) ÌU!”* ÌU"š” ÌV” ÌV” ÌV” ÌV	” ÌV” ÌV” ÌV” ÌV&” ÌV(” ÌV*–” ÌW” ÌW” ÌW” ÌW” ÌW” ÌW˜” ÌX” ÌX” ÌX”! ÌX”" ÌX”+ ÌX#”ÌD ÌX4”ÌE ÌX5”” ÌY” ÌY” ÌY” ÌY	‘”	 ÌZ’” Ì[” Ì[”” Ì]
-” Ì]” Ì]” Ì])˜” Ì^” Ì^” Ì^	” Ì^” Ì^”# Ì^”? Ì^3”Ì@ Ì^4œ” Ì_” Ì_” Ì_” Ì_” Ì_” Ì_”  Ì_”! Ì_”- Ì_)”. Ì_*”6 Ì_2”8 Ì_4˜” Ì`” Ì`
-” Ì`” Ì`” Ì`”) Ì`#”+ Ì`%”, Ì`&™” Ìa” Ìa
-” Ìa” Ìa” Ìa”% Ìa”( Ìa"”, Ìa&”- Ìa'‘”	 Ìb‘” Ìb™” Ìc” Ìc
-” Ìc” Ìc” Ìc”% Ìc”( Ìc"”- Ìc'”. Ìc(‘”	 Ìd™” Ìe” Ìe” Ìe	” Ìe” Ìe”" Ìe”% Ìe!”) Ìe%”* Ìe&’” Ìf” Ìf’” Ìh” Ìh˜” Ìi” Ìi” Ìi	” Ìi” Ìi”# Ìi”? Ìi3”Ì@ Ìi4–” Ìj” Ìj” Ìj	” Ìj” Ìj” Ìj’” Ìk” Ìk’” Ìm” Ìm’” Ìn
-” Ìn” Ìo” Ìo” Ìo” Ìo” Ìo” Ìo” Ìo” Ìo”* Ìo&”+ Ìo'”3 Ìo/”4 Ìo0”5 Ìo1’” Ìq” Ìq™” Ìr” Ìr” Ìr” Ìr” Ìr” Ìr”  Ìr”" Ìr”$ Ìr ›” Ìs” Ìs” Ìs” Ìs” Ìs” Ìs”( Ìs"”) Ìs#”4 Ìs.”6 Ìs0”7 Ìs1Ü ” Ìt” Ìt” Ìt” Ìt” Ìt”" Ìt”# Ìt”' Ìt!”( Ìt"”* Ìt$”+ Ìu”/ Ìu”0 Ìu”5 Ìu”6 Ìu”ÌA Ìu”ÌC Ìu ”ÌD Ìu!”ÌL Ìu)”ÌM Ìu*”ÌQ Ìu.”ÌR Ìu/” Ìv” Ìv” Ìv” Ìv” Ìv”( Ìv ”* Ìv"”+ Ìv#”3 Ìv+”4 Ìv,”8 Ìv0”9 Ìv1”: Ìw”; Ìw‘”	 Ìx’” Ìz” Ìz–” Ì{” Ì{” Ì{” Ì{”" Ì{”$ Ì{ š” Ì|” Ì|” Ì|” Ì|” Ì|”" Ì|”# Ì|”' Ì|!”( Ì|"”* Ì|$’” Ì}”$ Ì}›” Ì~” Ì~” Ì~” Ì~”# Ì~”$ Ì~”2 Ì~*”3 Ì~+”7 Ì~/”8 Ì~0”9 Ì~1›” Ì” Ì” Ì” Ì”) Ì!”* Ì"”2 Ì*”3 Ì+”9 Ì1”: Ì2”; Ì3”” Ì€” Ì€” Ì€” Ì€	‘”	 Ì”” Ìƒ” Ìƒ” Ìƒ” Ìƒ’” Ì„” Ì„’” Ì†” Ì†”” Ì‡
-” Ì‡” Ì‡” Ì‡'’” Ìˆ”  Ìˆœ” Ì‰” Ì‰
-” Ì‰” Ì‰” Ì‰” Ì‰” Ì‰”! Ì‰”% Ì‰!”& Ì‰"”- Ì‰)”. Ì‰*–” ÌŠ” ÌŠ” ÌŠ” ÌŠ” ÌŠ” ÌŠÜ ” Ì‹” Ì‹	” Ì‹” Ì‹” Ì‹” Ì‹” Ì‹” Ì‹” Ì‹” Ì‹”  Ì‹”& Ì‹"”( Ì‹$”) Ì‹%”+ Ì‹'”- Ì‹)›” ÌŒ” ÌŒ” ÌŒ” ÌŒ” ÌŒ” ÌŒ”' ÌŒ!”( ÌŒ"”) ÌŒ#”* ÌŒ$”+ ÌŒ%Ÿ” Ì” Ì
-” Ì” Ì” Ì” Ì” Ì” Ì” Ì”" Ì”& Ì ”' Ì!”* Ì$”. Ì(”/ Ì)™” Ì” Ì
-” Ì” Ì” Ì” Ì” Ì”  Ì”+ Ì%‘”	 Ì™” Ì” Ì” Ì” Ì” Ì” Ì” Ì” Ì” Ì’” Ì‘” Ì‘‘” Ì“’” Ì”” Ì”
-˜” Ì”” Ì”
-” Ì½” Ì½
-” Ì½”" Ì½”# Ì½”/ Ì½!˜” Ì”” Ì”
-” Ì¾” Ì¾” Ì¾”# Ì¾”$ Ì¾”0 Ì¾"˜” Ì”” Ì”
-” Ì¿”! Ì¿”" Ì¿”+ Ì¿”, Ì¿”2 Ì¿$™” Ì”” Ì”
-” ÌÀ” ÌÀ” ÌÀ” ÌÀ”! ÌÀ ”# ÌÀ"”% ÌÀ$”” ÌÁ” ÌÁ
-” ÌÁ” ÌÁ™” ÌÂ” ÌÂ” ÌÂ” ÌÂ”) ÌÂ”* ÌÂ”3 ÌÂ'”ÌQ ÌÂ=”ÌS ÌÂ?š” ÌÃ
-” ÌÃ” ÌÃ”) ÌÃ”* ÌÃ”8 ÌÃ*”9 ÌÃ+”> ÌÃ0”? ÌÃ1”Ì@ ÌÃ2‘” ÌÄ	‘” ÌÅ’” ÌÆ” ÌÆ’” Ì•” Ì•’” Ì–” Ì–	’” Ì•” Ì•–” Ì–” Ì–	” Ì¯” Ì¯” Ì¯” Ì¯’” Ì•” Ì•” Ì–” Ì–	” Ì°” Ì°” Ì°” Ì°” Ì°” Ì°”  Ì°”" Ì°”( Ì°”* Ì°!”, Ì°#”. Ì°%’” Ì•” Ì•˜” Ì–” Ì–	” Ì±” Ì±” Ì±”( Ì±”) Ì± ”/ Ì±&’” Ì—” Ì—” Ì˜” Ì˜” Ì˜” Ì˜”! Ì˜”# Ì˜”' Ì˜”( Ì˜”2 Ì˜'”4 Ì˜)”? Ì˜4”ÌA Ì˜6”ÌJ Ì˜?”ÌL Ì˜ÌA’” Ì—” Ì—™” Ì˜” Ì˜” Ì™” Ì™” Ì™” Ì™”" Ì™"”$ Ì™$”& Ì™&—” Ìš” Ìš” Ìš” Ìš”" Ìš”' Ìš#”( Ìš$’” Ì›
-” Ì›’” Ì—” Ì—–” Ì˜” Ì˜” Ìœ” Ìœ” Ìœ” Ìœ’” Ì—” Ì—š” Ì˜” Ì˜” Ì” Ì” Ì” Ì”! Ì”# Ì”% Ì”' Ì’” Ì—” Ì—–” Ì˜” Ì˜” Ì”" Ì”# Ì”, Ì$’” Ì—” Ì—–” Ì˜” Ì˜” ÌŸ” ÌŸ”  ÌŸ”" ÌŸ’” Ì—” Ì—’” Ì˜” Ì˜’” Ì¡” Ì¡” Ì¢” Ì¢”# Ì¢”' Ì¢”( Ì¢”9 Ì¢%”: Ì¢&”; Ì¢'”< Ì¢(”Ì@ Ì¢,”ÌA Ì¢-”ÌB Ì¢.”ÌC Ì¢/”ÌG Ì¢3’” Ì¡” Ì¡–” Ì¢” Ì¢” Ì£” Ì£” Ì£” Ì£’” Ì¡” Ì¡˜” Ì¢” Ì¢” Ì¤” Ì¤” Ì¤”" Ì¤”# Ì¤”* Ì¤"’” Ì¡” Ì¡Ü ” Ì¢” Ì¢” Ì¥”" Ì¥”# Ì¥”' Ì¥”( Ì¥ ”9 Ì¥1”: Ì¥2”; Ì¥3”< Ì¥4”ÌE Ì¥=”ÌF Ì¥>”ÌG Ì¥?”ÌH Ì¥Ì@”ÌQ Ì¥ÌI’” Ì¡” Ì¡Ü ” Ì¢” Ì¢” Ì¦” Ì¦” Ì¦”! Ì¦”" Ì¦”3 Ì¦+”4 Ì¦,”5 Ì¦-”6 Ì¦.”; Ì¦3”< Ì¦4”ÌA Ì¦9”ÌB Ì¦:”ÌC Ì¦;”ÌD Ì¦<”ÌI Ì¦ÌA”ÌJ Ì¦ÌB”ÌO Ì¦ÌG’” Ì¡” Ì¡—” Ì¢” Ì¢” Ì§” Ì§” Ì§” Ì§”  Ì§š” Ì¨” Ì¨” Ì¨”& Ì¨"”) Ì¨%”* Ì¨&”. Ì¨*”/ Ì¨+”Ì@ Ì¨<”ÌA Ì¨=’” Ì©” Ì©–” Ìª” Ìª” Ìª” Ìª”* Ìª&”, Ìª(–” Ì«” Ì«” Ì«”* Ì«$”, Ì«&”- Ì«'‘” Ì¬’” Ì­
-” Ì­’” Ì¡” Ì¡’” Ì¢” Ì¢’” Ì•” Ì•’” Ì–” Ì–	™” Ì³” Ì³
-” Ì³” Ì³”! Ì³”" Ì³”+ Ì³%”ÌI Ì³;”ÌK Ì³=’”8 Ì´”ÌE Ì´‘” Ìµ™” Ìµ” Ìµ” Ìµ” Ìµ”& Ìµ"”' Ìµ#”0 Ìµ,”ÌN ÌµÌB”ÌP ÌµÌD•” Ì¶” Ì¶” Ì¶”# Ì¶”0 Ì¶‘” Ì·‘” Ì·˜”8 Ì¸”ÌE Ì¸”ÌL Ì¸”ÌN Ì¸”ÌZ Ì¸$”Ì\ Ì¸&”Ì_ Ì¸)”Ìa Ì¸+–”( Ì¹
-”, Ì¹”- Ì¹”9 Ì¹”; Ì¹”< Ì¹“”$ Ìº”% Ìº	”' Ìº•”( Ì¸”4 Ì¸$”6 Ì¸&”9 Ì¸)”; Ì¸+–”, Ì¹
-”0 Ì¹”1 Ì¹”= Ì¹”? Ì¹”Ì@ Ì¹’”( Ìº”) Ìº	‘” Ì»’” Ì”” Ì”
-‘” ÌÇ’” ÌÉ” ÌÉ’” ÌÊ”  ÌÊ’” ÌË” ÌË
-’” ÌÌ” ÌÌ
-–” ÌÌ” ÌÌ
-” Ìç”  Ìç”! Ìç”* Ìç ”” ÌÌ” ÌÌ
-” Ìè” Ìè”” ÌÌ” ÌÌ
-” Ìé” Ìé•” ÌÌ” ÌÌ
-” Ìê” Ìê” Ìê“” Ìë” Ìë”Ìƒ Ìë,“” Ìì” Ìì”Ì„ Ìì-“” Ìí” Ìí”Ì‚ Ìí+‘” Ìî”” ÌÌ” ÌÌ
-” Ìï”  Ìï˜” ÌÌ” ÌÌ
-” Ìğ” Ìğ” Ìğ”& Ìğ”' Ìğ”+ Ìğ!›” ÌÌ” ÌÌ
-” Ìñ” Ìñ” Ìñ”  Ìñ”% Ìñ#”' Ìñ%”* Ìñ0”, Ìñ2”. Ìñ4’” Ìò” Ìò™” Ìó” Ìó” Ìó”! Ìó”" Ìó”, Ìó$”/ Ìó'”4 Ìó,”5 Ìó-™” Ìô” Ìô” Ìô”! Ìô”" Ìô”* Ìô"”- Ìô%”0 Ìô(”1 Ìô)’” Ìõ” Ìõ’” ÌÍ” ÌÍ”” ÌÎ
-”  ÌÎ”! ÌÑ”- ÌÑ”” ÌÎ
-”  ÌÎ”! ÌÒ”0 ÌÒ˜”< ÌÏ”ÌD ÌÏ”ÌK ÌÏ”ÌM ÌÏ”ÌU ÌÏ”ÌW ÌÏ!”Ì[ ÌÏ%”Ì] ÌÏ'””, ÌÏ”4 ÌÏ”6 ÌÏ!”: ÌÏ%’” ÌÎ
-”  ÌÎÜ ”/ ÌÍ”3 ÌÍ”4 ÌÍ”ÌD ÌÍ%”ÌF ÌÍ'”Ì` ÌÓ”Ìa ÌÓ”Ìe ÌÓ”Ìg ÌÓ”Ìl ÌÓ*”Ìn ÌÓ,”Ìp ÌÓ.”Ìq ÌÓ/”Ìu ÌÓ3”Ìv ÌÓ4”Ì ÌÓ=”Ì€ ÌÓ>”Ì„ ÌÓÌB”Ì… ÌÓÌC”Ìˆ ÌÓÌF”Ì ÌÓÌK’” ÌÍ” ÌÍ’” Ì×
-” Ì×–” Ì×
-” Ì×” Ìä” Ìä” Ìä”$ ÌäÜ ” ÌØ” ÌØ” ÌØ” ÌØ”) ÌØ!”* ÌØ"”1 ÌØ)”5 ÌØ-”6 ÌØ.”: ÌØ2”; ÌØ3”ÌL ÌØÌD”ÌP ÌØÌH”ÌQ ÌØÌI”ÌU ÌØÌM”ÌV ÌØÌN”Ì` ÌØÌX”Ìb ÌØÌZ’”  ÌÙ”9 ÌÙ'’”  ÌÚ”% ÌÚ’”  ÌÙ”9 ÌÙ'–”  ÌÚ”% ÌÚ”& ÌÛ”+ ÌÛ”, ÌÛ”1 ÌÛ’” ÌÙ”5 ÌÙ'’” ÌÚ”! ÌÚœ”Ì@ Ìİ”ÌN Ìİ”ÌU Ìİ”ÌW Ìİ”Ìj Ìİ2”Ìl Ìİ4”Ìp Ìİ8”Ìq Ìİ9”Ì} ÌİÌE”Ì~ ÌİÌF”Ì ÌİÌV”Ì ÌİÌX˜”0 Ìİ”ÌC Ìİ2”ÌE Ìİ4”ÌI Ìİ8”ÌJ Ìİ9”ÌV ÌİÌE”ÌW ÌİÌF”Ìg ÌİÌV˜”, Ìİ”? Ìİ2”ÌA Ìİ4”ÌE Ìİ8”ÌF Ìİ9”ÌR ÌİÌE”ÌS ÌİÌF”Ìc ÌİÌV‘” Ìß‘” Ìß””+ Ìá”0 Ìá”1 Ìá”7 Ìá’”Ì@ Ìà”ÌL Ìà‘” Ìâ’” Ì×
-” Ì×’” ÌÕ”! ÌÕ’” ÌÖ” ÌÖ’” ÌÌ” ÌÌ
-’” ÌÊ” ÌÊ’” ÌË” ÌË
-‘” Ì÷ÔrG–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜÙ‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
- ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ì ‘”  ÌŸ ‘”  Ì  ‘”  Ì¡ ‘”  Ì¢ ‘”  Ì£ ‘”  Ì¤ ‘”  Ì¥ ‘”  Ì¦ ‘”  Ì§ ‘”  Ì¨ ‘”  Ì© ‘”  Ìª ‘”  Ì« ‘”  Ì¬ ‘”  Ì­ ‘”  Ì® ‘”  Ì¯ ‘”  Ì° ‘”  Ì± ‘”  Ì² ‘”  Ì³ ‘”  Ì´ ‘”  Ìµ ‘”  Ì¶ ‘”  Ì· ‘”  Ì¸ ‘”  Ì¹ ‘”  Ìº ‘”  Ì» ‘”  Ì¼ ‘”  Ì½ ‘”  Ì¾ ‘”  Ì¿ ‘”  ÌÀ ‘”  ÌÁ ‘”  ÌÂ ‘”  ÌÃ ‘”  ÌÄ ‘”  ÌÅ ‘”  ÌÆ ‘”  ÌÇ ‘”  ÌÈ ‘”  ÌÉ ‘”  ÌÊ ‘”  ÌË ‘”  ÌÌ ‘”  ÌÍ ‘”  ÌÎ ‘”  ÌÏ ‘”  ÌĞ ‘”  ÌÑ ‘”  ÌÒ ‘”  ÌÓ ‘”  ÌÔ ‘”  ÌÕ ‘”  ÌÖ ‘”  Ì× ‘”  ÌØ ‘”  ÌÙ ‘”  ÌÚ ‘”  ÌÛ ‘”  ÌÜ ‘”  Ìİ ‘”  ÌŞ ‘”  Ìß ‘”  Ìà ‘”  Ìá ‘”  Ìâ ‘”  Ìã ‘”  Ìä ‘”  Ìå ‘”  Ìæ ‘”  Ìç ‘”  Ìè ‘”  Ìé ‘”  Ìê ‘”  Ìë ‘”  Ìì ‘”  Ìí ‘”  Ìî ‘”  Ìï ‘”  Ìğ ‘”  Ìñ ‘”  Ìò ‘”  Ìó ‘”  Ìô ‘”  Ìõ ‘”  Ìö ‘”  Ì÷ ‘”  Ìø ‘”  Ìù ‘”  Ìú ‘”  Ìû ‘”  Ìü ‘”  Ìı ‘”  Ìş ‘”  Ìÿ ‘”  Í  ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í	 ‘”  Í
- ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í  ‘”  Í! ‘”  Í" ‘”  Í# ‘”  Í$ ‘”  Í% ‘”  Í& ‘”  Í' ‘”  Í( ‘”  Í) ‘”  Í* ‘”  Í+ ‘”  Í, ‘”  Í- ‘”  Í. ‘”  Í/ ‘”  Í0 ‘”  Í1 ‘”  Í2 ‘”  Í3 ‘”  Í4 ‘”  Í5 ‘”  Í6 ‘”  Í7 ‘”  Í8 ‘”  Í9 ‘”  Í: ‘”  Í; ‘”  Í< ‘”  Í= ‘”  Í> ‘”  Í? ‘”  Í@ ‘”  ÍA ‘”  ÍB ‘”  ÍC ‘”  ÍD ‘”  ÍE ‘”  ÍF ‘”  ÍG ‘”  ÍH ‘”  ÍI ‘”  ÍJ ‘”  ÍK ‘”  ÍL ‘”  ÍM ‘”  ÍN ‘”  ÍO ‘”  ÍP ‘”  ÍQ ‘”  ÍR ‘”  ÍS ‘”  ÍT ‘”  ÍU ‘”  ÍV ‘”  ÍW ‘”  ÍX ‘”  ÍY ‘”  ÍZ ‘”  Í[ ‘”  Í\ ‘”  Í] ‘”  Í^ ‘”  Í_ ‘”  Í` ‘”  Ía ‘”  Íb ‘”  Íc ‘”  Íd ‘”  Íe ‘”  Íf ‘”  Íg ‘”  Íh ‘”  Íi ‘”  Íj ‘”  Ík ‘”  Íl ‘”  Ím ‘”  Ín ‘”  Ío ‘”  Íp ‘”  Íq ‘”  Ír ‘”  Ís ‘”  Ít ‘”  Íu ‘”  Ív ‘”  Íw ‘”  Íx ‘”  Íy ‘”  Íz ‘”  Í{ ‘”  Í| ‘”  Í} ‘”  Í~ ‘”  Í ‘”  Í€ ‘”  Í ‘”  Í‚ ‘”  Íƒ ‘”  Í„ ‘”  Í… ‘”  Í† ‘”  Í‡ ‘”  Íˆ ‘”  Í‰ ‘”  ÍŠ ‘”  Í‹ ‘”  ÍŒ ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í‘ ‘”  Í’ ‘”  Í“ ‘”  Í” ‘”  Í• ‘”  Í– ‘”  Í— ‘”  Í˜ ‘”  Í™ ‘”  Íš ‘”  Í› ‘”  Íœ ‘”  Í ‘”  Í ‘”  ÍŸ ‘”  Í  ‘”  Í¡ ‘”  Í¢ ‘”  Í£ ‘”  Í¤ ‘”  Í¥ ‘”  Í¦ ‘”  Í§ ‘”  Í¨ ‘”  Í© ‘”  Íª ‘”  Í« ‘”  Í¬ ‘”  Í­ ‘”  Í® ‘”  Í¯ ‘”  Í° ‘”  Í± ‘”  Í² ‘”  Í³ ‘”  Í´ ‘”  Íµ ‘”  Í¶ ‘”  Í· ‘”  Í¸ ‘”  Í¹ ‘”  Íº ‘”  Í» ‘”  Í¼ ‘”  Í½ ‘”  Í¾ ‘”  Í¿ ‘”  ÍÀ ‘”  ÍÁ ‘”  ÍÂ ‘”  ÍÃ ‘”  ÍÄ ‘”  ÍÅ ‘”  ÍÆ ‘”  ÍÇ ‘”  ÍÈ ‘”  ÍÉ ‘”  ÍÊ ‘”  ÍË ‘”  ÍÌ ‘”  ÍÍ ‘”  ÍÎ ‘”  ÍÏ ‘”  ÍĞ ‘”  ÍÑ ‘”  ÍÒ ‘”  ÍÓ ‘”  ÍÔ ‘”  ÍÕ ‘”  ÍÖ ‘”  Í× ‘”  ÍØ ÔrH’§missing¦pluginÃ¦genAbcÂÔ  ÔrI”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache›ÔrJ•¤type¥start£endªspecifiers¦source±ImportDeclarationÍîÍ‘ÔrK”¤type¥start£end¥local¶ImportDefaultSpecifierÍõÍıÔrL”¤type¥start£end¤nameªIdentifierÍõÍı¨NewsItemÔrM•¤type¥start£end¥value£raw§LiteralÍÍª./NewsItem¬'./NewsItem'J±ImportDeclarationÍÍ@‘K¶ImportDefaultSpecifierÍÍ'LªIdentifierÍÍ'®LoadMoreLayoutM§LiteralÍ-Í?°./LoadMoreLayout²'./LoadMoreLayout'J±ImportDeclarationÍBÍx‘K¶ImportDefaultSpecifierÍIÍRLªIdentifierÍIÍR©ConstantsM§LiteralÍXÍw½../common/constants/Constants¿'../common/constants/Constants'J±ImportDeclarationÍzÍ±‘K¶ImportDefaultSpecifierÍÍLªIdentifierÍÍ­NewsViewModelM§LiteralÍ”Í°º../viewmodel/NewsViewModel¼'../viewmodel/NewsViewModel'J±ImportDeclarationÍ³Íé‘ÔrN•¤type¥start£end¨imported¥local¯ImportSpecifierÍ¼ÍÅLªIdentifierÍ¼ÍÅ©showToastLªIdentifierÍ¼ÍÅ©showToastM§LiteralÍÍÍè¹../common/utils/ToastUtil»'../common/utils/ToastUtil'J±ImportDeclarationÍëÍ‘K¶ImportDefaultSpecifierÍòÍÿLªIdentifierÍòÍÿ­FailureLayoutM§LiteralÍÍ¯./FailureLayout±'./FailureLayout'J±ImportDeclarationÍÍE‘K¶ImportDefaultSpecifierÍ Í-LªIdentifierÍ Í-­LoadingLayoutM§LiteralÍ3ÍD¯./LoadingLayout±'./LoadingLayout'J±ImportDeclarationÍGÍq‘K¶ImportDefaultSpecifierÍNÍZLªIdentifierÍNÍZ¬NoMoreLayoutM§LiteralÍ`Íp®./NoMoreLayout°'./NoMoreLayout'J±ImportDeclarationÍsÍ¸‘K¶ImportDefaultSpecifierÍzÍLªIdentifierÍzÍ´RefreshListViewModelM§LiteralÍ”Í·Ù!../viewmodel/RefreshListViewModelÙ#'../viewmodel/RefreshListViewModel'J±ImportDeclarationÍºÍë‘K¶ImportDefaultSpecifierÍÁÍÌLªIdentifierÍÁÍÌ«preferencesM§LiteralÍÒÍê¶@ohos.data.preferences¸"@ohos.data.preferences"J±ImportDeclarationÍíÍ(‘N¯ImportSpecifierÍöÍLªIdentifierÍöÍ­GlobalContextLªIdentifierÍöÍ­GlobalContextM§LiteralÍÍ'º../viewmodel/GlobalContext¼'../viewmodel/GlobalContext'

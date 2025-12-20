@@ -1,1049 +1,0 @@
-Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚ?Nif (!("finalizeConstruction" in ViewPU.prototype)) {
-    Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
-}
-import router from '@ohos.router';
-import preferences from "@ohos.data.preferences";
-import { ProductItem, products } from '../zonghezuoye/ListPage';
-class ProductDetailPage extends ViewPU {
-    constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
-        super(parent, __localStorage, elmtId, extraInfo);
-        if (typeof paramsLambda === "function") {
-            this.paramsGenerator_ = paramsLambda;
-        }
-        this.__productId = new ObservedPropertySimplePU(0, this, "productId");
-        this.__product = new ObservedPropertyObjectPU(null, this, "product");
-        this.__isFavorite = new ObservedPropertySimplePU(false, this, "isFavorite");
-        this.__name = new ObservedPropertySimplePU('', this, "name");
-        this.__price = new ObservedPropertySimplePU(0, this, "price");
-        this.__rating = new ObservedPropertySimplePU(0, this, "rating");
-        this.__image = new ObservedPropertyObjectPU({ "id": 16777324, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }, this, "image");
-        this.__message = new ObservedPropertySimplePU(true, this, "message");
-        this.context = this.getUIContext().getHostContext();
-        this.preferences = preferences.getPreferencesSync(this.context, { name: 'favoritePrefs' });
-        this.setInitiallyProvidedValue(params);
-        this.finalizeConstruction();
-    }
-    setInitiallyProvidedValue(params) {
-        if (params.productId !== undefined) {
-            this.productId = params.productId;
-        }
-        if (params.product !== undefined) {
-            this.product = params.product;
-        }
-        if (params.isFavorite !== undefined) {
-            this.isFavorite = params.isFavorite;
-        }
-        if (params.name !== undefined) {
-            this.name = params.name;
-        }
-        if (params.price !== undefined) {
-            this.price = params.price;
-        }
-        if (params.rating !== undefined) {
-            this.rating = params.rating;
-        }
-        if (params.image !== undefined) {
-            this.image = params.image;
-        }
-        if (params.message !== undefined) {
-            this.message = params.message;
-        }
-        if (params.context !== undefined) {
-            this.context = params.context;
-        }
-        if (params.preferences !== undefined) {
-            this.preferences = params.preferences;
-        }
-    }
-    updateStateVars(params) {
-    }
-    purgeVariableDependenciesOnElmtId(rmElmtId) {
-        this.__productId.purgeDependencyOnElmtId(rmElmtId);
-        this.__product.purgeDependencyOnElmtId(rmElmtId);
-        this.__isFavorite.purgeDependencyOnElmtId(rmElmtId);
-        this.__name.purgeDependencyOnElmtId(rmElmtId);
-        this.__price.purgeDependencyOnElmtId(rmElmtId);
-        this.__rating.purgeDependencyOnElmtId(rmElmtId);
-        this.__image.purgeDependencyOnElmtId(rmElmtId);
-        this.__message.purgeDependencyOnElmtId(rmElmtId);
-    }
-    aboutToBeDeleted() {
-        this.__productId.aboutToBeDeleted();
-        this.__product.aboutToBeDeleted();
-        this.__isFavorite.aboutToBeDeleted();
-        this.__name.aboutToBeDeleted();
-        this.__price.aboutToBeDeleted();
-        this.__rating.aboutToBeDeleted();
-        this.__image.aboutToBeDeleted();
-        this.__message.aboutToBeDeleted();
-        SubscriberManager.Get().delete(this.id__());
-        this.aboutToBeDeletedInternal();
-    }
-    get productId() {
-        return this.__productId.get();
-    }
-    set productId(newValue) {
-        this.__productId.set(newValue);
-    }
-    get product() {
-        return this.__product.get();
-    }
-    set product(newValue) {
-        this.__product.set(newValue);
-    }
-    get isFavorite() {
-        return this.__isFavorite.get();
-    }
-    set isFavorite(newValue) {
-        this.__isFavorite.set(newValue);
-    }
-    get name() {
-        return this.__name.get();
-    }
-    set name(newValue) {
-        this.__name.set(newValue);
-    }
-    get price() {
-        return this.__price.get();
-    }
-    set price(newValue) {
-        this.__price.set(newValue);
-    }
-    get rating() {
-        return this.__rating.get();
-    }
-    set rating(newValue) {
-        this.__rating.set(newValue);
-    }
-    get image() {
-        return this.__image.get();
-    }
-    set image(newValue) {
-        this.__image.set(newValue);
-    }
-    get message() {
-        return this.__message.get();
-    }
-    set message(newValue) {
-        this.__message.set(newValue);
-    }
-    // åŠ è½½æ”¶è—çŠ¶æ€
-    loadFavoriteStatus() {
-        const favoriteList = this.preferences.getSync('favorites', []);
-        this.isFavorite = favoriteList.includes(this.productId);
-    }
-    // aboutToAppear(): void {
-    //   const params = router.getParams();
-    //
-    //   if (params) {
-    //     const routeParams = params as ListPage;
-    //     const productId = parseInt(routeParams.id || '0');
-    //     this.productId = productId;
-    //     this.name = routeParams.name || '';
-    //     this.price = parseFloat(routeParams.price || '0');
-    //     this.rating = parseFloat(routeParams.rating || '0');
-    //     const foundProduct = products.find(p => p.id === productId);
-    //     if (foundProduct) {
-    //       this.image = foundProduct.image;
-    //       // ç›´æ¥ä½¿ç”¨åŸå•†å“çš„ Resource å¯¹è±¡
-    //     } else {
-    //       // å¦‚æœæ‰¾ä¸åˆ°å¯¹åº”å•†å“ï¼Œä½¿ç”¨é»˜è®¤å›¾ç‰‡
-    //       this.image = $r('app.media.earphone');
-    //     }
-    //     // åŠ è½½å•†å“ä¿¡æ¯
-    //     this.loadProduct();
-    //     // æ£€æŸ¥æ˜¯å¦å·²æ”¶è—
-    //     this.checkFavorite();
-    //   }
-    // }
-    // é¡µé¢åŠ è½½æ—¶è·å–è·¯ç”±å‚æ•°å¹¶åˆå§‹åŒ–æ•°æ®
-    aboutToAppear() {
-        const params = router.getParams(); //è·å–è·¯ç”±å‚æ•°
-        if (params) {
-            const routeParams = params;
-            //é€šè¿‡ router.getParams() è·å–ä¼ é€’ç»™é¡µé¢çš„è·¯ç”±å‚æ•°å°†å‚æ•°è½¬æ¢ä¸º ListPage æ¥å£ç±»å‹
-            this.productId = parseInt(routeParams.id || '0');
-            //ä»è·¯ç”±å‚æ•°ä¸­è·å–äº§å“IDï¼Œå¦‚æœä¸å­˜åœ¨åˆ™é»˜è®¤ä¸º'0'
-            const foundProduct = products.find(p => p.id === this.productId);
-            //åœ¨å…¨å±€ products æ•°ç»„ä¸­æŸ¥æ‰¾åŒ¹é… productId çš„äº§å“
-            if (foundProduct) { //å¦‚æœæ‰¾åˆ°åŒ¹é…çš„äº§å“ï¼Œç›´æ¥ä½¿ç”¨è¯¥äº§å“å¯¹è±¡
-                this.product = foundProduct;
-            }
-            else { //å¦‚æœæœªæ‰¾åˆ°ï¼Œåˆ™æ ¹æ®è·¯ç”±å‚æ•°åˆ›å»ºæ–°çš„ ProductItem å®ä¾‹
-                // ä½¿ç”¨é»˜è®¤å€¼åˆ›å»ºäº§å“
-                this.product = new ProductItem(this.productId, routeParams.name || '', parseFloat(routeParams.price || '0'), parseFloat(routeParams.rating || '0'), { "id": 16777324, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" });
-            }
-            this.loadFavoriteStatus();
-        }
-    }
-    //ä¿å­˜æ”¶è—çŠ¶æ€
-    saveFavoriteStatus() {
-        let favoriteList = this.preferences.getSync('favorites', []);
-        // åˆ¤æ–­æ˜¯å¦å·²æ”¶è—
-        if (this.isFavorite) {
-            //å¦‚æœæœªæ”¶è—
-            if (!favoriteList.includes(this.productId)) {
-                // æ·»åŠ åˆ°æ”¶è—
-                favoriteList.push(this.productId);
-            }
-        }
-        else {
-            // ..filteræ˜¯ç­›é€‰
-            favoriteList = favoriteList.filter(id => id !== this.productId);
-        }
-        this.preferences.putSync('favorites', favoriteList);
-        this.preferences.flushSync();
-    }
-    // åŠ è½½å•†å“ä¿¡æ¯
-    loadProduct() {
-        this.product = new ProductItem(this.productId, this.name, this.price, this.rating, this.image);
-        this.checkFavorite();
-    }
-    // æ£€æŸ¥æ˜¯å¦å·²æ”¶è—
-    checkFavorite() {
-        // å¯å¯¹æ¥æœ¬åœ°å­˜å‚¨æˆ–ç”¨æˆ·åå¥½è®¾ç½®
-        this.loadFavoriteStatus();
-    }
-    // åˆ‡æ¢æ”¶è—çŠ¶æ€
-    toggleFavorite() {
-        this.isFavorite = !this.isFavorite;
-        this.saveFavoriteStatus();
-    }
-    // ä¿å­˜æ”¶è—çŠ¶æ€
-    // private async saveFavoriteStatus(): Promise<void> {
-    //   try {
-    //     if (!this.pref) {
-    //       this.pref = await dataPreferences.getPreferences(getContext(this), 'favoritePrefs');
-    //     }
-    //     if (this.pref) {
-    //       let favoriteList = (await this.pref.get('favorites', [])) as Array<number>;
-    //
-    //       if (this.isFavorite) {
-    //         if (!favoriteList.includes(this.productId)) {
-    //           favoriteList.push(this.productId);
-    //         }
-    //       } else {
-    //         favoriteList = favoriteList.filter(id => id !== this.productId);
-    //       }
-    //
-    //       await this.pref.put('favorites', favoriteList);
-    //       await this.pref.flush();
-    //     }
-    //   } catch (error) {
-    //     console.error('ä¿å­˜æ”¶è—çŠ¶æ€å¤±è´¥:', error);
-    //   }
-    // }
-    initialRender() {
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/zonghezuoye/ProductDetailPage.ets(158:5)", "entry");
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.debugLine("entry/src/main/ets/pages/zonghezuoye/ProductDetailPage.ets(159:7)", "entry");
-            Row.alignSelf(ItemAlign.Start);
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777299, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/zonghezuoye/ProductDetailPage.ets(160:9)", "entry");
-            Image.width(24);
-            Image.height(24);
-            Image.margin({ top: 10, left: 20 });
-            Image.onClick(() => {
-                router.back();
-            });
-        }, Image);
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // å•†å“å›¾ç‰‡
-            Image.create(this.product?.image);
-            Image.debugLine("entry/src/main/ets/pages/zonghezuoye/ProductDetailPage.ets(169:7)", "entry");
-            // å•†å“å›¾ç‰‡
-            Image.width('100%');
-            // å•†å“å›¾ç‰‡
-            Image.height(300);
-            // å•†å“å›¾ç‰‡
-            Image.objectFit(ImageFit.Contain);
-            // å•†å“å›¾ç‰‡
-            Image.margin({ top: 20, bottom: 20 });
-        }, Image);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create(this.product?.name || '');
-            Text.debugLine("entry/src/main/ets/pages/zonghezuoye/ProductDetailPage.ets(175:7)", "entry");
-            Text.fontSize(24);
-            Text.fontWeight(FontWeight.Bold);
-            Text.margin({ bottom: 10 });
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create(`${this.product?.price}å…ƒ`);
-            Text.debugLine("entry/src/main/ets/pages/zonghezuoye/ProductDetailPage.ets(180:7)", "entry");
-            Text.fontColor('#ff5722');
-            Text.fontSize(20);
-            Text.fontWeight(FontWeight.Bold);
-            Text.margin({ bottom: 20 });
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.debugLine("entry/src/main/ets/pages/zonghezuoye/ProductDetailPage.ets(186:7)", "entry");
-            Row.justifyContent(FlexAlign.SpaceBetween);
-            Row.width('100%');
-            Row.margin({ bottom: 20 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create(`${this.product?.rating}æ˜Ÿ`);
-            Text.debugLine("entry/src/main/ets/pages/zonghezuoye/ProductDetailPage.ets(187:9)", "entry");
-            Text.fontColor('#666');
-            Text.fontSize(16);
-            Text.margin({ left: 20 });
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Button.createWithLabel(this.isFavorite ? 'å·²æ”¶è—' : 'æ”¶è—');
-            Button.debugLine("entry/src/main/ets/pages/zonghezuoye/ProductDetailPage.ets(192:9)", "entry");
-            Button.width(100);
-            Button.height(32);
-            Button.fontSize(14);
-            Button.margin({ right: 20 });
-            Button.type(ButtonType.Capsule);
-            Button.backgroundColor(this.isFavorite ? '#ff5722' : '#f5f5f5');
-            Button.fontColor(this.isFavorite ? Color.White : Color.Black);
-            Button.onClick(() => {
-                this.toggleFavorite(); //åˆ‡æ¢æ”¶è—çŠ¶æ€
-            });
-        }, Button);
-        Button.pop();
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // å•†å“æè¿°åŒºåŸŸ
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/zonghezuoye/ProductDetailPage.ets(208:7)", "entry");
-            // å•†å“æè¿°åŒºåŸŸ
-            Column.width('100%');
-            // å•†å“æè¿°åŒºåŸŸ
-            Column.margin({ bottom: 80 });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('å•†å“æè¿°:');
-            Text.debugLine("entry/src/main/ets/pages/zonghezuoye/ProductDetailPage.ets(209:9)", "entry");
-            Text.fontSize(16);
-            Text.fontWeight(FontWeight.Bold);
-            Text.margin({ bottom: 8 });
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('è¿™æ˜¯ä¸€æ¬¾é«˜å“è´¨çš„å•†å“ï¼Œå…·æœ‰å‡ºè‰²çš„æ€§èƒ½å’Œç”¨æˆ·ä½“éªŒã€‚');
-            Text.debugLine("entry/src/main/ets/pages/zonghezuoye/ProductDetailPage.ets(214:9)", "entry");
-            Text.fontSize(14);
-            Text.lineHeight(20);
-            Text.maxLines(5);
-            Text.textOverflow({ overflow: TextOverflow.Ellipsis });
-        }, Text);
-        Text.pop();
-        // å•†å“æè¿°åŒºåŸŸ
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // è´­ç‰©è½¦æŒ‰é’®
-            Button.createWithLabel(this.message ? "æ·»åŠ åˆ°è´­ç‰©è½¦" : "å·²æ·»åŠ ");
-            Button.debugLine("entry/src/main/ets/pages/zonghezuoye/ProductDetailPage.ets(224:9)", "entry");
-            // è´­ç‰©è½¦æŒ‰é’®
-            Button.width('80%');
-            // è´­ç‰©è½¦æŒ‰é’®
-            Button.height(40);
-            // è´­ç‰©è½¦æŒ‰é’®
-            Button.fontSize(16);
-            // è´­ç‰©è½¦æŒ‰é’®
-            Button.type(ButtonType.Capsule);
-            // è´­ç‰©è½¦æŒ‰é’®
-            Button.backgroundColor('#ff5722');
-            // è´­ç‰©è½¦æŒ‰é’®
-            Button.fontColor(Color.White);
-            // è´­ç‰©è½¦æŒ‰é’®
-            Button.onClick(() => {
-                this.message = !this.message;
-                console.log('å·²æ·»åŠ åˆ°è´­ç‰©è½¦');
-                if (this.product) { //
-                    console.log(`å•†å“ "${this.product.name}" å·²æ·»åŠ åˆ°è´­ç‰©è½¦`);
-                }
-            });
-        }, Button);
-        // è´­ç‰©è½¦æŒ‰é’®
-        Button.pop();
-        Column.pop();
-    }
-    rerender() {
-        this.updateDirtyElements();
-    }
-    static getEntryName() {
-        return "ProductDetailPage";
-    }
-}
-registerNamedRoute(() => new ProductDetailPage(undefined, {}), "", { bundleName: "com.example.newsrelease", moduleName: "entry", pagePath: "pages/zonghezuoye/ProductDetailPage", pageFullPath: "entry/src/main/ets/pages/zonghezuoye/ProductDetailPage", integratedHsp: "false", moduleType: "followWithHap" });
-//# sourceMappingURL=ProductDetailPage.js.mapÂ“ÙQ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsÙ[ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.data.preferences.d.tsÙmD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\pages\zonghezuoye\ListPage.etsÙvD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\pages\zonghezuoye\ProductDetailPage.etsÔrBšªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo°belongModulePath¬shouldEmitJs¥entryÃÂÙAD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entryÙ;D:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql¥entry¥1.0.0Ô  ÙAD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entryÃÃÚO´import router from '@ohos.router'
-import { preferences } from '@kit.ArkData';
-import { common } from '@kit.AbilityKit';
-import { ProductItem, products } from '../zonghezuoye/ListPage';
-
-// å®šä¹‰è·¯ç”±å‚æ•°æ¥å£
-interface ListPage {
-  id: string;
-  name: string;
-  price: string;
-  rating: string;
-  image: string;
-}
-// å•†å“è¯¦æƒ…é¡µé¢ç»„ä»¶
-@Entry
-@Component
-struct ProductDetailPage {  // ç»„ä»¶çŠ¶æ€å˜é‡
-  @State private productId: number = 0;
-  @State private product: ProductItem | null = null;
-  @State private isFavorite: boolean = false;
-  @State private name: string = '';
-  @State private price: number = 0;
-  @State private rating: number = 0;
-  @State private image: Resource = $r('app.media.earphone'); // è®¾ç½®é»˜è®¤å€¼
-  @State private message: boolean = true ;
-
-  private context = this.getUIContext().getHostContext() as common.UIAbilityContext;
-  private preferences =preferences.getPreferencesSync(this.context, { name: 'favoritePrefs' });
-
-  // åŠ è½½æ”¶è—çŠ¶æ€
-  private loadFavoriteStatus(): void {
-
-      const favoriteList = this.preferences.getSync('favorites', []) as Array<number>;
-      this.isFavorite = favoriteList.includes(this.productId);
-
-  }
-
-  // aboutToAppear(): void {
-  //   const params = router.getParams();
-  //
-  //   if (params) {
-  //     const routeParams = params as ListPage;
-  //     const productId = parseInt(routeParams.id || '0');
-  //     this.productId = productId;
-  //     this.name = routeParams.name || '';
-  //     this.price = parseFloat(routeParams.price || '0');
-  //     this.rating = parseFloat(routeParams.rating || '0');
-  //     const foundProduct = products.find(p => p.id === productId);
-  //     if (foundProduct) {
-  //       this.image = foundProduct.image;
-  //       // ç›´æ¥ä½¿ç”¨åŸå•†å“çš„ Resource å¯¹è±¡
-  //     } else {
-  //       // å¦‚æœæ‰¾ä¸åˆ°å¯¹åº”å•†å“ï¼Œä½¿ç”¨é»˜è®¤å›¾ç‰‡
-  //       this.image = $r('app.media.earphone');
-  //     }
-  //     // åŠ è½½å•†å“ä¿¡æ¯
-  //     this.loadProduct();
-  //     // æ£€æŸ¥æ˜¯å¦å·²æ”¶è—
-  //     this.checkFavorite();
-  //   }
-  // }
-
-  // é¡µé¢åŠ è½½æ—¶è·å–è·¯ç”±å‚æ•°å¹¶åˆå§‹åŒ–æ•°æ®
-  aboutToAppear(): void {
-    const params = router.getParams();//è·å–è·¯ç”±å‚æ•°
-    if (params) {
-      const routeParams = params as ListPage;
-      //é€šè¿‡ router.getParams() è·å–ä¼ é€’ç»™é¡µé¢çš„è·¯ç”±å‚æ•°å°†å‚æ•°è½¬æ¢ä¸º ListPage æ¥å£ç±»å‹
-      this.productId = parseInt(routeParams.id || '0');
-      //ä»è·¯ç”±å‚æ•°ä¸­è·å–äº§å“IDï¼Œå¦‚æœä¸å­˜åœ¨åˆ™é»˜è®¤ä¸º'0'
-      const foundProduct = products.find(p => p.id === this.productId);
-      //åœ¨å…¨å±€ products æ•°ç»„ä¸­æŸ¥æ‰¾åŒ¹é… productId çš„äº§å“
-      if (foundProduct) {//å¦‚æœæ‰¾åˆ°åŒ¹é…çš„äº§å“ï¼Œç›´æ¥ä½¿ç”¨è¯¥äº§å“å¯¹è±¡
-        this.product = foundProduct;
-      } else {//å¦‚æœæœªæ‰¾åˆ°ï¼Œåˆ™æ ¹æ®è·¯ç”±å‚æ•°åˆ›å»ºæ–°çš„ ProductItem å®ä¾‹
-        // ä½¿ç”¨é»˜è®¤å€¼åˆ›å»ºäº§å“
-        this.product = new ProductItem(
-          this.productId,
-          routeParams.name || '',
-          parseFloat(routeParams.price || '0'),
-          parseFloat(routeParams.rating || '0'),
-          $r('app.media.earphone')
-        );
-      }
-      this.loadFavoriteStatus();
-    }
-  }
-
-  //ä¿å­˜æ”¶è—çŠ¶æ€
-  private saveFavoriteStatus(): void {
-
-    let favoriteList = this.preferences.getSync('favorites', []) as Array<number>;
-    // åˆ¤æ–­æ˜¯å¦å·²æ”¶è—
-    if (this.isFavorite) {
-      //å¦‚æœæœªæ”¶è—
-      if (!favoriteList.includes(this.productId)) {
-        // æ·»åŠ åˆ°æ”¶è—
-        favoriteList.push(this.productId);
-      }
-    } else {
-      // ..filteræ˜¯ç­›é€‰
-      favoriteList = favoriteList.filter(id => id !== this.productId);
-    }
-
-    this.preferences.putSync('favorites', favoriteList);
-    this.preferences.flushSync();
-
-  }
-
-  // åŠ è½½å•†å“ä¿¡æ¯
-  loadProduct(): void {
-    this.product = new ProductItem(
-      this.productId,
-      this.name,
-      this.price,
-      this.rating,
-      this.image
-    );
-    this.checkFavorite();
-  }
-
-  // æ£€æŸ¥æ˜¯å¦å·²æ”¶è—
-  checkFavorite(): void {
-    // å¯å¯¹æ¥æœ¬åœ°å­˜å‚¨æˆ–ç”¨æˆ·åå¥½è®¾ç½®
-    this.loadFavoriteStatus();
-  }
-  // åˆ‡æ¢æ”¶è—çŠ¶æ€
-  toggleFavorite(): void {
-    this.isFavorite = !this.isFavorite;
-    this.saveFavoriteStatus();
-  }
-  // ä¿å­˜æ”¶è—çŠ¶æ€
-  // private async saveFavoriteStatus(): Promise<void> {
-  //   try {
-  //     if (!this.pref) {
-  //       this.pref = await dataPreferences.getPreferences(getContext(this), 'favoritePrefs');
-  //     }
-  //     if (this.pref) {
-  //       let favoriteList = (await this.pref.get('favorites', [])) as Array<number>;
-  //
-  //       if (this.isFavorite) {
-  //         if (!favoriteList.includes(this.productId)) {
-  //           favoriteList.push(this.productId);
-  //         }
-  //       } else {
-  //         favoriteList = favoriteList.filter(id => id !== this.productId);
-  //       }
-  //
-  //       await this.pref.put('favorites', favoriteList);
-  //       await this.pref.flush();
-  //     }
-  //   } catch (error) {
-  //     console.error('ä¿å­˜æ”¶è—çŠ¶æ€å¤±è´¥:', error);
-  //   }
-  // }
-
-  build() {
-    Column() {
-      Row() {
-        Image($r('app.media.ic_back'))
-          .width(24)
-          .height(24)
-          .margin({ top: 10, left: 20 })
-          .onClick(() => {
-            router.back();
-          })
-      }.alignSelf(ItemAlign.Start)
-      // å•†å“å›¾ç‰‡
-      Image(this.product?.image)
-        .width('100%')
-        .height(300)
-        .objectFit(ImageFit.Contain)
-        .margin({ top: 20, bottom: 20 })
-
-      Text(this.product?.name || '')
-        .fontSize(24)
-        .fontWeight(FontWeight.Bold)
-        .margin({ bottom: 10 })
-
-      Text(`${this.product?.price}å…ƒ`)
-        .fontColor('#ff5722')
-        .fontSize(20)
-        .fontWeight(FontWeight.Bold)
-        .margin({ bottom: 20 })
-
-      Row() {
-        Text(`${this.product?.rating}æ˜Ÿ`)
-          .fontColor('#666')
-          .fontSize(16)
-          .margin({ left: 20 })
-
-        Button(this.isFavorite ? 'å·²æ”¶è—' : 'æ”¶è—')
-          .width(100)
-          .height(32)
-          .fontSize(14)
-          .margin({ right: 20 })
-          .type(ButtonType.Capsule)
-          .backgroundColor(this.isFavorite ? '#ff5722' : '#f5f5f5')
-          .fontColor(this.isFavorite ? Color.White : Color.Black)
-          .onClick(() => {
-            this.toggleFavorite();//åˆ‡æ¢æ”¶è—çŠ¶æ€
-          })
-      }
-      .justifyContent(FlexAlign.SpaceBetween)
-      .width('100%')
-      .margin({ bottom: 20 })
-      // å•†å“æè¿°åŒºåŸŸ
-      Column() {
-        Text('å•†å“æè¿°:')
-          .fontSize(16)
-          .fontWeight(FontWeight.Bold)
-          .margin({ bottom: 8 })
-
-        Text('è¿™æ˜¯ä¸€æ¬¾é«˜å“è´¨çš„å•†å“ï¼Œå…·æœ‰å‡ºè‰²çš„æ€§èƒ½å’Œç”¨æˆ·ä½“éªŒã€‚')
-          .fontSize(14)
-          .lineHeight(20)
-          .maxLines(5)
-          .textOverflow({ overflow: TextOverflow.Ellipsis })
-      }
-      .width('100%')
-      .margin({ bottom: 80})
-
-      // è´­ç‰©è½¦æŒ‰é’®
-        Button(this.message?"æ·»åŠ åˆ°è´­ç‰©è½¦":"å·²æ·»åŠ ")
-          .width('80%')
-          .height(40)
-          .fontSize(16)
-          .type(ButtonType.Capsule)
-          .backgroundColor('#ff5722')
-          .fontColor(Color.White)
-
-          .onClick(() => {
-            this.message = !this.message;
-            console.log('å·²æ·»åŠ åˆ°è´­ç‰©è½¦');
-
-            if (this.product) { //
-              console.log(`å•†å“ "${this.product.name}" å·²æ·»åŠ åˆ°è´­ç‰©è½¦`);
-
-            }
-          })
-    }
-  }
-}
-// ProductDetailPage.ets
-// ProductDetailPage.ets
-// // ProductDetailPage.ets
-//
-// // å®šä¹‰ ProductItem ç±»
-// // class ProductItem {
-// //   id: number;
-// //   name: string;
-// //   price: number;
-// //   rating: number;
-// //   image: Resource;
-// //
-// //   constructor(id: number, name: string, price: number, rating: number, image: Resource) {
-// //     this.id = id;
-// //     this.name = name;
-// //     this.price = price;
-// //     this.rating = rating;
-// //     this.image = image;
-// //   }
-// // }
-//
-// ProductDetailPage.ets
-// import router from '@ohos.router';
-// import prompt from '@system.prompt';
-// import preferences from '@ohos.data.preferences';
-// import { ProductItem, products } from '../zonghezuoye/ListPage';
-//
-// interface ListPage {
-//   id: string;
-//   name: string;
-//   price: string;
-//   rating: string;
-//   image: string;
-// }
-//
-// @Entry
-// @Component
-// struct ProductDetailPage {
-//   @State private productId: number = 0;
-//   @State private product: ProductItem | null = null;
-//   @State private isFavorite: boolean = false;
-//   @State private name: string = '';
-//   @State private price: number = 0;
-//   @State private rating: number = 0;
-//   @State private image: Resource = $r('app.media.earphone');
-//
-//   // é¡µé¢åŠ è½½æ—¶è·å–è·¯ç”±å‚æ•°å¹¶åˆå§‹åŒ–æ•°æ®
-//   aboutToAppear(): void {
-//     const params = router.getParams();
-//
-//     if (params) {
-//       const routeParams = params as ListPage;
-//       const productId = parseInt(routeParams.id || '0');
-//       this.productId = productId;
-//       this.name = routeParams.name || '';
-//       this.price = parseFloat(routeParams.price || '0');
-//       this.rating = parseFloat(routeParams.rating || '0');
-//
-//       // æ ¹æ® productId ä»å…¨å±€ products æ•°ç»„ä¸­æŸ¥æ‰¾å¯¹åº”çš„å•†å“
-//       const foundProduct = products.find(p => p.id === productId);
-//       if (foundProduct) {
-//         this.image = foundProduct.image;
-//         // æ£€æŸ¥æ˜¯å¦å·²æ”¶è—
-//         this.checkFavorite(productId);
-//       } else {
-//         this.image = $r('app.media.earphone');
-//       }
-//
-//       this.loadProduct();
-//     }
-//   }
-//
-//   loadProduct(): void {
-//     this.product = new ProductItem(
-//       this.productId,
-//       this.name,
-//       this.price,
-//       this.rating,
-//       this.image
-//     );
-//   }
-//
-//   // æ£€æŸ¥å•†å“æ˜¯å¦å·²æ”¶è—
-//   checkFavorite(productId: number): void {
-//     try {
-//       const context = getContext(this);
-//       preferences.getPreferences(context, 'favorites', (err, pref) => {
-//         if (err) {
-//           console.error('Error getting preferences:', err);
-//           this.isFavorite = false;
-//           return;
-//         }
-//         pref.get('favorites', '[]', (err, value) => {
-//           if (err) {
-//             console.error('Error reading favorites:', err);
-//             this.isFavorite = false;
-//             return;
-//           }
-//           // æ·»åŠ æ•°æ®éªŒè¯
-//           try {
-//             const favoriteList = JSON.parse(value) as number[];
-//             if (Array.isArray(favoriteList)) {
-//               this.isFavorite = favoriteList.includes(productId);
-//             } else {
-//               this.isFavorite = false;
-//             }
-//           } catch (parseError) {
-//             console.error('Error parsing favorites:', parseError);
-//             this.isFavorite = false;
-//           }
-//         });
-//       });
-//     } catch (e) {
-//       console.error('Error reading favorites:', e);
-//       this.isFavorite = false;
-//     }
-//   }
-//
-//   // åˆ‡æ¢æ”¶è—çŠ¶æ€
-//   toggleFavorite(): void {
-//     this.isFavorite = !this.isFavorite;
-//     this.saveFavoriteStatus();
-//   }
-//
-//   // ä¿å­˜æ”¶è—çŠ¶æ€åˆ°æœ¬åœ°å­˜å‚¨
-//   saveFavoriteStatus(): void {
-//     try {
-//       const context = getContext(this);
-//       preferences.getPreferences(context, 'favorites', (err, pref) => {
-//         if (err) {
-//           console.error('Error getting preferences:', err);
-//           return;
-//         }
-//         pref.get('favorites', '[]', (err, value) => {
-//           if (err) {
-//             console.error('Error reading favorites:', err);
-//             return;
-//           }
-//           // æ·»åŠ æ•°æ®éªŒè¯
-//           let favoriteList: number[] = [];
-//           try {
-//             const parsedValue = JSON.parse(value);
-//             if (Array.isArray(parsedValue)) {
-//               favoriteList = parsedValue as number[];
-//             }
-//           } catch (parseError) {
-//             console.error('Error parsing favorites:', parseError);
-//             favoriteList = [];
-//           }
-//
-//           if (this.isFavorite) {
-//             // æ·»åŠ åˆ°æ”¶è—
-//             if (!favoriteList.includes(this.productId)) {
-//               favoriteList.push(this.productId);
-//             }
-//           } else {
-//             // ä»æ”¶è—ä¸­ç§»é™¤
-//             favoriteList = favoriteList.filter(id => id !== this.productId);
-//           }
-//
-//           pref.put('favorites', JSON.stringify(favoriteList), (err) => {
-//             if (err) {
-//               console.error('Error saving favorites:', err);
-//               return;
-//             }
-//             pref.flush((err) => {
-//               if (err) {
-//                 console.error('Error flushing preferences:', err);
-//               }
-//             });
-//           });
-//         });
-//       });
-//     } catch (e) {
-//       console.error('Error saving favorites:', e);
-//     }
-//   }
-//
-//   // æ·»åŠ åˆ°è´­ç‰©è½¦åŠŸèƒ½
-//   addToCart(): void {
-//     // å®ç°æ·»åŠ åˆ°è´­ç‰©è½¦é€»è¾‘
-//     prompt.showToast({
-//       message: 'å·²æ·»åŠ åˆ°è´­ç‰©è½¦'
-//     });
-//   }
-//
-//   build() {
-//     Stack({ alignContent: Alignment.Bottom }) {
-//       Scroll() {
-//         Column() {
-//           // é¡¶éƒ¨å¯¼èˆªæ 
-//           Row() {
-//             Image($r('app.media.ic_back'))
-//               .width(24)
-//               .height(24)
-//               .margin({ top: 10, left: 20 })
-//               .onClick(() => {
-//                 router.back();
-//               })
-//
-//             Text('å•†å“è¯¦æƒ…')
-//               .fontSize(18)
-//               .fontWeight(FontWeight.Bold)
-//               .layoutWeight(1)
-//               .textAlign(TextAlign.Center)
-//               .margin({ right: 44 })
-//           }
-//           .width('100%')
-//           .height(50)
-//
-//           // å•†å“å›¾ç‰‡å±•ç¤º
-//           Image(this.product?.image)
-//             .width('100%')
-//             .height(300)
-//             .objectFit(ImageFit.Contain)
-//             .margin({ top: 20, bottom: 20 })
-//
-//           // å•†å“åŸºæœ¬ä¿¡æ¯
-//           Column() {
-//             Text(this.product?.name || '')
-//               .fontSize(24)
-//               .fontWeight(FontWeight.Bold)
-//               .margin({ bottom: 10 })
-//               .width('100%')
-//               .textAlign(TextAlign.Center)
-//
-//             Text(`${this.product?.price}å…ƒ`)
-//               .fontColor('#ff5722')
-//               .fontSize(20)
-//               .fontWeight(FontWeight.Bold)
-//               .margin({ bottom: 20 })
-//
-//             Row() {
-//               Text(`${this.product?.rating}æ˜Ÿ`)
-//                 .fontColor('#666')
-//                 .fontSize(16)
-//                 .margin({ right: 10 })
-//
-//               // æ”¶è—æŒ‰é’®
-//               Button(this.isFavorite ? 'å·²æ”¶è—' : 'æ”¶è—')
-//                 .width(80)
-//                 .height(32)
-//                 .fontSize(14)
-//                 .type(ButtonType.Capsule)
-//                 .backgroundColor(this.isFavorite ? '#ff5722' : '#f5f5f5')
-//                 .fontColor(this.isFavorite ? Color.White : Color.Black)
-//                 .onClick(() => {
-//                   this.toggleFavorite();
-//                 })
-//             }
-//             .justifyContent(FlexAlign.SpaceBetween)
-//             .width('100%')
-//             .margin({ bottom: 20 })
-//           }
-//           .padding({ left: 20, right: 20 })
-//
-//           // å•†å“æè¿°
-//           Column() {
-//             Text('å•†å“æè¿°:')
-//               .fontSize(16)
-//               .fontWeight(FontWeight.Bold)
-//               .margin({ bottom: 8 })
-//
-//             Text('è¿™æ˜¯ä¸€æ¬¾é«˜å“è´¨çš„å•†å“ï¼Œå…·æœ‰å‡ºè‰²çš„æ€§èƒ½å’Œç”¨æˆ·ä½“éªŒã€‚é‡‡ç”¨å…ˆè¿›çš„æŠ€æœ¯åˆ¶é€ ï¼Œç¡®ä¿äº§å“çš„å¯é æ€§å’Œè€ç”¨æ€§ã€‚')
-//               .fontSize(14)
-//               .lineHeight(20)
-//               .maxLines(5)
-//               .textOverflow({ overflow: TextOverflow.Ellipsis })
-//           }
-//           .width('100%')
-//           .padding({ left: 20, right: 20 })
-//           .margin({ bottom: 20 })
-//
-//           // è§„æ ¼å‚æ•°
-//           Column() {
-//             Text('è§„æ ¼å‚æ•°:')
-//               .fontSize(16)
-//               .fontWeight(FontWeight.Bold)
-//               .margin({ bottom: 8 })
-//
-//             Column() {
-//               ForEach([
-//                 { key: 'å“ç‰Œ', value: 'åä¸º' },
-//                 { key: 'å‹å·', value: 'HUAWEI-001' },
-//                 { key: 'é¢œè‰²', value: 'é»‘è‰²' },
-//                 { key: 'é‡é‡', value: '200g' },
-//                 { key: 'æè´¨', value: 'ä¼˜è´¨å¡‘æ–™' }
-//               ], (item) => {
-//                 Row() {
-//                   Text(item.key)
-//                     .fontColor('#666')
-//                     .width('30%')
-//                   Text(item.value)
-//                     .layoutWeight(1)
-//                 }
-//                 .width('100%')
-//                 .margin({ bottom: 5 })
-//               })
-//             }
-//           }
-//           .width('100%')
-//           .padding({ left: 20, right: 20 })
-//           .margin({ bottom: 20 })
-//
-//           // ç”¨æˆ·è¯„ä»·
-//           Column() {
-//             Text('ç”¨æˆ·è¯„ä»·:')
-//               .fontSize(16)
-//               .fontWeight(FontWeight.Bold)
-//               .margin({ bottom: 8 })
-//
-//             Column() {
-//               ForEach([
-//                 { user: 'ç”¨æˆ·A', rating: 5, comment: 'éå¸¸å¥½ç”¨ï¼Œæ¨èè´­ä¹°ï¼' },
-//                 { user: 'ç”¨æˆ·B', rating: 4, comment: 'è´¨é‡ä¸é”™ï¼Œæ€§ä»·æ¯”é«˜ã€‚' },
-//                 { user: 'ç”¨æˆ·C', rating: 5, comment: 'ç‰©æµå¾ˆå¿«ï¼ŒåŒ…è£…å¾ˆå¥½ã€‚' }
-//               ], (review) => {
-//                 Column() {
-//                   Row() {
-//                     Text(review.user)
-//                       .fontColor('#666')
-//                       .margin({ right: 10 })
-//                     Text('â˜…'.repeat(review.rating))
-//                       .fontColor('#ffcc00')
-//                   }
-//                   Text(review.comment)
-//                     .fontSize(12)
-//                     .margin({ top: 5 })
-//                 }
-//                 .width('100%')
-//                 .padding(10)
-//                 .backgroundColor('#f5f5f5')
-//                 .borderRadius(8)
-//                 .margin({ bottom: 10 })
-//               })
-//             }
-//           }
-//           .width('100%')
-//           .padding({ left: 20, right: 20 })
-//           .margin({ bottom: 20 })
-//
-//           // å ä½ç©ºé—´ï¼Œç¡®ä¿å†…å®¹å¯ä»¥æ»šåŠ¨
-//           Blank()
-//             .height(80)
-//         }
-//         .width('100%')
-//         .backgroundColor(Color.White)
-//       }
-//
-//       // åº•éƒ¨å›ºå®šæ“ä½œæ 
-//       Row() {
-//         Button("åŠ å…¥è´­ç‰©è½¦")
-//           .width('70%')
-//           .height(40)
-//           .fontSize(16)
-//           .type(ButtonType.Capsule)
-//           .backgroundColor('#ff5722')
-//           .fontColor(Color.White)
-//           .margin({ right: 10 })
-//           .onClick(() => {
-//             this.addToCart();
-//           })
-//
-//         Button("ç«‹å³è´­ä¹°")
-//           .width('30%')
-//           .height(40)
-//           .fontSize(16)
-//           .type(ButtonType.Capsule)
-//           .backgroundColor('#007aff')
-//           .fontColor(Color.White)
-//       }
-//       .width('100%')
-//       .height(60)
-//       .padding({ left: 20, right: 20 })
-//       .backgroundColor(Color.White)
-//       .border({ width: 1, color: '#f0f0f0' })
-//     }
-//     .width('100%')
-//     .height('100%')
-//   }
-// }
-ÀÔrC“¬@ohos.router¶@ohos.data.preferences·../zonghezuoye/ListPageÔrD—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÃÙQ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsAÃªoh-resolveÂDAÃÙ[ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.data.preferences.d.tsAÃªoh-resolveÂDAÂÙmD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\pages\zonghezuoye\ListPage.etsAÃªoh-resolveÂ“ÔrE–§version¤fileªsourceRoot§sources¥names¨mappings´ProductDetailPage.js ‘µProductDetailPage.etsÜv–”    ”  ”  ”  ”!  !”"  !–”   ” 	” ” ”0 *”1 +š”   ” ”	 	” ” ” ”   ”& &”? ?”Ì@ Ì@’” ” ‘”  ’”8 %”9 &’”6 /”: 3’”9 '”> ,’”3  ”5 "’”4 !”5 "’”5 "”6 #’”6 $”: (˜” ” ” ”( %”* '”+ (”9 6”; ÌSŸ” ”& "”' #”9 5”: 6”> :”? ;”ÌF ÌB”ÌH ÌD”ÌJ ÌF”ÌN ÌJ”ÌP ÌL”Ì_ Ì[”Ìa Ì]”Ìb Ì^‘” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” ” ’” 
-” Ÿ”  ”  ”  ”  ”!  ”"   ”-  +”.  ,”5  3”6  4”ÌA  ?”ÌC  ÌA”ÌE  ÌC”ÌF  ÌU”ÌG  ÌV” !” !
-” !” !” !”& !$”' !%”/ !-”0 !.”4 !2”5 !3”> !<”? !=”Ì@ !>’” #” #’” %” %’” &”+ &)’” '” '’” (” (’” )”2 )0’” *”= *;’” +”& +$’” ,”. ,,’” -”= -;’” .”? .=’” /”ÌG /ÌE’” 0” 0’” 1”- 1+’” 2”$ 2"’” 3” 3’” 4”  4’” 5”3 51’” 6” 6
-’” 7” 7’” 8” 8’” 9” 9’” :”  :’” ;”
- ;’” <” <’” >” >’” ?” ?›” Ì@” Ì@
-” Ì@” Ì@” Ì@” Ì@”' Ì@#”) Ì@%”* Ì@&”+ Ì@&”3 Ì@.”” ÌA” ÌA” ÌA” ÌA–” ÌB” ÌB” ÌB”  ÌB”& ÌB,”' ÌB-’” ÌC”ÌD ÌC>” ÌD” ÌD
-” ÌD” ÌD” ÌD”% ÌD”& ÌD ”1 ÌD+”2 ÌD,”4 ÌD.”8 ÌD2”; ÌD5”< ÌD6”= ÌD7’” ÌE”' ÌE!Ü ” ÌF” ÌF” ÌF”! ÌF”) ÌF#”* ÌF$”. ÌF(”/ ÌF)”0 ÌF*”1 ÌF+”3 ÌF-”4 ÌF.”5 ÌF/”6 ÌF0”8 ÌF2”= ÌF7”ÌA ÌF;”ÌB ÌF<”ÌK ÌFÌE”ÌL ÌFÌF”ÌM ÌFÌG’” ÌG”0 ÌG*–” ÌH” ÌH
-” ÌH” ÌH”  ÌH”5 ÌH.—” ÌI” ÌI” ÌI” ÌI” ÌI”+ ÌI#”, ÌI$‘” ÌJ“” ÌJ” ÌJ”5 ÌJ0’” ÌK” ÌKÜ %” ÌL” ÌL” ÌL” ÌL” ÌL”# ÌL”. ÌL&”/ ÌM
-”3 ÌM”4 ÌM”= ÌM”? ÌN
-”ÌJ ÌN”ÌK ÌN”ÌO ÌN”ÌS ÌN”ÌU ÌN ”ÌW ÌO
-”Ìa ÌO”Ìb ÌO”Ìm ÌO ”Ìn ÌO!”Ìs ÌO&”Ìw ÌO*”Ìz ÌO-”Ì{ ÌO.”Ì} ÌP
-”Ì‡ ÌP”Ìˆ ÌP”Ì“ ÌP ”Ì” ÌP!”Ìš ÌP'”Ì ÌP+”Ì¡ ÌP.”Ì¢ ÌP/”Í ÌR	”Í ÌR
-‘” ÌS–” ÌT” ÌT
-” ÌT”# ÌT”% ÌT”& ÌT ‘”	 ÌU’” ÌV” ÌV’” ÌX” ÌX
-’” ÌY
-” ÌYŸ” Ì[” Ì[” Ì[” Ì[” Ì[”  Ì[”+ Ì['”, Ì[(”3 Ì[/”4 Ì[0”? Ì[;”ÌA Ì[=”ÌC Ì[?”ÌD Ì[ÌQ”ÌE Ì[ÌR’” Ì\” Ì\–” Ì]” Ì]” Ì]” Ì]” Ì]” Ì]’” Ì^” Ì^œ” Ì_” Ì_
-” Ì_” Ì_” Ì_”& Ì_ ”' Ì_!”+ Ì_%”, Ì_&”5 Ì_/”6 Ì_0”8 Ì_2’” Ì`” Ì`š” Ìa” Ìa” Ìa”! Ìa”" Ìa”& Ìa”' Ìa”0 Ìa(”1 Ìa)”2 Ìa*‘” Ìb‘”	 Ìc‘” Ìc’” Ìd” ÌdÜ ” Ìe” Ìe” Ìe”' Ìe!”( Ìe"”. Ìe(”/ Ìe)”1 Ìe+”2 Ìe,”4 Ìe.”5 Ìe/”7 Ìe1”< Ìe6”Ì@ Ìe:”ÌA Ìe;”ÌJ ÌeÌD”ÌK ÌeÌE”ÌL ÌeÌF‘”	 Ìfœ” Ìh” Ìh” Ìh	” Ìh” Ìh”  Ìh”! Ìh”, Ìh(”. Ìh*”: Ìh6”; Ìh7”< Ìh8˜” Ìi” Ìi” Ìi	” Ìi” Ìi”" Ìi”$ Ìi ”% Ìi!’” Ìk” Ìk’” Ìm” Ìm’” Ìn” ÌnÜ ” Ìo” Ìo” Ìo	” Ìo” Ìo” Ìo”& Ìo"”' Ìp”+ Ìp
-”, Ìp”5 Ìp”7 Ìq”; Ìq
-”< Ìq”Ì@ Ìq”ÌB Ìr”ÌF Ìr
-”ÌG Ìr”ÌL Ìr”ÌN Ìs”ÌR Ìs
-”ÌS Ìs”ÌY Ìs”Ì[ Ìt”Ì_ Ìt
-”Ì` Ìt”Ìe Ìt”Ìf Ìu”Ìg Ìu–” Ìv” Ìv” Ìv	” Ìv” Ìv” Ìv’” Ìw” Ìw’” Ìy” Ìy’” Ìz” Ìz’” Ì{” Ì{–” Ì|” Ì|” Ì|	” Ì|”! Ì|”" Ì|’” Ì}” Ì}’” Ì~” Ì~’” Ì” Ìš” Ì€” Ì€” Ì€	” Ì€” Ì€” Ì€” Ì€”  Ì€”* Ì€&”+ Ì€'–” Ì” Ì” Ì	” Ì”! Ì”" Ì’” Ì‚” Ì‚’” Ìƒ” Ìƒ’” Ì„”: Ì„8’” Ì…” Ì…’” Ì†” Ì†’” Ì‡”Ìa Ì‡Ì_’” Ìˆ” Ìˆ
-’” Ì‰” Ì‰’” ÌŠ”ÌX ÌŠÌV’” Ì‹” Ì‹’” ÌŒ”# ÌŒ!’” Ì”< Ì:’” Ì”3 Ì1’” Ì” Ì’” Ì” Ì’” Ì‘”ÌO Ì‘ÌM’” Ì’” Ì’’” Ì“” Ì“’” Ì””< Ì”:’” Ì•”% Ì•#’” Ì–” Ì–
-’” Ì—” Ì—’” Ì˜”- Ì˜+’” Ì™”
- Ì™’” Ìš” Ìš‘” Ìœ’” Ì” Ì
-’” Ì” Ì	˜” Ì” Ì	” Ì¦” Ì¦” Ì¦”# Ì¦”$ Ì¦”) Ì¦!’” ÌŸ” ÌŸ–” ÌŸ” ÌŸ” Ì ” Ì ” Ì ” Ì –” ÌŸ” ÌŸ” Ì¡” Ì¡” Ì¡” Ì¡” ÌŸ” ÌŸ” Ì¢” Ì¢” Ì¢” Ì¢” Ì¢”  Ì¢”" Ì¢”$ Ì¢”( Ì¢!”* Ì¢#”, Ì¢%”. Ì¢'—” ÌŸ” ÌŸ” Ì£” Ì£” Ì£” Ì£” Ì£–” Ì¤” Ì¤” Ì¤” Ì¤” Ì¤” Ì¤’” Ì¥
-” Ì¥’” Ì” Ì	’” Ì§” Ì§˜” Ì¨” Ì¨” Ì¨” Ì¨” Ì¨”% Ì¨”' Ì¨”, Ì¨’” Ì§” Ì§–” Ì¨” Ì¨” Ì©	” Ì©” Ì©” Ì©’” Ì§” Ì§–” Ì¨” Ì¨” Ìª	” Ìª” Ìª” Ìª’” Ì§” Ì§˜” Ì¨” Ì¨” Ì«	” Ì«” Ì«”$ Ì«”% Ì«”, Ì«#’” Ì§” Ì§” Ì¨” Ì¨” Ì¬	” Ì¬” Ì¬” Ì¬” Ì¬”  Ì¬”" Ì¬”$ Ì¬”* Ì¬!”, Ì¬#”. Ì¬%”0 Ì¬'š” Ì®” Ì®
-” Ì®” Ì®” Ì®”$ Ì®”& Ì®”* Ì®”. Ì®!”0 Ì®#–” Ì®” Ì®
-” Ì¯	” Ì¯” Ì¯” Ì¯˜” Ì®” Ì®
-” Ì°	” Ì°” Ì°”& Ì°”' Ì°”+ Ì°#š” Ì®” Ì®
-” Ì±	” Ì±” Ì±” Ì±”  Ì±”" Ì±”$ Ì±”& Ì±’” Ì®” Ì®
-š” Ì³” Ì³
-” Ì³” Ì³” Ì³”  Ì³”' Ì³”) Ì³”. Ì³!”1 Ì³$–” Ì³” Ì³
-” Ì´	” Ì´” Ì´”$ Ì´–” Ì³” Ì³
-” Ìµ	” Ìµ” Ìµ” Ìµ˜” Ì³” Ì³
-” Ì¶	” Ì¶” Ì¶”& Ì¶”' Ì¶”+ Ì¶#š” Ì³” Ì³
-” Ì·	” Ì·” Ì·” Ì·”  Ì·”" Ì·”$ Ì·”& Ì·’” Ì³” Ì³
-’” Ì¹” Ì¹	˜” Ì¹” Ì¹	” ÌË” ÌË” ÌË”( ÌË”) ÌË ”5 ÌË,–” Ì¹” Ì¹	” ÌÌ” ÌÌ” ÌÌ” ÌÌš” Ì¹” Ì¹	” ÌÍ” ÌÍ” ÌÍ” ÌÍ” ÌÍ”! ÌÍ”# ÌÍ”% ÌÍš” Ìº” Ìº” Ìº” Ìº” Ìº”  Ìº”' Ìº”) Ìº”/ Ìº$”2 Ìº'–” Ìº” Ìº” Ì»” Ì»” Ì»”! Ì»–” Ìº” Ìº” Ì¼” Ì¼” Ì¼” Ì¼š” Ìº” Ìº” Ì½” Ì½” Ì½” Ì½” Ì½”  Ì½”" Ì½”$ Ì½’” Ìº” Ìº” Ì¿” Ì¿”# Ì¿”' Ì¿”( Ì¿”2 Ì¿”3 Ì¿”4 Ì¿ ”5 Ì¿!”: Ì¿&”; Ì¿'”< Ì¿(”= Ì¿)”ÌA Ì¿-–” Ì¿” Ì¿” ÌÀ” ÌÀ” ÌÀ” ÌÀ–” Ì¿” Ì¿” ÌÁ” ÌÁ” ÌÁ” ÌÁ–” Ì¿” Ì¿” ÌÂ” ÌÂ” ÌÂ” ÌÂš” Ì¿” Ì¿” ÌÃ” ÌÃ” ÌÃ” ÌÃ”! ÌÃ”# ÌÃ”% ÌÃ”' ÌÃ˜” Ì¿” Ì¿” ÌÄ” ÌÄ” ÌÄ”" ÌÄ”# ÌÄ”* ÌÄ"Ü ” Ì¿” Ì¿” ÌÅ”" ÌÅ”# ÌÅ”' ÌÅ”( ÌÅ ”2 ÌÅ*”3 ÌÅ+”4 ÌÅ,”5 ÌÅ-”> ÌÅ6”? ÌÅ7”Ì@ ÌÅ8”ÌA ÌÅ9”ÌJ ÌÅÌBÜ ” Ì¿” Ì¿” ÌÆ” ÌÆ” ÌÆ”! ÌÆ”" ÌÆ”, ÌÆ$”- ÌÆ%”. ÌÆ&”/ ÌÆ'”4 ÌÆ,”5 ÌÆ-”: ÌÆ2”; ÌÆ3”< ÌÆ4”= ÌÆ5”ÌB ÌÆ:”ÌC ÌÆ;”ÌH ÌÆÌ@—” Ì¿” Ì¿” ÌÇ” ÌÇ” ÌÇ” ÌÇ”  ÌÇ˜” ÌÈ” ÌÈ” ÌÈ”# ÌÈ”% ÌÈ!”& ÌÈ"”' ÌÈ"”/ ÌÈ*’” ÌÉ
-” ÌÉ’” Ì¿” Ì¿’” Ì¹” Ì¹	’” ÌÎ” ÌÎ’” ÌÏ” ÌÏ’” ÌÎ” ÌÎ–” ÌÏ” ÌÏ” ÌÛ” ÌÛ” ÌÛ” ÌÛ’” ÌÎ” ÌÎš” ÌÏ” ÌÏ” ÌÜ” ÌÜ” ÌÜ” ÌÜ”" ÌÜ”$ ÌÜ”& ÌÜ”( ÌÜ”” ÌĞ” ÌĞ” ÌĞ” ÌĞ–” ÌĞ” ÌĞ” ÌÑ” ÌÑ” ÌÑ” ÌÑ˜” ÌĞ” ÌĞ” ÌÒ” ÌÒ” ÌÒ”& ÌÒ ”' ÌÒ!”+ ÌÒ%š” ÌĞ” ÌĞ” ÌÓ” ÌÓ” ÌÓ” ÌÓ”  ÌÓ”" ÌÓ”# ÌÓ”% ÌÓ’” ÌĞ” ÌĞ”” ÌÕ” ÌÕ” ÌÕ”2 ÌÕ'–” ÌÕ” ÌÕ” ÌÖ” ÌÖ” ÌÖ” ÌÖ–” ÌÕ” ÌÕ” Ì×” Ì×” Ì×” Ì×–” ÌÕ” ÌÕ” ÌØ” ÌØ” ÌØ” ÌØœ” ÌÕ” ÌÕ” ÌÙ” ÌÙ” ÌÙ”  ÌÙ”( ÌÙ"”* ÌÙ$”6 ÌÙ0”7 ÌÙ1”? ÌÙ9”ÌA ÌÙ;’” ÌÕ” ÌÕ’” ÌÎ” ÌÎ’” ÌÏ” ÌÏ’” ÌŞ” ÌŞ” Ìß” Ìß”# Ìß”' Ìß”( Ìß”/ Ìß”0 Ìß”1 Ìß”2 Ìß”: Ìß$”; Ìß$”< Ìß%”= Ìß%”ÌB Ìß*’” ÌŞ” ÌŞ–” Ìß” Ìß” Ìà” Ìà” Ìà” Ìà’” ÌŞ” ÌŞ–” Ìß” Ìß” Ìá” Ìá” Ìá” Ìá’” ÌŞ” ÌŞ–” Ìß” Ìß” Ìâ” Ìâ” Ìâ” Ìâ’” ÌŞ” ÌŞ˜” Ìß” Ìß” Ìã” Ìã” Ìã”" Ìã”# Ìã”* Ìã"’” ÌŞ” ÌŞ–” Ìß” Ìß” Ìä”" Ìä”# Ìä”, Ìä$’” ÌŞ” ÌŞ˜” Ìß” Ìß” Ìå” Ìå” Ìå”" Ìå”# Ìå”( Ìå ’” ÌŞ” ÌŞ—” Ìß” Ìß” Ìç” Ìç” Ìç” Ìç”  Ìçš” Ìè” Ìè” Ìè” Ìè” Ìè”  Ìè”$ Ìè ”% Ìè!”, Ìè(”- Ìè)˜” Ìé” Ìé” Ìé” Ìé” Ìé”% Ìé!”& Ìé"”' Ìé#˜” Ìë” Ìë” Ìë” Ìë”  Ìë”" Ìë”$ Ìë ”& Ìë"” Ìì” Ìì” Ìì” Ìì”  Ìì”' Ìì!”+ Ìì%”, Ìì&”3 Ìì-”4 Ìì.”8 Ìì2”ÌC Ìì=”ÌD Ìì>”ÌE Ìì?‘” Ìî’” Ìï
-” Ìï’” ÌŞ” ÌŞ’” Ìß” Ìß’” Ì” Ì
-‘” ÌñÔrF–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜ‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
- ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ì ‘”  ÌŸ ‘”  Ì  ‘”  Ì¡ ‘”  Ì¢ ‘”  Ì£ ‘”  Ì¤ ‘”  Ì¥ ‘”  Ì¦ ‘”  Ì§ ‘”  Ì¨ ‘”  Ì© ‘”  Ìª ‘”  Ì« ‘”  Ì¬ ‘”  Ì­ ‘”  Ì® ‘”  Ì¯ ‘”  Ì° ‘”  Ì± ‘”  Ì² ‘”  Ì³ ‘”  Ì´ ‘”  Ìµ ‘”  Ì¶ ‘”  Ì· ‘”  Ì¸ ‘”  Ì¹ ‘”  Ìº ‘”  Ì» ‘”  Ì¼ ‘”  Ì½ ‘”  Ì¾ ‘”  Ì¿ ‘”  ÌÀ ‘”  ÌÁ ‘”  ÌÂ ‘”  ÌÃ ‘”  ÌÄ ‘”  ÌÅ ‘”  ÌÆ ‘”  ÌÇ ‘”  ÌÈ ‘”  ÌÉ ‘”  ÌÊ ‘”  ÌË ‘”  ÌÌ ‘”  ÌÍ ‘”  ÌÎ ‘”  ÌÏ ‘”  ÌĞ ‘”  ÌÑ ‘”  ÌÒ ‘”  ÌÓ ‘”  ÌÔ ‘”  ÌÕ ‘”  ÌÖ ‘”  Ì× ‘”  ÌØ ‘”  ÌÙ ‘”  ÌÚ ‘”  ÌÛ ‘”  ÌÜ ‘”  Ìİ ‘”  ÌŞ ‘”  Ìß ‘”  Ìà ‘”  Ìá ‘”  Ìâ ‘”  Ìã ‘”  Ìä ‘”  Ìå ‘”  Ìæ ‘”  Ìç ‘”  Ìè ‘”  Ìé ‘”  Ìê ‘”  Ìë ‘”  Ìì ‘”  Ìí ‘”  Ìî ‘”  Ìï ‘”  Ìğ ‘”  Ìñ ‘”  Ìò ‘”  Ìó ‘”  Ìô ‘”  Ìõ ‘”  Ìö ‘”  Ì÷ ‘”  Ìø ‘”  Ìù ‘”  Ìú ‘”  Ìû ‘”  Ìü ‘”  Ìı ‘”  Ìş ‘”  Ìÿ ‘”  Í  ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í	 ‘”  Í
- ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í  ‘”  Í! ‘”  Í" ‘”  Í# ‘”  Í$ ‘”  Í% ‘”  Í& ‘”  Í' ‘”  Í( ‘”  Í) ‘”  Í* ‘”  Í+ ‘”  Í, ‘”  Í- ‘”  Í. ‘”  Í/ ‘”  Í0 ‘”  Í1 ‘”  Í2 ‘”  Í3 ‘”  Í4 ‘”  Í5 ‘”  Í6 ‘”  Í7 ‘”  Í8 ‘”  Í9 ‘”  Í: ‘”  Í; ‘”  Í< ‘”  Í= ‘”  Í> ‘”  Í? ‘”  Í@ ‘”  ÍA ‘”  ÍB ‘”  ÍC ‘”  ÍD ‘”  ÍE ‘”  ÍF ‘”  ÍG ‘”  ÍH ‘”  ÍI ‘”  ÍJ ‘”  ÍK ‘”  ÍL ‘”  ÍM ‘”  ÍN ‘”  ÍO ‘”  ÍP ‘”  ÍQ ‘”  ÍR ‘”  ÍS ‘”  ÍT ‘”  ÍU ‘”  ÍV ‘”  ÍW ‘”  ÍX ‘”  ÍY ‘”  ÍZ ‘”  Í[ ‘”  Í\ ‘”  Í] ‘”  Í^ ‘”  Í_ ‘”  Í` ‘”  Ía ‘”  Íb ‘”  Íc ‘”  Íd ‘”  Íe ‘”  Íf ‘”  Íg ‘”  Íh ‘”  Íi ‘”  Íj ‘”  Ík ‘”  Íl ‘”  Ím ‘”  Ín ‘”  Ío ‘”  Íp ‘”  Íq ‘”  Ír ‘”  Ís ‘”  Ít ‘”  Íu ‘”  Ív ‘”  Íw ‘”  Íx ‘”  Íy ‘”  Íz ‘”  Í{ ‘”  Í| ‘”  Í} ‘”  Í~ ÔrG’§missing¦pluginÃ¦genAbcÂÔ  ÔrH”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache“ÔrI•¤type¥start£endªspecifiers¦source±ImportDeclarationÌ€Ì¢‘ÔrJ”¤type¥start£end¥local¶ImportDefaultSpecifierÌ‡ÌÔrK”¤type¥start£end¤nameªIdentifierÌ‡Ì¦routerÔrL•¤type¥start£end¥value£raw§LiteralÌ“Ì¡¬@ohos.router®'@ohos.router'I±ImportDeclarationÌ¤ÌÕ‘J¶ImportDefaultSpecifierÌ«Ì¶KªIdentifierÌ«Ì¶«preferencesL§LiteralÌ¼ÌÔ¶@ohos.data.preferences¸"@ohos.data.preferences"I±ImportDeclarationÌ×Í’ÔrM•¤type¥start£end¨imported¥local¯ImportSpecifierÌàÌëKªIdentifierÌàÌë«ProductItemKªIdentifierÌàÌë«ProductItemM¯ImportSpecifierÌíÌõKªIdentifierÌíÌõ¨productsKªIdentifierÌíÌõ¨productsL§LiteralÌıÍ·../zonghezuoye/ListPage¹'../zonghezuoye/ListPage'

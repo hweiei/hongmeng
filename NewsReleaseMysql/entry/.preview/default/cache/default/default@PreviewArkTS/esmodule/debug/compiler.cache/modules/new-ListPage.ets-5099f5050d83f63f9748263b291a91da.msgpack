@@ -1,1191 +1,0 @@
-Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚTñif (!("finalizeConstruction" in ViewPU.prototype)) {
-    Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
-}
-import router from '@ohos.router';
-// å®šä¹‰äº§å“é¡¹ç±»
-export class ProductItem {
-    constructor(id, name, price, rating, image) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.rating = rating;
-        this.image = image;
-    }
-}
-// åˆå§‹åŒ–äº§å“æ•°æ®
-export const products = [
-    new ProductItem(7, "é™å™ªè€³æœºLite", 399, 4.6, { "id": 16777320, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(8, "æ™ºèƒ½æ‰‹ç¯Pro", 299, 4.8, { "id": 16777307, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(9, "è¿åŠ¨è€³æœº", 199, 4.5, { "id": 16777324, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(10, "æ— çº¿å……ç”µå™¨", 129, 4.3, { "id": 16777304, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(11, "è“ç‰™è€³æœºMini", 99, 4.2, { "id": 16777324, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(12, "æ™ºèƒ½æ‰‹è¡¨Pro", 1299, 4.9, { "id": 16777307, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(13, "é™å™ªè€³æœºUltra", 899, 4.9, { "id": 16777324, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(14, "è¿åŠ¨æ‰‹ç¯Pro", 349, 4.7, { "id": 16777325, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(15, "æ™ºèƒ½éŸ³ç®±", 299, 4.6, { "id": 16777304, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(16, "æ— çº¿è€³æœºAir", 249, 4.5, { "id": 16777324, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(17, "æ™ºèƒ½çœ¼é•œ", 1599, 4.8, { "id": 16777307, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(18, "é™å™ªè€³æœºMax", 1199, 4.9, { "id": 16777304, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(19, "è¿åŠ¨è€³æœºPro", 399, 4.7, { "id": 16777304, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(20, "æ™ºèƒ½æ‰‹ç¯Ultra", 499, 4.8, { "id": 16777307, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(21, "è“ç‰™éŸ³ç®±Mini", 199, 4.4, { "id": 16777320, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(22, "æ™ºèƒ½é—¹é’Ÿ", 159, 4.3, { "id": 16777307, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(23, "é™å™ªè€³æœºPlus", 599, 4.7, { "id": 16777320, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(24, "è¿åŠ¨æ‰‹ç¯Lite", 199, 4.2, { "id": 16777325, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(25, "æ— çº¿è€³æœºPro", 499, 4.8, { "id": 16777320, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(26, "æ™ºèƒ½ç¯æ³¡", 99, 4.1, { "id": 16777324, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(27, "ä¾¿æºå¼æŠ•å½±ä»ª", 899, 4.6, { "id": 16777324, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(28, "æ™ºèƒ½é—¨é”", 699, 4.7, { "id": 16777307, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(29, "ç”µåŠ¨ç‰™åˆ·", 299, 4.5, { "id": 16777324, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" }),
-    new ProductItem(30, "è½¦è½½ç©ºæ°”å‡€åŒ–å™¨", 399, 4.4, { "id": 16777324, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" })
-];
-class ProductList extends ViewPU {
-    constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
-        super(parent, __localStorage, elmtId, extraInfo);
-        if (typeof paramsLambda === "function") {
-            this.paramsGenerator_ = paramsLambda;
-        }
-        this.select = 0;
-        this.paixu = ['åç§°', 'ä»·æ ¼', 'è¯„åˆ†'];
-        this.paixu1 = ['å¢åº', 'é™åº'];
-        this.__sortField = new ObservedPropertySimplePU('name', this, "sortField");
-        this.__sortOrder = new ObservedPropertySimplePU('asc', this, "sortOrder");
-        this.__v = new ObservedPropertySimplePU('', this, "v");
-        this.__searchTerm = new ObservedPropertySimplePU('', this, "searchTerm");
-        this.__products = new ObservedPropertyObjectPU([...products], this, "products");
-        this.setInitiallyProvidedValue(params);
-        this.finalizeConstruction();
-    }
-    setInitiallyProvidedValue(params) {
-        if (params.select !== undefined) {
-            this.select = params.select;
-        }
-        if (params.paixu !== undefined) {
-            this.paixu = params.paixu;
-        }
-        if (params.paixu1 !== undefined) {
-            this.paixu1 = params.paixu1;
-        }
-        if (params.sortField !== undefined) {
-            this.sortField = params.sortField;
-        }
-        if (params.sortOrder !== undefined) {
-            this.sortOrder = params.sortOrder;
-        }
-        if (params.v !== undefined) {
-            this.v = params.v;
-        }
-        if (params.searchTerm !== undefined) {
-            this.searchTerm = params.searchTerm;
-        }
-        if (params.products !== undefined) {
-            this.products = params.products;
-        }
-    }
-    updateStateVars(params) {
-    }
-    purgeVariableDependenciesOnElmtId(rmElmtId) {
-        this.__sortField.purgeDependencyOnElmtId(rmElmtId);
-        this.__sortOrder.purgeDependencyOnElmtId(rmElmtId);
-        this.__v.purgeDependencyOnElmtId(rmElmtId);
-        this.__searchTerm.purgeDependencyOnElmtId(rmElmtId);
-        this.__products.purgeDependencyOnElmtId(rmElmtId);
-    }
-    aboutToBeDeleted() {
-        this.__sortField.aboutToBeDeleted();
-        this.__sortOrder.aboutToBeDeleted();
-        this.__v.aboutToBeDeleted();
-        this.__searchTerm.aboutToBeDeleted();
-        this.__products.aboutToBeDeleted();
-        SubscriberManager.Get().delete(this.id__());
-        this.aboutToBeDeletedInternal();
-    }
-    get sortField() {
-        return this.__sortField.get();
-    }
-    set sortField(newValue) {
-        this.__sortField.set(newValue);
-    }
-    get sortOrder() {
-        return this.__sortOrder.get();
-    }
-    set sortOrder(newValue) {
-        this.__sortOrder.set(newValue);
-    }
-    get v() {
-        return this.__v.get();
-    }
-    set v(newValue) {
-        this.__v.set(newValue);
-    }
-    get searchTerm() {
-        return this.__searchTerm.get();
-    }
-    set searchTerm(newValue) {
-        this.__searchTerm.set(newValue);
-    }
-    get products() {
-        return this.__products.get();
-    }
-    set products(newValue) {
-        this.__products.set(newValue);
-    }
-    // åˆ›å»ºç‹¬ç«‹å‰¯æœ¬
-    // è·å–è¿‡æ»¤å’Œæ’åºåçš„äº§å“åˆ—è¡¨
-    getFilteredAndSortedProducts() {
-        let result = [...this.products];
-        // æ ¹æ®æœç´¢è¯è¿‡æ»¤äº§å“
-        if (this.searchTerm?.trim()) {
-            const searchTermLower = this.searchTerm.toLowerCase();
-            result = result.filter(item => item.name.toLowerCase().includes(searchTermLower));
-        }
-        // å¯¹äº§å“è¿›è¡Œæ’åº
-        result.sort((a, b) => {
-            let comparison = 0;
-            // æ ¹æ®æ’åºå­—æ®µè·å–æ¯”è¾ƒå€¼
-            switch (this.sortField) {
-                case 'name':
-                    comparison = a.name.localeCompare(b.name);
-                    break;
-                case 'price':
-                    comparison = a.price - b.price;
-                    break;
-                case 'rating':
-                    comparison = a.rating - b.rating;
-                    break;
-                default:
-                    return 0;
-            }
-            // æ ¹æ®æ’åºé¡ºåºè°ƒæ•´ç»“æœ
-            return this.sortOrder === 'asc' ? comparison : -comparison;
-        });
-        return result;
-    }
-    initialRender() {
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(108:5)", "entry");
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(109:7)", "entry");
-            Row.alignSelf(ItemAlign.Start);
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777299, "type": 20000, params: [], "bundleName": "com.example.newsrelease", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(110:9)", "entry");
-            Image.width(24);
-            Image.height(24);
-            Image.margin({ top: 10, left: 20 });
-            Image.onClick(() => {
-                router.back(); // è¿”å›åˆ°ä¸Šä¸€é¡µ
-            });
-        }, Image);
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // æœç´¢
-            Search.create({ value: this.searchTerm, placeholder: "æœç´¢å•†å“..." });
-            Search.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(119:7)", "entry");
-            // æœç´¢
-            Search.onChange((value) => {
-                this.searchTerm = value;
-            });
-            // æœç´¢
-            Search.width('90%');
-            // æœç´¢
-            Search.margin({ top: 16, bottom: 10 });
-            // æœç´¢
-            Search.backgroundColor('#f5f5f5');
-        }, Search);
-        // æœç´¢
-        Search.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // æ’åºæ§åˆ¶æŒ‰é’®
-            Row.create();
-            Row.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(127:7)", "entry");
-            // æ’åºæ§åˆ¶æŒ‰é’®
-            Row.justifyContent(FlexAlign.Center);
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Button.createWithLabel("æ’åº: " + (this.paixu[this.sortField === 'name' ? 0 : this.select === 1 ? 1 : 2]));
-            Button.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(128:9)", "entry");
-            Button.margin(20);
-            Button.onClick(() => {
-                const currentFieldIndex = this.sortField === 'name' ? 0 : this.sortField === 'price' ? 1 : 2;
-                this.getUIContext().showTextPickerDialog({
-                    range: this.paixu,
-                    selected: currentFieldIndex,
-                    defaultPickerItemHeight: 40,
-                    onAccept: (value) => {
-                        const selectedIndex = Array.isArray(value.index) ? value.index[0] : value.index;
-                        this.select = selectedIndex === 0 ? 0 : selectedIndex === 1 ? 1 : 2;
-                        this.sortField = ['name', 'price', 'rating'][selectedIndex];
-                        console.info("Selected sort field: " + this.sortField);
-                    }
-                });
-            });
-        }, Button);
-        Button.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // æ’åºé¡ºåºé€‰æ‹©æŒ‰é’®
-            Button.createWithLabel("ä»·æ ¼: " + (this.paixu1[this.sortOrder === 'asc' ? 0 : 1]));
-            Button.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(146:9)", "entry");
-            // æ’åºé¡ºåºé€‰æ‹©æŒ‰é’®
-            Button.margin(20);
-            // æ’åºé¡ºåºé€‰æ‹©æŒ‰é’®
-            Button.onClick(() => {
-                const currentOrderIndex = this.sortOrder === 'asc' ? 0 : 1;
-                this.getUIContext().showTextPickerDialog({
-                    range: this.paixu1,
-                    selected: currentOrderIndex,
-                    defaultPickerItemHeight: 40,
-                    onAccept: (value) => {
-                        const selectedIndex = Array.isArray(value.index) ? value.index[0] : value.index;
-                        this.sortOrder = selectedIndex === 0 ? 'asc' : 'desc';
-                        console.info("Selected sort order: " + this.sortOrder);
-                    },
-                });
-            });
-        }, Button);
-        // æ’åºé¡ºåºé€‰æ‹©æŒ‰é’®
-        Button.pop();
-        // æ’åºæ§åˆ¶æŒ‰é’®
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // äº§å“åˆ—è¡¨
-            List.create({ space: 10 });
-            List.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(167:7)", "entry");
-            // äº§å“åˆ—è¡¨
-            List.width('100%');
-            // äº§å“åˆ—è¡¨
-            List.height('100%');
-            // äº§å“åˆ—è¡¨
-            List.backgroundColor(Color.White);
-        }, List);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            ForEach.create();
-            const forEachItemGenFunction = _item => {
-                const item = _item;
-                {
-                    const itemCreation = (elmtId, isInitialRender) => {
-                        ViewStackProcessor.StartGetAccessRecordingFor(elmtId);
-                        itemCreation2(elmtId, isInitialRender);
-                        if (!isInitialRender) {
-                            ListItem.pop();
-                        }
-                        ViewStackProcessor.StopGetAccessRecording();
-                    };
-                    const itemCreation2 = (elmtId, isInitialRender) => {
-                        ListItem.create(deepRenderFunction, true);
-                        ListItem.width('100%');
-                        ListItem.border({ width: 1, color: '#f0f0f0' });
-                        ListItem.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(169:11)", "entry");
-                    };
-                    const deepRenderFunction = (elmtId, isInitialRender) => {
-                        itemCreation(elmtId, isInitialRender);
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Row.create();
-                            Row.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(170:13)", "entry");
-                            Row.onClick(() => {
-                                // ç‚¹å‡»è·³è½¬åˆ°è¯¦æƒ…é¡µ
-                                this.getUIContext().getRouter().pushUrl({
-                                    url: "pages/zonghezuoye/ProductDetailPage",
-                                    params: {
-                                        id: item.id,
-                                        name: item.name,
-                                        price: item.price,
-                                        rating: item.rating,
-                                        productId: item.id
-                                    }
-                                });
-                            });
-                            Row.width('100%');
-                            Row.padding(12);
-                        }, Row);
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Image.create(item.image);
-                            Image.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(171:15)", "entry");
-                            Image.width(120);
-                            Image.height(120);
-                            Image.margin({ right: 20 });
-                            Image.backgroundColor("#eee");
-                            Image.borderRadius(8);
-                        }, Image);
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Column.create();
-                            Column.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(177:15)", "entry");
-                            Column.layoutWeight(1);
-                        }, Column);
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Text.create(item.name);
-                            Text.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(178:17)", "entry");
-                            Text.fontSize(18);
-                            Text.margin({ bottom: 8 });
-                            Text.maxLines(1);
-                            Text.textOverflow({ overflow: TextOverflow.Ellipsis });
-                        }, Text);
-                        Text.pop();
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Text.create(`${item.price}å…ƒ`);
-                            Text.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(183:17)", "entry");
-                            Text.fontColor('#ff5722');
-                            Text.fontSize(18);
-                            Text.margin({ bottom: 8 });
-                        }, Text);
-                        Text.pop();
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Row.create();
-                            Row.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(187:17)", "entry");
-                            Row.justifyContent(FlexAlign.SpaceBetween);
-                            Row.width('100%');
-                        }, Row);
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Text.create(`${item.rating}æ˜Ÿ`);
-                            Text.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(188:19)", "entry");
-                            Text.fontColor('#666');
-                        }, Text);
-                        Text.pop();
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            // åŠ å…¥è´­ç‰©è½¦æŒ‰é’®
-                            Button.createWithLabel("åŠ å…¥è´­ç‰©è½¦");
-                            Button.debugLine("entry/src/main/ets/pages/zonghezuoye/ListPage.ets(191:19)", "entry");
-                            // åŠ å…¥è´­ç‰©è½¦æŒ‰é’®
-                            Button.width("70%");
-                            // åŠ å…¥è´­ç‰©è½¦æŒ‰é’®
-                            Button.height(32);
-                            // åŠ å…¥è´­ç‰©è½¦æŒ‰é’®
-                            Button.fontSize(14);
-                            // åŠ å…¥è´­ç‰©è½¦æŒ‰é’®
-                            Button.type(ButtonType.Capsule);
-                            // åŠ å…¥è´­ç‰©è½¦æŒ‰é’®
-                            Button.backgroundColor('#ff5722');
-                            // åŠ å…¥è´­ç‰©è½¦æŒ‰é’®
-                            Button.fontColor(Color.White);
-                            // åŠ å…¥è´­ç‰©è½¦æŒ‰é’®
-                            Button.onClick(() => {
-                                this.getUIContext().getRouter().pushUrl({
-                                    url: "pages/zonghezuoye/ProductDetailPage",
-                                    params: {
-                                        id: item.id,
-                                        name: item.name,
-                                        price: item.price,
-                                        rating: item.rating,
-                                        productId: item.id
-                                    }
-                                });
-                            });
-                        }, Button);
-                        // åŠ å…¥è´­ç‰©è½¦æŒ‰é’®
-                        Button.pop();
-                        Row.pop();
-                        Column.pop();
-                        Row.pop();
-                        ListItem.pop();
-                    };
-                    this.observeComponentCreation2(itemCreation2, ListItem);
-                    ListItem.pop();
-                }
-            };
-            this.forEachUpdateFunction(elmtId, this.getFilteredAndSortedProducts(), forEachItemGenFunction, (item) => item.id.toString(), false, false);
-        }, ForEach);
-        ForEach.pop();
-        // äº§å“åˆ—è¡¨
-        List.pop();
-        Column.pop();
-    }
-    rerender() {
-        this.updateDirtyElements();
-    }
-    static getEntryName() {
-        return "ProductList";
-    }
-}
-registerNamedRoute(() => new ProductList(undefined, {}), "", { bundleName: "com.example.newsrelease", moduleName: "entry", pagePath: "pages/zonghezuoye/ListPage", pageFullPath: "entry/src/main/ets/pages/zonghezuoye/ListPage", integratedHsp: "false", moduleType: "followWithHap" });
-//# sourceMappingURL=ListPage.js.mapÂ‘ÙQ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsÙmD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entry\src\main\ets\pages\zonghezuoye\ListPage.etsÔrB›ªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo°belongModulePath¬shouldEmitJs¯hostModulesInfo¥entryÃÂÙAD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entryÙ;D:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql¥entry¥1.0.0Ô  ÙAD:\GRuan\NewsReleaseMysql\NewsReleaseMysql\NewsReleaseMysql\entryÃ‘ÔrC’²hostDependencyName®hostModuleName·../zonghezuoye/ListPage¥entryÃÚeË
-import router from '@ohos.router'
-
-// å®šä¹‰äº§å“é¡¹ç±»
- export class ProductItem{
-  id: number
-  name: string
-  price: number
-  rating: number
-   image: Resource
-
-   constructor(id:number,name: string, price: number, rating: number, image: Resource, ) {
-    this.id = id
-    this.name = name
-    this.price = price
-    this.rating = rating
-    this.image = image
-  }
-}
-// åˆå§‹åŒ–äº§å“æ•°æ®
-export const products: ProductItem[] = [
-
-  new ProductItem(7, "é™å™ªè€³æœºLite", 399, 4.6, $r('app.media.pro_earphone')),
-  new ProductItem(8, "æ™ºèƒ½æ‰‹ç¯Pro", 299, 4.8, $r('app.media.band')),
-  new ProductItem(9, "è¿åŠ¨è€³æœº", 199, 4.5, $r('app.media.earphone')),
-  new ProductItem(10, "æ— çº¿å……ç”µå™¨", 129, 4.3, $r('app.media.speaker')),
-  new ProductItem(11, "è“ç‰™è€³æœºMini", 99, 4.2, $r('app.media.earphone')),
-  new ProductItem(12, "æ™ºèƒ½æ‰‹è¡¨Pro", 1299, 4.9, $r('app.media.band')),
-  new ProductItem(13, "é™å™ªè€³æœºUltra", 899, 4.9, $r('app.media.earphone')),
-  new ProductItem(14, "è¿åŠ¨æ‰‹ç¯Pro", 349, 4.7, $r('app.media.sports_band')),
-  new ProductItem(15, "æ™ºèƒ½éŸ³ç®±", 299, 4.6, $r('app.media.speaker')),
-  new ProductItem(16, "æ— çº¿è€³æœºAir", 249, 4.5, $r('app.media.earphone')),
-  new ProductItem(17, "æ™ºèƒ½çœ¼é•œ", 1599, 4.8, $r('app.media.band')),
-  new ProductItem(18, "é™å™ªè€³æœºMax", 1199, 4.9, $r('app.media.speaker')),
-  new ProductItem(19, "è¿åŠ¨è€³æœºPro", 399, 4.7, $r('app.media.speaker')),
-  new ProductItem(20, "æ™ºèƒ½æ‰‹ç¯Ultra", 499, 4.8, $r('app.media.band')),
-  new ProductItem(21, "è“ç‰™éŸ³ç®±Mini", 199, 4.4, $r('app.media.pro_earphone')),
-  new ProductItem(22, "æ™ºèƒ½é—¹é’Ÿ", 159, 4.3, $r('app.media.band')),
-  new ProductItem(23, "é™å™ªè€³æœºPlus", 599, 4.7, $r('app.media.pro_earphone')),
-  new ProductItem(24, "è¿åŠ¨æ‰‹ç¯Lite", 199, 4.2, $r('app.media.sports_band')),
-  new ProductItem(25, "æ— çº¿è€³æœºPro", 499, 4.8, $r('app.media.pro_earphone')),
-  new ProductItem(26, "æ™ºèƒ½ç¯æ³¡", 99, 4.1, $r('app.media.earphone')),
-  new ProductItem(27, "ä¾¿æºå¼æŠ•å½±ä»ª", 899, 4.6, $r('app.media.earphone')),
-  new ProductItem(28, "æ™ºèƒ½é—¨é”", 699, 4.7, $r('app.media.band')),
-  new ProductItem(29, "ç”µåŠ¨ç‰™åˆ·", 299, 4.5, $r('app.media.earphone')),
-  new ProductItem(30, "è½¦è½½ç©ºæ°”å‡€åŒ–å™¨", 399, 4.4, $r('app.media.earphone'))
-];
-// äº§å“åˆ—è¡¨é¡µé¢ç»„ä»¶
-@Entry
-@Component
-struct ProductList {
-  // æ’åºå­—æ®µç´¢å¼•
-  private select: number  = 0;
-  // æ’åºå­—æ®µé€‰é¡¹
-  private paixu: string[] = ['åç§°', 'ä»·æ ¼', 'è¯„åˆ†'];
-  private paixu1: string[] = ['å¢åº', 'é™åº'];
-  // å½“å‰æ’åºå­—æ®µ
-  @State private sortField: 'name' | 'price' | 'rating' = 'name';
-  @State private sortOrder: 'asc' | 'desc' = 'asc';
-  // æœç´¢è¾“å…¥å€¼
-  @State v: string = '';
-  // æœç´¢å…³é”®è¯
-  @State private searchTerm: string = '';
-  @State private products: ProductItem[] =  [...products];
-  // åˆ›å»ºç‹¬ç«‹å‰¯æœ¬
-
-
-  // è·å–è¿‡æ»¤å’Œæ’åºåçš„äº§å“åˆ—è¡¨
-  getFilteredAndSortedProducts(): ProductItem[] {
-
-    let result = [...this.products];
-
-    // æ ¹æ®æœç´¢è¯è¿‡æ»¤äº§å“
-    if (this.searchTerm?.trim()) {
-      const searchTermLower = this.searchTerm.toLowerCase();
-      result = result.filter(item =>
-      item.name.toLowerCase().includes(searchTermLower)
-      );
-    }
-
-    // å¯¹äº§å“è¿›è¡Œæ’åº
-    result.sort((a, b) => {
-      let comparison = 0;
-
-      // æ ¹æ®æ’åºå­—æ®µè·å–æ¯”è¾ƒå€¼
-      switch (this.sortField) {
-        case 'name':
-          comparison = a.name.localeCompare(b.name);
-          break;
-        case 'price':
-          comparison = a.price - b.price;
-          break;
-        case 'rating':
-          comparison = a.rating - b.rating;
-          break;
-        default:
-          return 0;
-      }
-
-      // æ ¹æ®æ’åºé¡ºåºè°ƒæ•´ç»“æœ
-      return this.sortOrder === 'asc' ? comparison : -comparison;
-    });
-
-    return result;
-  }
-
-  build() {
-    Column() {
-      Row(){
-        Image($r('app.media.ic_back'))
-          .width(24)
-          .height(24)
-          .margin({ top: 10, left: 20 })
-          .onClick(() => {
-            router.back();  // è¿”å›åˆ°ä¸Šä¸€é¡µ
-          })
-      }.alignSelf(ItemAlign.Start)
-      // æœç´¢
-      Search({ value: this.searchTerm, placeholder: "æœç´¢å•†å“..." })
-              .onChange((value: string) => {
-                this.searchTerm = value;
-              })
-              .width('90%')
-              .margin({ top: 16, bottom: 10 })
-              .backgroundColor('#f5f5f5')
-      // æ’åºæ§åˆ¶æŒ‰é’®
-      Row() {
-        Button("æ’åº: " + (this.paixu[this.sortField === 'name' ? 0 : this.select === 1 ? 1 : 2]))
-          .margin(20)
-          .onClick(() => {
-            const currentFieldIndex = this.sortField === 'name' ? 0 : this.sortField === 'price' ? 1 : 2;
-            this.getUIContext().showTextPickerDialog({
-              range: this.paixu,
-              selected: currentFieldIndex,
-              defaultPickerItemHeight: 40,
-              onAccept: (value: TextPickerResult) => {
-                const selectedIndex = Array.isArray(value.index) ? value.index[0] : value.index;
-                this.select = selectedIndex === 0 ?0 : selectedIndex === 1 ? 1: 2;
-                this.sortField = ['name', 'price', 'rating'][selectedIndex] as 'name' | 'price' | 'rating';
-                console.info("Selected sort field: " + this.sortField);
-              }
-            });
-          })
-
-        // æ’åºé¡ºåºé€‰æ‹©æŒ‰é’®
-        Button("ä»·æ ¼: " + (this.paixu1[this.sortOrder === 'asc' ? 0 : 1]))
-          .margin(20)
-          .onClick(() => {
-            const currentOrderIndex = this.sortOrder === 'asc' ? 0 : 1;
-            this.getUIContext().showTextPickerDialog({
-              range: this.paixu1,
-              selected: currentOrderIndex,
-              defaultPickerItemHeight: 40,
-              onAccept: (value: TextPickerResult) => {
-
-                const selectedIndex = Array.isArray(value.index) ? value.index[0] : value.index;
-                this.sortOrder = selectedIndex === 0 ? 'asc' : 'desc';
-                console.info("Selected sort order: " + this.sortOrder);
-              },
-
-            });
-          })
-      }
-      .justifyContent(FlexAlign.Center)
-
-      // äº§å“åˆ—è¡¨
-      List({space:10}){
-        ForEach(this.getFilteredAndSortedProducts(), (item: ProductItem) => {
-          ListItem() {
-            Row(){
-              Image(item.image)
-                .width(120)
-                .height(120)
-                .margin({right:20})
-                .backgroundColor("#eee")
-                .borderRadius(8)
-              Column(){
-                Text(item.name)
-                  .fontSize(18)
-                  .margin({bottom:8})
-                  .maxLines(1)
-                  .textOverflow({overflow:TextOverflow.Ellipsis})
-                Text(`${item.price}å…ƒ`)
-                  .fontColor('#ff5722')
-                  .fontSize(18)
-                  .margin({bottom:8})
-                Row(){
-                  Text(`${item.rating}æ˜Ÿ`)
-                    .fontColor('#666')
-                  // åŠ å…¥è´­ç‰©è½¦æŒ‰é’®
-                  Button("åŠ å…¥è´­ç‰©è½¦")
-                    .width("70%")
-                    .height(32)
-                    .fontSize(14)
-                    .type(ButtonType.Capsule)
-                    .backgroundColor( '#ff5722')
-                    .fontColor(Color.White)
-                      // ç‚¹å‡»è·³è½¬åˆ°è¯¦æƒ…é¡µ
-                    .onClick(() => {
-                      this.getUIContext().getRouter().pushUrl({
-                        url: "pages/zonghezuoye/ProductDetailPage",
-                        params: {
-                          id: item.id,
-                          name: item.name,
-                          price: item.price,
-                          rating: item.rating,
-                          productId: item.id
-                        }
-                      });
-                    })
-
-                }
-                .justifyContent(FlexAlign.SpaceBetween)
-                .width('100%')
-              }
-              .layoutWeight(1)
-
-            }
-            .onClick(() => {
-              // ç‚¹å‡»è·³è½¬åˆ°è¯¦æƒ…é¡µ
-              this.getUIContext().getRouter().pushUrl({
-                url: "pages/zonghezuoye/ProductDetailPage",
-                params: {
-                  id: item.id,
-                  name: item.name,
-                  price: item.price,
-                  rating: item.rating,
-                  productId: item.id
-                }
-              });
-            })
-            .width('100%')
-            .padding(12)
-          }
-          .width('100%')
-          .border({width:1,color:'#f0f0f0'})
-        },(item:ProductItem)=>item.id.toString())
-      }
-      .width('100%')
-      .height('100%')
-      .backgroundColor(Color.White)
-
-    }
-  }
-}
-// ListPage.ets
-// import { router } from '@kit.ArkUI';
-//
-// class ProductItem {
-//   id: number;
-//   name: string;
-//   price: number;
-//   rating: number;
-//   image: Resource;
-//
-//   constructor(id: number, name: string, price: number, rating: number, image: Resource) {
-//     this.id = id;
-//     this.name = name;
-//     this.price = price;
-//     this.rating = rating;
-//     this.image = image;
-//   }
-// }
-//
-// @Entry
-// @Component
-// struct ListPage {
-//   @State private sortFieldIndex: number = 0; // å¯¹åº” 'name'
-//   @State private sortOrderIndex: number = 0;
-//   @State private searchTerm: string = '';
-//   @State private showPicker: boolean = false; // æ·»åŠ è¿™ä¸€è¡Œ
-//
-//   @State private sortField: 'name' | 'price' | 'rating' = 'name';
-//   @State private sortOrder: 'asc' | 'desc' = 'asc';
-//   @State private products: ProductItem[] = [
-//     new ProductItem(7, "é™å™ªè€³æœºLite", 399, 4.6, $r('app.media.earphone')),
-//     new ProductItem(8, "æ™ºèƒ½æ‰‹ç¯Pro", 299, 4.8, $r('app.media.band')),
-//     new ProductItem(9, "è¿åŠ¨è€³æœº", 199, 4.5, $r('app.media.earphone')),
-//     new ProductItem(10, "æ— çº¿å……ç”µå™¨", 129, 4.3, $r('app.media.earphone')),
-//     new ProductItem(11, "è“ç‰™è€³æœºMini", 99, 4.2, $r('app.media.earphone')),
-//     new ProductItem(12, "æ™ºèƒ½æ‰‹è¡¨Pro", 1299, 4.9, $r('app.media.band')),
-//     new ProductItem(13, "é™å™ªè€³æœºUltra", 899, 4.9, $r('app.media.earphone')),
-//     new ProductItem(14, "è¿åŠ¨æ‰‹ç¯Pro", 349, 4.7, $r('app.media.band')),
-//     new ProductItem(15, "æ™ºèƒ½éŸ³ç®±", 299, 4.6, $r('app.media.earphone')),
-//     new ProductItem(16, "æ— çº¿è€³æœºAir", 249, 4.5, $r('app.media.earphone')),
-//     new ProductItem(17, "æ™ºèƒ½çœ¼é•œ", 1599, 4.8, $r('app.media.band')),
-//     new ProductItem(18, "é™å™ªè€³æœºMax", 1199, 4.9, $r('app.media.earphone')),
-//     new ProductItem(19, "è¿åŠ¨è€³æœºPro", 399, 4.7, $r('app.media.earphone')),
-//     new ProductItem(20, "æ™ºèƒ½æ‰‹ç¯Ultra", 499, 4.8, $r('app.media.band')),
-//     new ProductItem(21, "è“ç‰™éŸ³ç®±Mini", 199, 4.4, $r('app.media.earphone')),
-//     new ProductItem(22, "æ™ºèƒ½é—¹é’Ÿ", 159, 4.3, $r('app.media.band')),
-//     new ProductItem(23, "é™å™ªè€³æœºPlus", 599, 4.7, $r('app.media.earphone')),
-//     new ProductItem(24, "è¿åŠ¨æ‰‹ç¯Lite", 199, 4.2, $r('app.media.band')),
-//     new ProductItem(25, "æ— çº¿è€³æœºPro", 499, 4.8, $r('app.media.earphone')),
-//     new ProductItem(26, "æ™ºèƒ½ç¯æ³¡", 99, 4.1, $r('app.media.earphone')),
-//     new ProductItem(27, "ä¾¿æºå¼æŠ•å½±ä»ª", 899, 4.6, $r('app.media.earphone')),
-//     new ProductItem(28, "æ™ºèƒ½é—¨é”", 699, 4.7, $r('app.media.band')),
-//     new ProductItem(29, "ç”µåŠ¨ç‰™åˆ·", 299, 4.5, $r('app.media.earphone')),
-//     new ProductItem(30, "è½¦è½½ç©ºæ°”å‡€åŒ–å™¨", 399, 4.4, $r('app.media.earphone'))
-//   ];
-//
-//   getFilteredAndSortedProducts(): ProductItem[] {
-//     let result = [...this.products];
-//
-//     if (this.searchTerm.trim()) {
-//       result = result.filter(item =>
-//       item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-//       );
-//     }
-//
-//     result.sort((a, b) => {
-//       let fieldA: string | number;
-//       let fieldB: string | number;
-//
-//       switch (this.sortField) {
-//         case 'name':
-//           fieldA = a.name;
-//           fieldB = b.name;
-//           break;
-//         case 'price':
-//           fieldA = a.price;
-//           fieldB = b.price;
-//           break;
-//         case 'rating':
-//           fieldA = a.rating;
-//           fieldB = b.rating;
-//           break;
-//         default:
-//           return 0;
-//       }
-//
-//       if (typeof fieldA === 'string' && typeof fieldB === 'string') {
-//         return this.sortOrder === 'asc'
-//           ? fieldA.localeCompare(fieldB)
-//           : fieldB.localeCompare(fieldA);
-//       } else {
-//         return this.sortOrder === 'asc'
-//           ? (fieldA as number) - (fieldB as number)
-//           : (fieldB as number) - (fieldA as number);
-//       }
-//     });
-//
-//     return result;
-//   }
-//
-//   build() {
-//     Column() {
-//       Search({ value: this.searchTerm, placeholder: "æœç´¢å•†å“..." })
-//         .onChange((value: string) => {
-//           this.searchTerm = value;
-//         })
-//         .width('90%')
-//         .margin({ top: 16, bottom: 16 })
-//         .backgroundColor('#f5f5f5')
-//
-//       Column() {
-//         Button("é€‰æ‹©æ’åºæ–¹å¼")
-//           .onClick(() => {
-//             this.showPicker = !this.showPicker;
-//           })
-//           .alignSelf(ItemAlign.Start)
-//
-//         if (this.showPicker) {
-//           TextPicker({
-//             range: ['åç§°', 'ä»·æ ¼', 'è¯„åˆ†'],
-//             selected: this.sortFieldIndex,
-//             value: ['åç§°', 'ä»·æ ¼', 'è¯„åˆ†'][this.sortFieldIndex]
-//           })
-//             .onChange((value: string|string[], index: number| number[]) => {
-//               const selectedIndex = Array.isArray(index) ? index[0] : index;
-//               this.sortFieldIndex = selectedIndex;
-//               const fields: Array<'name' | 'price' | 'rating'> = ['name', 'price', 'rating'];
-//               this.sortField = fields[selectedIndex];
-//             })
-//             .onScrollStop((value: string| string[], index: number| number[]) => {
-//               console.info('Picker scroll stopped, value: ' + value + ', index: ' + index);
-//             })
-//             .disappearTextStyle({ color: Color.Red, font: { size: 15, weight: FontWeight.Lighter } })
-//             .textStyle({ color: Color.Black, font: { size: 20, weight: FontWeight.Normal } })
-//             .selectedTextStyle({ color: Color.Blue, font: { size: 30, weight: FontWeight.Bolder } })
-//             .defaultPickerItemHeight(50)
-//             .canLoop(false)
-//             .alignSelf(ItemAlign.Start)
-//         }
-//
-//         List({ space: 10 }) {
-//           ForEach(
-//             this.getFilteredAndSortedProducts(),
-//             (item: ProductItem) => {
-//               ListItem() {
-//                 Row() {
-//                   Image(item.image)
-//                     .width(120)
-//                     .height(120)
-//                     .margin({ right: 20 })
-//                     .backgroundColor("#eee")
-//                     .borderRadius(8)
-//                     .objectFit(ImageFit.Contain)
-//
-//                   Column() {
-//                     Text(item.name)
-//                       .fontSize(18)
-//                       .margin({ bottom: 8 })
-//                       .maxLines(1)
-//                       .textOverflow({ overflow: TextOverflow.Ellipsis })
-//                       .fontWeight(FontWeight.Medium)
-//
-//                     Text(`${item.price}å…ƒ`)
-//                       .fontColor('#ff5722')
-//                       .fontSize(18)
-//                       .margin({ bottom: 8 })
-//                       .fontWeight(FontWeight.Bold)
-//
-//                     Row() {
-//                       Text(`${item.rating}æ˜Ÿ`)
-//                         .fontColor('#666')
-//                         .fontSize(14)
-//
-//                       Button("åŠ å…¥è´­ç‰©è½¦")
-//                         .width(100)
-//                         .height(32)
-//                         .fontSize(14)
-//                         .type(ButtonType.Capsule)
-//                         .backgroundColor('#ff5722')
-//                         .fontColor(Color.White)
-//                     }
-//                     .justifyContent(FlexAlign.SpaceBetween)
-//                     .width('100%')
-//                   }
-//                   .layoutWeight(1)
-//                 }
-//                 .width('100%')
-//                 .padding(12)
-//                 .onClick(() => {
-//                   router.pushUrl({
-//                     url: `pages/zonghezuoye/DetailPage?id=${item.id}`
-//                   });
-//                 })
-//               }
-//               .width('100%')
-//               .border({ width: 1, color: '#f0f0f0' })
-//               .margin({ left: 10, right: 10 })
-//             },
-//             (item: ProductItem) => item.id.toString()
-//           )
-//         }
-//         .width('100%')
-//         .height('100%')
-//         .backgroundColor('#fafafa')
-//       }
-//       .width('100%')
-//       .height('100%')
-//       .backgroundColor('#f5f5f5')
-//     }
-//   }
-// }
-// // ListPage.ets
-// import { router } from '@kit.ArkUI';
-//
-// class ProductItem {
-//   id: number;
-//   name: string;
-//   price: number;
-//   rating: number;
-//   image: Resource;
-//
-//   constructor(
-//     id: number,
-//     name: string,
-//     price: number,
-//     rating: number,
-//     image: Resource
-//   ) {
-//     this.id = id;
-//     this.name = name;
-//     this.price = price;
-//     this.rating = rating;
-//     this.image = image;
-//   }
-// }
-//
-// @Entry
-// @Component
-// struct ListPage {
-//   @State private sortFieldIndex: number = 0; // å¯¹åº” 'name'
-//   @State private sortOrderIndex: number = 0;
-//   @State private searchTerm: string = '';
-//   @State private sortField: 'name' | 'price' | 'rating' = 'name';
-//   @State private sortOrder: 'asc' | 'desc' = 'asc';
-//   @State private products: ProductItem[] = [
-//     new ProductItem(7, "é™å™ªè€³æœºLite", 399, 4.6, $r('app.media.earphone')),
-//     new ProductItem(8, "æ™ºèƒ½æ‰‹ç¯Pro", 299, 4.8, $r('app.media.band')),
-//     new ProductItem(9, "è¿åŠ¨è€³æœº", 199, 4.5, $r('app.media.earphone')),
-//     new ProductItem(10, "æ— çº¿å……ç”µå™¨", 129, 4.3, $r('app.media.earphone')),
-//     new ProductItem(11, "è“ç‰™è€³æœºMini", 99, 4.2, $r('app.media.earphone')),
-//     new ProductItem(12, "æ™ºèƒ½æ‰‹è¡¨Pro", 1299, 4.9, $r('app.media.band')),
-//     new ProductItem(13, "é™å™ªè€³æœºUltra", 899, 4.9, $r('app.media.earphone')),
-//     new ProductItem(14, "è¿åŠ¨æ‰‹ç¯Pro", 349, 4.7, $r('app.media.band')),
-//     new ProductItem(15, "æ™ºèƒ½éŸ³ç®±", 299, 4.6, $r('app.media.earphone')),
-//     new ProductItem(16, "æ— çº¿è€³æœºAir", 249, 4.5, $r('app.media.earphone')),
-//     new ProductItem(17, "æ™ºèƒ½çœ¼é•œ", 1599, 4.8, $r('app.media.band')),
-//     new ProductItem(18, "é™å™ªè€³æœºMax", 1199, 4.9, $r('app.media.earphone')),
-//     new ProductItem(19, "è¿åŠ¨è€³æœºPro", 399, 4.7, $r('app.media.earphone')),
-//     new ProductItem(20, "æ™ºèƒ½æ‰‹ç¯Ultra", 499, 4.8, $r('app.media.band')),
-//     new ProductItem(21, "è“ç‰™éŸ³ç®±Mini", 199, 4.4, $r('app.media.earphone')),
-//     new ProductItem(22, "æ™ºèƒ½é—¹é’Ÿ", 159, 4.3, $r('app.media.band')),
-//     new ProductItem(23, "é™å™ªè€³æœºPlus", 599, 4.7, $r('app.media.earphone')),
-//     new ProductItem(24, "è¿åŠ¨æ‰‹ç¯Lite", 199, 4.2, $r('app.media.band')),
-//     new ProductItem(25, "æ— çº¿è€³æœºPro", 499, 4.8, $r('app.media.earphone')),
-//     new ProductItem(26, "æ™ºèƒ½ç¯æ³¡", 99, 4.1, $r('app.media.earphone')),
-//     new ProductItem(27, "ä¾¿æºå¼æŠ•å½±ä»ª", 899, 4.6, $r('app.media.earphone')),
-//     new ProductItem(28, "æ™ºèƒ½é—¨é”", 699, 4.7, $r('app.media.band')),
-//     new ProductItem(29, "ç”µåŠ¨ç‰™åˆ·", 299, 4.5, $r('app.media.earphone')),
-//     new ProductItem(30, "è½¦è½½ç©ºæ°”å‡€åŒ–å™¨", 399, 4.4, $r('app.media.earphone'))
-//   ];
-//
-//   getFilteredAndSortedProducts(): ProductItem[] {
-//     let result = [...this.products];
-//
-//     if (this.searchTerm.trim()) {
-//       result = result.filter(item =>
-//       item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-//       );
-//     }
-//
-//     result.sort((a, b) => {
-//       let fieldA: string | number;
-//       let fieldB: string | number;
-//
-//       switch (this.sortField) {
-//         case 'name':
-//           fieldA = a.name;
-//           fieldB = b.name;
-//           break;
-//         case 'price':
-//           fieldA = a.price;
-//           fieldB = b.price;
-//           break;
-//         case 'rating':
-//           fieldA = a.rating;
-//           fieldB = b.rating;
-//           break;
-//         default:
-//           return 0;
-//       }
-//
-//       if (typeof fieldA === 'string' && typeof fieldB === 'string') {
-//         return this.sortOrder === 'asc'
-//           ? fieldA.localeCompare(fieldB)
-//           : fieldB.localeCompare(fieldA);
-//       } else {
-//         return this.sortOrder === 'asc'
-//           ? (fieldA as number) - (fieldB as number)
-//           : (fieldB as number) - (fieldA as number);
-//       }
-//     });
-//
-//     return result;
-//   }
-//
-//   build() {
-//     Column() {
-//       Search({ value: this.searchTerm, placeholder: "æœç´¢å•†å“..." })
-//         .onChange((value: string) => {
-//           this.searchTerm = value;
-//         })
-//         .width('90%')
-//         .margin({ top: 16, bottom: 16 })
-//         .backgroundColor('#f5f5f5')
-//
-//       Column() {
-//         Row() {
-//           Text("æ’åºï¼š")
-//             .fontSize(16)
-//             .fontWeight(FontWeight.Bold)
-//             .margin({ right: 12 })
-//
-//           Select([
-//             { text: 'åç§°', value: 'name' } as SelectOption,
-//             { text: 'ä»·æ ¼', value: 'price' } as SelectOption,
-//             { text: 'è¯„åˆ†', value: 'rating' } as SelectOption
-//           ])
-//             .selected(this.sortFieldIndex)
-//             .width(120)
-//             .height(40)
-//             .margin({ right: 12 })
-//             .onSelect((index: number) => {
-//               this.sortFieldIndex = index;
-//               const fields: Array<'name' | 'price' | 'rating'> = ['name', 'price', 'rating'];
-//               this.sortField = fields[index];
-//             })
-//
-//
-//           Select([
-//             { text: 'å‡åº', value: 'asc' } as SelectOption,
-//             { text: 'é™åº', value: 'desc' } as SelectOption
-//           ])
-//             .selected(this.sortOrderIndex)
-//             .width(80)
-//             .height(40)
-//             .onSelect((index: number) => {
-//               this.sortOrderIndex = index;
-//               const orders: Array<'asc' | 'desc'> = ['asc', 'desc'];
-//               this.sortOrder = orders[index];
-//             })
-//         }
-//         List({ space: 10 }) {
-//           ForEach(
-//             this.getFilteredAndSortedProducts(),
-//             (item: ProductItem) => {
-//               ListItem() {
-//                 Row() {
-//                   Image(item.image)
-//                     .width(120)
-//                     .height(120)
-//                     .margin({ right: 20 })
-//                     .backgroundColor("#eee")
-//                     .borderRadius(8)
-//                     .objectFit(ImageFit.Contain)
-//
-//                   Column() {
-//                     Text(item.name)
-//                       .fontSize(18)
-//                       .margin({ bottom: 8 })
-//                       .maxLines(1)
-//                       .textOverflow({ overflow: TextOverflow.Ellipsis })
-//                       .fontWeight(FontWeight.Medium)
-//
-//                     Text(`${item.price}å…ƒ`)
-//                       .fontColor('#ff5722')
-//                       .fontSize(18)
-//                       .margin({ bottom: 8 })
-//                       .fontWeight(FontWeight.Bold)
-//
-//                     Row() {
-//                       Text(`${item.rating}æ˜Ÿ`)
-//                         .fontColor('#666')
-//                         .fontSize(14)
-//
-//                       Button("åŠ å…¥è´­ç‰©è½¦")
-//                         .width(100)
-//                         .height(32)
-//                         .fontSize(14)
-//                         .type(ButtonType.Capsule)
-//                         .backgroundColor('#ff5722')
-//                         .fontColor(Color.White)
-//                     }
-//                     .justifyContent(FlexAlign.SpaceBetween)
-//                     .width('100%')
-//                   }
-//                   .layoutWeight(1)
-//                 }
-//                 .width('100%')
-//                 .padding(12)
-//                 .onClick(() => {
-//                   router.pushUrl({
-//                     url: `pages/zonghezuoye/DetailPage?id=${item.id}`
-//                   });
-//                 })
-//               }
-//               .width('100%')
-//               .border({ width: 1, color: '#f0f0f0' })
-//               .margin({ left: 10, right: 10 })
-//             },
-//             (item: ProductItem) => item.id.toString()
-//           )
-//         }
-//         .width('100%')
-//         .height('100%')
-//         .backgroundColor('#fafafa')
-//       }
-//       .width('100%')
-//       .height('100%')
-//       .backgroundColor('#f5f5f5')
-//     }
-//   }
-// }
-// ListPage.etsÀÔrD‘¬@ohos.routerÔrE—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÃÙQ hvigor_ignore_D:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsAÃªoh-resolveÂ“ÔrF–§version¤fileªsourceRoot§sources¥names¨mappings«ListPage.js ‘¬ListPage.etsÜ‹–”   ” ” ” ”! !”" !’”   ”	 	””  ” ” ” ›” ” ” ” ” %” '” 4”! 6”' ÌD”) ÌF”. ÌU—” ” ” 	” ” ” ” —” ” ” 	” ” ” ” —” ” ” 	” ” ” ” —” ” ” 	” ” ” ” —” ” ” 	” ” ” ” ’” ” ‘” ’”   ”
- 
-–”   ” ” ” ” ” 'œ” ” ” ” ” ” ”! ”# !”& $”( &”+ )”Ì› ÌHœ” ” ” ” ” ” ”  ”"  ”% #”' %”* (”Ìš ?œ” ” ” ” ” ” ” ” ”"  ”$ "”' %”Ì— Ì@œ” ” ” ” ” ” ” ”! ”$ "”& $”) '”Ì™ ÌAœ” ” ” ” ” ” ”"  ”$ "”& $”( &”+ )”Ì› ÌDœ” ” ” ” ” ” ”! ”# !”' %”) '”, *”Ìœ ÌAœ” ” ” ” ” ” ”# !”% #”( &”* (”- +”Ì ÌFœ” ” ” ” ” ” ”! ”# !”& $”( &”+ )”Ì› ÌGœ” ” ” ” ” ” ” ”  ”# !”% #”( &”Ì˜ Ì@œ” ” ” ” ” ” ”! ”# !”& $”( &”+ )”Ì› ÌDœ”  ”  ”  ”  ”  ”  ”  ”   ”$  "”&  $”)  '”Ì™  >œ” !” !” !” !” !” !”! !”# !!”' !%”) !'”, !*”Ìœ !ÌDœ” "” "” "” "” "” "”! "”# "!”& "$”( "&”+ ")”Ì› "ÌCœ” #” #” #” #” #” #”# #!”% ##”( #&”* #(”- #+”Ì #ÌBœ” $” $” $” $” $” $”" $ ”$ $"”' $%”) $'”, $*”Ìœ $ÌIœ” %” %” %” %” %” %” %”  %”# %!”% %#”( %&”Ì˜ %=œ” &” &” &” &” &” &”" & ”$ &"”' &%”) &'”, &*”Ìœ &ÌIœ” '” '” '” '” '” '”" ' ”$ '"”' '%”) ''”, '*”Ìœ 'ÌHœ” (” (” (” (” (” (”! (”# (!”& ($”( (&”+ ()”Ì› (ÌHœ” )” )” )” )” )” )” )”  )”" ) ”$ )"”' )%”Ì— )Ì@œ” *” *” *” *” *” *”  *”" * ”% *#”' *%”* *(”Ìš *ÌCœ” +” +” +” +” +” +” +”  +”# +!”% +#”( +&”Ì˜ +=œ” ,” ,” ,” ,” ,” ,” ,”  ,”# ,!”% ,#”( ,&”Ì˜ ,ÌAœ” -” -” -” -” -” -”! -”# -!”& -$”( -&”+ -)”Ì› -ÌD’” .” .’” 2” 2‘” 0 ’” 4” 4˜” 6” 6” 6!” 6#”  6'”" 6)”& 6-”' 6.–” 7” 7” 7"” 7$”! 7(”" 7)’”8 9:”> 9Ì@’”8 :-”= :2’”0 <”2 <’”9 >&”; >(•”7 ?,”8 ?-”; ?0”ÌC ?8”ÌD ?9‘” .’” 9” 9’” 9” 9’” :” :’” :” :’” <	”	 <
-’” <	”	 <
-’” >” >’” >” >’” ?” ?’” ?” ?’” Ì@” Ì@’” ÌC” ÌC’” ÌD”  ÌD›” ÌF” ÌF” ÌF” ÌF” ÌF” ÌF” ÌF” ÌF”& ÌF"”' ÌF#”( ÌF$’” ÌH” ÌH™” ÌI” ÌI” ÌI” ÌI” ÌI” ÌI”! ÌI”# ÌI”% ÌI!›” ÌJ” ÌJ”! ÌJ”$ ÌJ”( ÌJ"”) ÌJ#”3 ÌJ-”4 ÌJ.”? ÌJ9”ÌA ÌJ;”ÌB ÌJ<Ü ” ÌK” ÌK” ÌK” ÌK” ÌK”" ÌK”# ÌK”' ÌK!”( ÌK"”* ÌK$”+ ÌL”/ ÌL
-”0 ÌL”4 ÌL”5 ÌL”Ì@ ÌL”ÌB ÌL”ÌC ÌL”ÌK ÌL&”ÌL ÌL'”Ì[ ÌL6”Ì\ ÌL7”Ì] ÌM”Ì^ ÌM‘”	 ÌN’” ÌP” ÌP›” ÌQ” ÌQ
-” ÌQ” ÌQ” ÌQ” ÌQ” ÌQ” ÌQ” ÌQ” ÌQ” ÌQ–” ÌR” ÌR
-” ÌR” ÌR” ÌR” ÌR’” ÌT” ÌT–” ÌU” ÌU” ÌU” ÌU”" ÌU”$ ÌU“” ÌV” ÌV” ÌV” ÌW
-” ÌW”! ÌW”" ÌW”# ÌW”' ÌW”( ÌW”5 ÌW+”6 ÌW,”7 ÌW-”8 ÌW.”< ÌW2”= ÌW3”> ÌW4’” ÌX
-” ÌX“” ÌY” ÌY” ÌY›” ÌZ
-” ÌZ”! ÌZ”" ÌZ”# ÌZ”( ÌZ”+ ÌZ!”, ÌZ"”- ÌZ#”2 ÌZ(”3 ÌZ)’” Ì[
-” Ì[“” Ì\” Ì\” Ì\›” Ì]
-” Ì]”! Ì]”" Ì]”# Ì]”) Ì]”, Ì]"”- Ì]#”. Ì]$”4 Ì]*”5 Ì]+’” Ì^
-” Ì^‘” Ì_”” Ì`
-” Ì`” Ì`” Ì`‘” Ìa’” Ìc” ÌcÜ ” Ìd” Ìd” Ìd” Ìd”! Ìd”& Ìd ”+ Ìd%”, Ìd&”- Ìd'”. Ìd(”8 Ìd2”9 Ìd3”: Ìd4”; Ìd5”< Ìd6”ÌF ÌdÌ@”ÌG ÌdÌA”” Ìe”	 Ìe”
- Ìe” Ìe”” Ìg” Ìg” Ìg” Ìg’” Ìh” Ìh‘” Ìj’” Ìk” Ìk
-’” Ìl” Ìl	˜” Ìl” Ìl	” Ìt” Ìt” Ìt”# Ìt”$ Ìt”) Ìt!’” Ìm” Ìm–” Ìm” Ìm” Ìn” Ìn” Ìn” Ìn–” Ìm” Ìm” Ìo” Ìo” Ìo” Ìo” Ìm” Ìm” Ìp” Ìp” Ìp” Ìp” Ìp”  Ìp”" Ìp”$ Ìp”( Ìp!”* Ìp#”, Ìp%”. Ìp'—” Ìm” Ìm” Ìq” Ìq” Ìq” Ìq” Ìq˜” Ìr” Ìr” Ìr” Ìr” Ìr” Ìr” Ìr”( Ìr%’” Ìs
-” Ìs’” Ìl” Ìl	’” Ìu” Ìu” Ìv” Ìv” Ìv” Ìv”! Ìv”# Ìv”' Ìv”( Ìv”2 Ìv%”4 Ìv'”? Ìv2”ÌA Ìv4”ÌJ Ìv=”ÌL Ìv?’” Ìu” Ìu™” Ìv” Ìv” Ìw” Ìw” Ìw” Ìw”" Ìw&”$ Ìw(”& Ìw*—” Ìx” Ìx” Ìx” Ìx”" Ìx"”' Ìx'”( Ìx(’” Ìy” Ìy’” Ìu” Ìu–” Ìv” Ìv” Ìz” Ìz” Ìz” Ìz’” Ìu” Ìu” Ìv” Ìv” Ì{” Ì{” Ì{” Ì{” Ì{”! Ì{”# Ì{”% Ì{!”+ Ì{'”- Ì{)”/ Ì{+”1 Ì{-’” Ìu” Ìu–” Ìv” Ìv” Ì|”" Ì|”# Ì|”, Ì|(’” Ìu” Ìu’” Ìv” Ìv’” Ì}” Ì}’” Ì~” Ì~	’” Ì}” Ì}˜” Ì~” Ì~	” Ì£” Ì£” Ì£”( Ì£”) Ì£ ”/ Ì£&Ü %” Ì” Ì”# Ì”) Ì”, Ì”- Ì”1 Ì”2 Ì”7 Ì#”8 Ì$”< Ì(”= Ì)”ÌF Ì2”ÌK Ì7”ÌQ Ì=”ÌR Ì>”ÌS Ì?”ÌT ÌÌ@”ÌU ÌÌA”ÌV ÌÌB”ÌW ÌÌC”ÌX ÌÌD”Ì\ ÌÌH”Ì] ÌÌI”Ìc ÌÌO”Ìh ÌÌT”Ìi ÌÌU”Ìj ÌÌV”Ìk ÌÌW”Ìl ÌÌX”Ìm ÌÌY”Ìn ÌÌZ”Ìo ÌÌ[”Ìp ÌÌ\”Ìq ÌÌ]”Ìr ÌÌ^”Ìs ÌÌ_–” Ì” Ì” Ì€” Ì€” Ì€” Ì€—” Ì” Ì” Ì” Ì” Ì” Ì”  ÌÜ ” Ì‚” Ì‚”' Ì‚#”* Ì‚&”. Ì‚*”/ Ì‚+”8 Ì‚4”= Ì‚9”ÌC Ì‚?”ÌD Ì‚Ì@”ÌE Ì‚ÌA”ÌF Ì‚ÌB”ÌG Ì‚ÌC”ÌH Ì‚ÌD”ÌI Ì‚ÌE”ÌJ Ì‚ÌF”ÌN Ì‚ÌJ”ÌO Ì‚ÌK”ÌX Ì‚ÌT”Ì] Ì‚ÌY”Ìd Ì‚Ì`”Ìe Ì‚Ìa”Ìf Ì‚Ìb”Ìg Ì‚Ìc”Ìh Ì‚Ìd”Ìi Ì‚Ìe”Ìj Ì‚Ìf”Ìk Ì‚Ìg”Ìl Ì‚Ìh”Ìm Ì‚Ìi˜” Ìƒ” Ìƒ” Ìƒ”! Ìƒ”# Ìƒ”$ Ìƒ ”8 Ìƒ4”9 Ìƒ5–” Ì„” Ì„” Ì„” Ì„”  Ì„”% Ì„”” Ì…” Ì…” Ì…”/ Ì…)”” Ì†”+ Ì†%”- Ì†'”/ Ì†)—” Ì‡” Ì‡” Ì‡” Ì‡”$ Ì‡0”& Ì‡2”( Ì‡4Ü ” Ìˆ” Ìˆ”+ Ìˆ#”. Ìˆ&”3 Ìˆ+”4 Ìˆ,”; Ìˆ3”< Ìˆ4”ÌA Ìˆ9”ÌB Ìˆ:”ÌG Ìˆ?”ÌH ÌˆÌ@”ÌI ÌˆÌA”ÌJ ÌˆÌB”ÌK ÌˆÌC”ÌP ÌˆÌH”ÌQ ÌˆÌI”ÌV ÌˆÌN”ÌW ÌˆÌO”ÌX ÌˆÌP”ÌY ÌˆÌQ”ÌZ ÌˆÌR”Ì[ ÌˆÌS”Ì\ ÌˆÌT”Ìa ÌˆÌY”Ìb ÌˆÌZ”Ìg ÌˆÌ_”Ìh ÌˆÌ`Ü ” Ì‰” Ì‰” Ì‰”# Ì‰”& Ì‰”3 Ì‰+”8 Ì‰0”9 Ì‰1”: Ì‰2”; Ì‰3”< Ì‰3”= Ì‰4”> Ì‰5”? Ì‰6”Ì@ Ì‰7”ÌM Ì‰ÌD”ÌR Ì‰ÌI”ÌS Ì‰ÌJ”ÌT Ì‰ÌK”ÌU Ì‰ÌL”ÌV Ì‰ÌM”ÌW Ì‰ÌN”ÌX Ì‰ÌN”ÌY Ì‰ÌO”ÌZ Ì‰ÌP”Ì[ Ì‰ÌQ”Ì\ Ì‰ÌRÜ ” ÌŠ” ÌŠ” ÌŠ”& ÌŠ”) ÌŠ!”* ÌŠ"”0 ÌŠ(”2 ÌŠ*”9 ÌŠ1”; ÌŠ3”ÌC ÌŠ;”ÌD ÌŠ<”ÌE ÌŠ=”ÌR ÌŠÌJ”ÌS ÌŠÌj”ÌT ÌŠÌkœ” Ì‹” Ì‹”  Ì‹”$ Ì‹”% Ì‹”< Ì‹4”? Ì‹7”ÌC Ì‹;”ÌD Ì‹<”ÌM Ì‹ÌE”ÌN Ì‹ÌF”ÌO Ì‹ÌG’” ÌŒ” ÌŒ“” Ì” Ì” Ì’” Ì
-” Ì’” Ì” Ì’” Ì” ÌÜ ” Ì‘” Ì‘”# Ì‘”) Ì‘”, Ì‘”- Ì‘”1 Ì‘”2 Ì‘”8 Ì‘$”9 Ì‘%”= Ì‘)”> Ì‘*”ÌG Ì‘3”ÌL Ì‘8”ÌQ Ì‘=”ÌR Ì‘>”ÌS Ì‘?”ÌT Ì‘Ì@”ÌU Ì‘ÌA”ÌV Ì‘ÌB”ÌW Ì‘ÌC”ÌX Ì‘ÌD”ÌY Ì‘ÌE”ÌZ Ì‘ÌF”Ì[ Ì‘ÌG’” Ì” Ì–” Ì‘” Ì‘” Ì’” Ì’” Ì’” Ì’’” Ì” Ì—” Ì‘” Ì‘” Ì“” Ì“” Ì“” Ì“”  Ì“Ü ” Ì”” Ì””' Ì”#”* Ì”&”. Ì”*”/ Ì”+”8 Ì”4”= Ì”9”ÌB Ì”>”ÌC Ì”?”ÌD Ì”Ì@”ÌE Ì”ÌA”ÌF Ì”ÌB”ÌG Ì”ÌC”ÌH Ì”ÌD”ÌI Ì”ÌE”ÌJ Ì”ÌF”ÌK Ì”ÌG˜” Ì•” Ì•” Ì•”! Ì•”# Ì•”$ Ì• ”8 Ì•4”9 Ì•5–” Ì–” Ì–” Ì–” Ì–”  Ì–”& Ì– ”” Ì—” Ì—” Ì—”/ Ì—)”” Ì˜”+ Ì˜%”- Ì˜'”/ Ì˜)—” Ì™” Ì™” Ì™” Ì™”$ Ì™0”& Ì™2”( Ì™4Ü ” Ì›” Ì›”+ Ì›#”. Ì›&”3 Ì›+”4 Ì›,”; Ì›3”< Ì›4”ÌA Ì›9”ÌB Ì›:”ÌG Ì›?”ÌH Ì›Ì@”ÌI Ì›ÌA”ÌJ Ì›ÌB”ÌK Ì›ÌC”ÌP Ì›ÌH”ÌQ Ì›ÌI”ÌV Ì›ÌN”ÌW Ì›ÌO”ÌX Ì›ÌP”ÌY Ì›ÌQ”ÌZ Ì›ÌR”Ì[ Ì›ÌS”Ì\ Ì›ÌT”Ìa Ì›ÌY”Ìb Ì›ÌZ”Ìg Ì›Ì_”Ìh Ì›Ì`Ü ” Ìœ” Ìœ” Ìœ”& Ìœ”) Ìœ!”6 Ìœ.”; Ìœ3”< Ìœ4”= Ìœ5”> Ìœ6”? Ìœ7”ÌD Ìœ<”ÌE Ìœ=”ÌF Ìœ>”ÌG Ìœ?”ÌM ÌœÌE”ÌN ÌœÌFœ” Ì” Ì”  Ì”$ Ì”% Ì”< Ì4”? Ì7”ÌC Ì;”ÌD Ì<”ÌM ÌÌE”ÌN ÌÌF”ÌO ÌÌG’” Ì” Ì“” Ì ” Ì ” Ì ’” Ì¡
-” Ì¡’” Ì” Ì’” Ì‘” Ì‘’” Ì}” Ì}’” Ì~” Ì~	’” Ì¥” Ì¥˜” Ì¦” Ì¦
-” Ì¦” Ì¦” Ì¦”! Ì¦”# Ì¦”% Ì¦’” Ì¥” Ì¥–” Ì¦” Ì¦
-” Ìî” Ìî” Ìî” Ìî’” Ì¥” Ì¥–” Ì¦” Ì¦
-” Ìï” Ìï” Ìï” Ìï’” Ì¥” Ì¥˜” Ì¦” Ì¦
-” Ìğ”  Ìğ”! Ìğ”& Ìğ”' Ìğ”, Ìğ"’” Ì§” Ì§’” Ì¨
-”$ Ì¨–” Ì¨
-”  Ì¨”! Ìê”& Ìê”' Ìê”- Ìê” Ì¨
-”  Ì¨”! Ìë”' Ìë”( Ìë”* Ìë”/ Ìë”1 Ìë”2 Ìë”4 Ìë”9 Ìë ”; Ìë!”ÌD Ìë*”ÌF Ìë+’” Ì©” Ì©—” Ì©” Ì©”  ÌÚ”' ÌÚ”( ÌÚ”+ ÌÚ”- ÌÚ’”  ÌÛ”+ ÌÛ›”  ÌÜ”$ ÌÜ”% ÌÜ”1 ÌÜ”3 ÌÜ!”4 ÌÜ"”= ÌÜ+”? ÌÜ-”Ì@ ÌÜ.”ÌG ÌÜ5”ÌH ÌÜ6””$ Ìİ”' Ìİ”) Ìİ”ÌN Ìİ:“”$ ÌŞ”* ÌŞ”, ÌŞ–”( Ìß”* Ìß”, Ìß”0 Ìß”1 Ìß”3 Ìß–”( Ìà”, Ìà”. Ìà”2 Ìà”3 Ìà”7 Ìà!–”( Ìá”- Ìá”/ Ìá”3 Ìá”4 Ìá”9 Ìá#–”( Ìâ”. Ìâ”0 Ìâ”4 Ìâ”5 Ìâ”; Ìâ%–”( Ìã”1 Ìã”3 Ìã”7 Ìã!”8 Ìã"”: Ìã$‘”% Ìä“”! Ìå”" Ìå”# Ìå’” Ìæ” Ìæ–” Ì©” Ì©”  Ìç”% Ìç”& Ìç”, Ìç–” Ì©” Ì©”  Ìè”' Ìè”( Ìè”* Ìè–” Ìª”! Ìª”) Ìª”- Ìª”. Ìª”3 Ìª–” Ìª”! Ìª”" Ì«”' Ì«”( Ì«”+ Ì«–” Ìª”! Ìª”" Ì¬”( Ì¬”) Ì¬”, Ì¬š” Ìª”! Ìª”" Ì­”( Ì­”) Ì­”+ Ì­”0 Ì­”2 Ì­”4 Ì­!”6 Ì­"–” Ìª”! Ìª”" Ì®”1 Ì® ”2 Ì®!”8 Ì®'–” Ìª”! Ìª”" Ì¯”. Ì¯”/ Ì¯”0 Ì¯’” Ì°”" Ì°–” Ì°”" Ì°”# Ì×”/ Ì×”0 Ì×”1 Ì×–” Ì±”  Ì±”( Ì±”, Ì±”- Ì±”1 Ì±–” Ì±”  Ì±”! Ì²”) Ì²”* Ì²”, Ì²š” Ì±”  Ì±”! Ì³”' Ì³”( Ì³”* Ì³”0 Ì³!”2 Ì³"”3 Ì³#”5 Ì³$–” Ì±”  Ì±”! Ì´”) Ì´”* Ì´”+ Ì´œ” Ì±”  Ì±”! Ìµ”- Ìµ”. Ìµ ”0 Ìµ!”8 Ìµ)”: Ìµ*”ÌF Ìµ6”ÌG Ìµ7”ÌO Ìµ?”ÌQ ÌµÌ@’” Ì±” Ì±˜” Ì¶”  Ì¶”( Ì¶”+ Ì¶”/ Ì¶”0 Ì¶”5 Ì¶"”8 Ì¶%–” Ì¶”  Ì¶”! Ì·”* Ì·”+ Ì·”4 Ì·&–” Ì¶”  Ì¶”! Ì¸”) Ì¸”* Ì¸”, Ì¸š” Ì¶”  Ì¶”! Ì¹”' Ì¹”( Ì¹”* Ì¹”0 Ì¹!”2 Ì¹"”3 Ì¹#”5 Ì¹$’” Ì¶” Ì¶’” Ìº” Ìº˜” Ìº” Ìº”  ÌÔ”. ÌÔ”/ ÌÔ ”8 ÌÔ)”9 ÌÔ*”ÌE ÌÔ6–” Ìº” Ìº”  ÌÕ”% ÌÕ”& ÌÕ”, ÌÕ˜” Ì»”  Ì»”( Ì»”+ Ì»”/ Ì»”0 Ì»”6 Ì»%”9 Ì»(–” Ì»”  Ì»”! Ì¼”* Ì¼”+ Ì¼”1 Ì¼%’” Ì»” Ì»’” Ì½”& Ì½”” Ì¾”" Ì¾”3 Ì¾”: Ì¾ ’” Ì½”& Ì½–” Ì¾”" Ì¾”# Ì¿”( Ì¿”) Ì¿”. Ì¿ ’” Ì½”& Ì½–” Ì¾”" Ì¾”# ÌÀ”) ÌÀ”* ÌÀ”, ÌÀ’” Ì½”& Ì½–” Ì¾”" Ì¾”# ÌÁ”+ ÌÁ”, ÌÁ”. ÌÁ ’” Ì½”& Ì½˜” Ì¾”" Ì¾”# ÌÂ”' ÌÂ”( ÌÂ”2 ÌÂ$”3 ÌÂ%”: ÌÂ,’” Ì½”& Ì½–” Ì¾”" Ì¾”# ÌÃ”2 ÌÃ$”3 ÌÃ&”< ÌÃ/’” Ì½”& Ì½˜” Ì¾”" Ì¾”# ÌÄ”, ÌÄ”- ÌÄ”2 ÌÄ$”3 ÌÄ%”8 ÌÄ*’” Ì½”& Ì½—” Ì¾”" Ì¾”# ÌÆ”* ÌÆ”+ ÌÆ”. ÌÆ ”0 ÌÆ"›”  ÌÇ”$ ÌÇ”% ÌÇ”1 ÌÇ'”3 ÌÇ)”4 ÌÇ*”= ÌÇ3”? ÌÇ5”Ì@ ÌÇ6”ÌG ÌÇ=”ÌH ÌÇ>””$ ÌÈ”' ÌÈ”) ÌÈ”ÌN ÌÈÌB“”$ ÌÉ”* ÌÉ”, ÌÉ –”( ÌÊ”* ÌÊ”, ÌÊ”0 ÌÊ"”1 ÌÊ#”3 ÌÊ%–”( ÌË”, ÌË”. ÌË ”2 ÌË$”3 ÌË%”7 ÌË)–”( ÌÌ”- ÌÌ”/ ÌÌ!”3 ÌÌ%”4 ÌÌ&”9 ÌÌ+–”( ÌÍ”. ÌÍ ”0 ÌÍ"”4 ÌÍ&”5 ÌÍ'”; ÌÍ-–”( ÌÎ”1 ÌÎ#”3 ÌÎ%”7 ÌÎ)”8 ÌÎ*”: ÌÎ,‘”% ÌÏ“”! ÌĞ”" ÌĞ”# ÌĞ’” ÌÑ” ÌÑ’” Ì½”" Ì½’” Ì¾” Ì¾’” Ìº” Ìº’” Ì°” Ì°’” Ì©” Ì©’” Ì¨
-”  Ì¨’” Ì¨
-” Ì¨Ü ”/ Ì§”3 Ì§”4 Ì§”ÌP Ì§1”ÌR Ì§3”Ìl Ìì
-”Ìm Ìì”Ìq Ìì”Ìs Ìì”Ìu Ìì”Ìv Ìì”Ìz Ìì"”Ì{ Ìì#”Ì} Ìì%”Ì~ Ìì&”Ì† Ìì.”Ìˆ Ìì0’” Ì§” Ì§’” Ì¥” Ì¥’” Ì¦” Ì¦
-’” Ìk” Ìk
-‘” ÌóÔrG–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜ”‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
- ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ì ‘”  ÌŸ ‘”  Ì  ‘”  Ì¡ ‘”  Ì¢ ‘”  Ì£ ‘”  Ì¤ ‘”  Ì¥ ‘”  Ì¦ ‘”  Ì§ ‘”  Ì¨ ‘”  Ì© ‘”  Ìª ‘”  Ì« ‘”  Ì¬ ‘”  Ì­ ‘”  Ì® ‘”  Ì¯ ‘”  Ì° ‘”  Ì± ‘”  Ì² ‘”  Ì³ ‘”  Ì´ ‘”  Ìµ ‘”  Ì¶ ‘”  Ì· ‘”  Ì¸ ‘”  Ì¹ ‘”  Ìº ‘”  Ì» ‘”  Ì¼ ‘”  Ì½ ‘”  Ì¾ ‘”  Ì¿ ‘”  ÌÀ ‘”  ÌÁ ‘”  ÌÂ ‘”  ÌÃ ‘”  ÌÄ ‘”  ÌÅ ‘”  ÌÆ ‘”  ÌÇ ‘”  ÌÈ ‘”  ÌÉ ‘”  ÌÊ ‘”  ÌË ‘”  ÌÌ ‘”  ÌÍ ‘”  ÌÎ ‘”  ÌÏ ‘”  ÌĞ ‘”  ÌÑ ‘”  ÌÒ ‘”  ÌÓ ‘”  ÌÔ ‘”  ÌÕ ‘”  ÌÖ ‘”  Ì× ‘”  ÌØ ‘”  ÌÙ ‘”  ÌÚ ‘”  ÌÛ ‘”  ÌÜ ‘”  Ìİ ‘”  ÌŞ ‘”  Ìß ‘”  Ìà ‘”  Ìá ‘”  Ìâ ‘”  Ìã ‘”  Ìä ‘”  Ìå ‘”  Ìæ ‘”  Ìç ‘”  Ìè ‘”  Ìé ‘”  Ìê ‘”  Ìë ‘”  Ìì ‘”  Ìí ‘”  Ìî ‘”  Ìï ‘”  Ìğ ‘”  Ìñ ‘”  Ìò ‘”  Ìó ‘”  Ìô ‘”  Ìõ ‘”  Ìö ‘”  Ì÷ ‘”  Ìø ‘”  Ìù ‘”  Ìú ‘”  Ìû ‘”  Ìü ‘”  Ìı ‘”  Ìş ‘”  Ìÿ ‘”  Í  ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í	 ‘”  Í
- ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í  ‘”  Í! ‘”  Í" ‘”  Í# ‘”  Í$ ‘”  Í% ‘”  Í& ‘”  Í' ‘”  Í( ‘”  Í) ‘”  Í* ‘”  Í+ ‘”  Í, ‘”  Í- ‘”  Í. ‘”  Í/ ‘”  Í0 ‘”  Í1 ‘”  Í2 ‘”  Í3 ‘”  Í4 ‘”  Í5 ‘”  Í6 ‘”  Í7 ‘”  Í8 ‘”  Í9 ‘”  Í: ‘”  Í; ‘”  Í< ‘”  Í= ‘”  Í> ‘”  Í? ‘”  Í@ ‘”  ÍA ‘”  ÍB ‘”  ÍC ‘”  ÍD ‘”  ÍE ‘”  ÍF ‘”  ÍG ‘”  ÍH ‘”  ÍI ‘”  ÍJ ‘”  ÍK ‘”  ÍL ‘”  ÍM ‘”  ÍN ‘”  ÍO ‘”  ÍP ‘”  ÍQ ‘”  ÍR ‘”  ÍS ‘”  ÍT ‘”  ÍU ‘”  ÍV ‘”  ÍW ‘”  ÍX ‘”  ÍY ‘”  ÍZ ‘”  Í[ ‘”  Í\ ‘”  Í] ‘”  Í^ ‘”  Í_ ‘”  Í` ‘”  Ía ‘”  Íb ‘”  Íc ‘”  Íd ‘”  Íe ‘”  Íf ‘”  Íg ‘”  Íh ‘”  Íi ‘”  Íj ‘”  Ík ‘”  Íl ‘”  Ím ‘”  Ín ‘”  Ío ‘”  Íp ‘”  Íq ‘”  Ír ‘”  Ís ‘”  Ít ‘”  Íu ‘”  Ív ‘”  Íw ‘”  Íx ‘”  Íy ‘”  Íz ‘”  Í{ ‘”  Í| ‘”  Í} ‘”  Í~ ‘”  Í ‘”  Í€ ‘”  Í ‘”  Í‚ ‘”  Íƒ ‘”  Í„ ‘”  Í… ‘”  Í† ‘”  Í‡ ‘”  Íˆ ‘”  Í‰ ‘”  ÍŠ ‘”  Í‹ ‘”  ÍŒ ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í‘ ‘”  Í’ ‘”  Í“ ÔrH’§missing¦pluginÃ¦genAbcÂÔ  ÔrI”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache’ÔrJ–¤type¥start£end«declarationªspecifiers¦source¶ExportNamedDeclarationÌ¯Í‘ÔrK–¤type¥start£end¢idªsuperClass¤body°ClassDeclarationÌ¶Í‘ÔrL”¤type¥start£end¤nameªIdentifierÌ¼ÌÇ«ProductItemÀÔrM”¤type¥start£end¤body©ClassBodyÌÈÍ‘‘ÔrN˜¤type¥start£end¦static¨computed£key¤kind¥value°MethodDefinitionÌÏÍÂÂLªIdentifierÌÏÌÚ«constructor«constructorÔrO™¤type¥start£end¢idªexpression©generator¥async¦params¤body²FunctionExpressionÌÚÍÀÂÂÂ•LªIdentifierÌÛÌİ¢idLªIdentifierÌßÌã¤nameLªIdentifierÌåÌê¥priceLªIdentifierÌìÌò¦ratingLªIdentifierÌôÌù¥imageM®BlockStatementÌûÍ•ÔrP”¤type¥start£endªexpression³ExpressionStatementÍÍÔrQ–¤type¥start£end¨operator¤left¥right´AssignmentExpressionÍÍ¡=ÔrR—¤type¥start£end¦object¨property¨computed¨optional°MemberExpressionÍÍÔrS“¤type¥start£end®ThisExpressionÍÍ
-LªIdentifierÍÍ¢idÂÂLªIdentifierÍÍ¢idP³ExpressionStatementÍÍ.Q´AssignmentExpressionÍÍ-¡=R°MemberExpressionÍÍ&S®ThisExpressionÍÍ!LªIdentifierÍ"Í&¤nameÂÂLªIdentifierÍ)Í-¤nameP³ExpressionStatementÍ8ÍKQ´AssignmentExpressionÍ8ÍJ¡=R°MemberExpressionÍ8ÍBS®ThisExpressionÍ8Í<LªIdentifierÍ=ÍB¥priceÂÂLªIdentifierÍEÍJ¥priceP³ExpressionStatementÍUÍjQ´AssignmentExpressionÍUÍi¡=R°MemberExpressionÍUÍ`S®ThisExpressionÍUÍYLªIdentifierÍZÍ`¦ratingÂÂLªIdentifierÍcÍi¦ratingP³ExpressionStatementÍtÍ‡Q´AssignmentExpressionÍtÍ†¡=R°MemberExpressionÍtÍ~S®ThisExpressionÍtÍxLªIdentifierÍyÍ~¥imageÂÂLªIdentifierÍÍ†¥imageÀJ¶ExportNamedDeclarationÍŸÍzÔrT•¤type¥start£end¬declarations¤kind³VariableDeclarationÍ¦Íz‘ÔrU•¤type¥start£end¢id¤init²VariableDeclaratorÍ¬ÍyLªIdentifierÍ¬Í´¨productsÔrV”¤type¥start£end¨elements¯ArrayExpressionÍ·ÍyÜ ÔrW•¤type¥start£end¦callee©arguments­NewExpressionÍ¾ÍULªIdentifierÍÂÍÍ«ProductItem•ÔrX•¤type¥start£end¥value£raw§LiteralÍÎÍÏ¡7X§LiteralÍÑÍÛ°é™å™ªè€³æœºLite²"é™å™ªè€³æœºLite"X§LiteralÍİÍàÍ£399X§LiteralÍâÍåË@ffffff£4.6ÔrY”¤type¥start£endªproperties°ObjectExpressionÍçÍT•ÔrZ™¤type¥start£end¦method©shorthand¨computed£key¥value¤kind¨PropertyÍéÍ÷ÂÂÂX§LiteralÍéÍí¢id¤"id"X§LiteralÍïÍ÷Î  h¨16777320¤initZ¨PropertyÍùÍÂÂÂX§LiteralÍùÍÿ¤type¦"type"X§LiteralÍÍÍN ¥20000¤initZ¨PropertyÍÍÂÂÂLªIdentifierÍÍ¦paramsV¯ArrayExpressionÍÍ¤initZ¨PropertyÍÍ;ÂÂÂX§LiteralÍÍ ªbundleName¬"bundleName"X§LiteralÍ"Í;·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍ=ÍRÂÂÂX§LiteralÍ=ÍIªmoduleName¬"moduleName"X§LiteralÍKÍR¥entry§"entry"¤initW­NewExpressionÍ\ÍòLªIdentifierÍ`Ík«ProductItem•X§LiteralÍlÍm¡8X§LiteralÍoÍx¯æ™ºèƒ½æ‰‹ç¯Pro±"æ™ºèƒ½æ‰‹ç¯Pro"X§LiteralÍzÍ}Í+£299X§LiteralÍÍ‚Ë@333333£4.8Y°ObjectExpressionÍ„Íñ•Z¨PropertyÍ†Í”ÂÂÂX§LiteralÍ†ÍŠ¢id¤"id"X§LiteralÍŒÍ”Î  [¨16777307¤initZ¨PropertyÍ–Í£ÂÂÂX§LiteralÍ–Íœ¤type¦"type"X§LiteralÍÍ£ÍN ¥20000¤initZ¨PropertyÍ¥Í¯ÂÂÂLªIdentifierÍ¥Í«¦paramsV¯ArrayExpressionÍ­Í¯¤initZ¨PropertyÍ±ÍØÂÂÂX§LiteralÍ±Í½ªbundleName¬"bundleName"X§LiteralÍ¿ÍØ·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍÚÍïÂÂÂX§LiteralÍÚÍæªmoduleName¬"moduleName"X§LiteralÍèÍï¥entry§"entry"¤initW­NewExpressionÍùÍŒLªIdentifierÍıÍ«ProductItem•X§LiteralÍ	Í
-	¡9X§LiteralÍÍ¬è¿åŠ¨è€³æœº®"è¿åŠ¨è€³æœº"X§LiteralÍÍÌÇ£199X§LiteralÍÍË@      £4.5Y°ObjectExpressionÍÍ‹•Z¨PropertyÍ Í.ÂÂÂX§LiteralÍ Í$¢id¤"id"X§LiteralÍ&Í.Î  l¨16777324¤initZ¨PropertyÍ0Í=ÂÂÂX§LiteralÍ0Í6¤type¦"type"X§LiteralÍ8Í=ÍN ¥20000¤initZ¨PropertyÍ?ÍIÂÂÂLªIdentifierÍ?ÍE¦paramsV¯ArrayExpressionÍGÍI¤initZ¨PropertyÍKÍrÂÂÂX§LiteralÍKÍWªbundleName¬"bundleName"X§LiteralÍYÍr·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍtÍ‰ÂÂÂX§LiteralÍtÍ€ªmoduleName¬"moduleName"X§LiteralÍ‚Í‰¥entry§"entry"¤initW­NewExpressionÍ“Í(LªIdentifierÍ—Í¢«ProductItem•X§LiteralÍ£Í¥
-¢10X§LiteralÍ§Í®¯æ— çº¿å……ç”µå™¨±"æ— çº¿å……ç”µå™¨"X§LiteralÍ°Í³Ì£129X§LiteralÍµÍ¸Ë@333333£4.3Y°ObjectExpressionÍºÍ'•Z¨PropertyÍ¼ÍÊÂÂÂX§LiteralÍ¼ÍÀ¢id¤"id"X§LiteralÍÂÍÊÎ  X¨16777304¤initZ¨PropertyÍÌÍÙÂÂÂX§LiteralÍÌÍÒ¤type¦"type"X§LiteralÍÔÍÙÍN ¥20000¤initZ¨PropertyÍÛÍåÂÂÂLªIdentifierÍÛÍá¦paramsV¯ArrayExpressionÍãÍå¤initZ¨PropertyÍçÍÂÂÂX§LiteralÍçÍóªbundleName¬"bundleName"X§LiteralÍõÍ·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍÍ%ÂÂÂX§LiteralÍÍªmoduleName¬"moduleName"X§LiteralÍÍ%¥entry§"entry"¤initW­NewExpressionÍ/ÍÆLªIdentifierÍ3Í>«ProductItem•X§LiteralÍ?ÍA¢11X§LiteralÍCÍM°è“ç‰™è€³æœºMini²"è“ç‰™è€³æœºMini"X§LiteralÍOÍQÌc¢99X§LiteralÍSÍVË@ÌÌÌÌÌÍ£4.2Y°ObjectExpressionÍXÍÅ•Z¨PropertyÍZÍhÂÂÂX§LiteralÍZÍ^¢id¤"id"X§LiteralÍ`ÍhÎ  l¨16777324¤initZ¨PropertyÍjÍwÂÂÂX§LiteralÍjÍp¤type¦"type"X§LiteralÍrÍwÍN ¥20000¤initZ¨PropertyÍyÍƒÂÂÂLªIdentifierÍyÍ¦paramsV¯ArrayExpressionÍÍƒ¤initZ¨PropertyÍ…Í¬ÂÂÂX§LiteralÍ…Í‘ªbundleName¬"bundleName"X§LiteralÍ“Í¬·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍ®ÍÃÂÂÂX§LiteralÍ®ÍºªmoduleName¬"moduleName"X§LiteralÍ¼ÍÃ¥entry§"entry"¤initW­NewExpressionÍÍÍeLªIdentifierÍÑÍÜ«ProductItem•X§LiteralÍİÍß¢12X§LiteralÍáÍê¯æ™ºèƒ½æ‰‹è¡¨Pro±"æ™ºèƒ½æ‰‹è¡¨Pro"X§LiteralÍìÍğÍ¤1299X§LiteralÍòÍõË@™™™™™š£4.9Y°ObjectExpressionÍ÷Íd•Z¨PropertyÍùÍÂÂÂX§LiteralÍùÍı¢id¤"id"X§LiteralÍÿÍÎ  [¨16777307¤initZ¨PropertyÍ	ÍÂÂÂX§LiteralÍ	Í¤type¦"type"X§LiteralÍÍÍN ¥20000¤initZ¨PropertyÍÍ"ÂÂÂLªIdentifierÍÍ¦paramsV¯ArrayExpressionÍ Í"¤initZ¨PropertyÍ$ÍKÂÂÂX§LiteralÍ$Í0ªbundleName¬"bundleName"X§LiteralÍ2ÍK·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍMÍbÂÂÂX§LiteralÍMÍYªmoduleName¬"moduleName"X§LiteralÍ[Íb¥entry§"entry"¤initW­NewExpressionÍlÍLªIdentifierÍpÍ{«ProductItem•X§LiteralÍ|Í~¢13X§LiteralÍ€Í‹±é™å™ªè€³æœºUltra³"é™å™ªè€³æœºUltra"X§LiteralÍÍÍƒ£899X§LiteralÍ’Í•Ë@™™™™™š£4.9Y°ObjectExpressionÍ—Í•Z¨PropertyÍ™Í§ÂÂÂX§LiteralÍ™Í¢id¤"id"X§LiteralÍŸÍ§Î  l¨16777324¤initZ¨PropertyÍ©Í¶ÂÂÂX§LiteralÍ©Í¯¤type¦"type"X§LiteralÍ±Í¶ÍN ¥20000¤initZ¨PropertyÍ¸ÍÂÂÂÂLªIdentifierÍ¸Í¾¦paramsV¯ArrayExpressionÍÀÍÂ¤initZ¨PropertyÍÄÍëÂÂÂX§LiteralÍÄÍĞªbundleName¬"bundleName"X§LiteralÍÒÍë·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍíÍÂÂÂX§LiteralÍíÍùªmoduleName¬"moduleName"X§LiteralÍûÍ¥entry§"entry"¤initW­NewExpressionÍÍ£LªIdentifierÍÍ«ProductItem•X§LiteralÍÍ¢14X§LiteralÍ Í)¯è¿åŠ¨æ‰‹ç¯Pro±"è¿åŠ¨æ‰‹ç¯Pro"X§LiteralÍ+Í.Í]£349X§LiteralÍ0Í3Ë@ÌÌÌÌÌÍ£4.7Y°ObjectExpressionÍ5Í¢•Z¨PropertyÍ7ÍEÂÂÂX§LiteralÍ7Í;¢id¤"id"X§LiteralÍ=ÍEÎ  m¨16777325¤initZ¨PropertyÍGÍTÂÂÂX§LiteralÍGÍM¤type¦"type"X§LiteralÍOÍTÍN ¥20000¤initZ¨PropertyÍVÍ`ÂÂÂLªIdentifierÍVÍ\¦paramsV¯ArrayExpressionÍ^Í`¤initZ¨PropertyÍbÍ‰ÂÂÂX§LiteralÍbÍnªbundleName¬"bundleName"X§LiteralÍpÍ‰·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍ‹Í ÂÂÂX§LiteralÍ‹Í—ªmoduleName¬"moduleName"X§LiteralÍ™Í ¥entry§"entry"¤initW­NewExpressionÍªÍ>LªIdentifierÍ®Í¹«ProductItem•X§LiteralÍºÍ¼¢15X§LiteralÍ¾ÍÄ¬æ™ºèƒ½éŸ³ç®±®"æ™ºèƒ½éŸ³ç®±"X§LiteralÍÆÍÉÍ+£299X§LiteralÍËÍÎË@ffffff£4.6Y°ObjectExpressionÍĞÍ=•Z¨PropertyÍÒÍàÂÂÂX§LiteralÍÒÍÖ¢id¤"id"X§LiteralÍØÍàÎ  X¨16777304¤initZ¨PropertyÍâÍïÂÂÂX§LiteralÍâÍè¤type¦"type"X§LiteralÍêÍïÍN ¥20000¤initZ¨PropertyÍñÍûÂÂÂLªIdentifierÍñÍ÷¦paramsV¯ArrayExpressionÍùÍû¤initZ¨PropertyÍıÍ$ÂÂÂX§LiteralÍıÍ	ªbundleName¬"bundleName"X§LiteralÍÍ$·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍ&Í;ÂÂÂX§LiteralÍ&Í2ªmoduleName¬"moduleName"X§LiteralÍ4Í;¥entry§"entry"¤initW­NewExpressionÍEÍÜLªIdentifierÍIÍT«ProductItem•X§LiteralÍUÍW¢16X§LiteralÍYÍb¯æ— çº¿è€³æœºAir±"æ— çº¿è€³æœºAir"X§LiteralÍdÍgÌù£249X§LiteralÍiÍlË@      £4.5Y°ObjectExpressionÍnÍÛ•Z¨PropertyÍpÍ~ÂÂÂX§LiteralÍpÍt¢id¤"id"X§LiteralÍvÍ~Î  l¨16777324¤initZ¨PropertyÍ€ÍÂÂÂX§LiteralÍ€Í†¤type¦"type"X§LiteralÍˆÍÍN ¥20000¤initZ¨PropertyÍÍ™ÂÂÂLªIdentifierÍÍ•¦paramsV¯ArrayExpressionÍ—Í™¤initZ¨PropertyÍ›ÍÂÂÂÂX§LiteralÍ›Í§ªbundleName¬"bundleName"X§LiteralÍ©ÍÂ·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍÄÍÙÂÂÂX§LiteralÍÄÍĞªmoduleName¬"moduleName"X§LiteralÍÒÍÙ¥entry§"entry"¤initW­NewExpressionÍãÍxLªIdentifierÍçÍò«ProductItem•X§LiteralÍóÍõ¢17X§LiteralÍ÷Íı¬æ™ºèƒ½çœ¼é•œ®"æ™ºèƒ½çœ¼é•œ"X§LiteralÍÿÍÍ?¤1599X§LiteralÍÍË@333333£4.8Y°ObjectExpressionÍ
-Íw•Z¨PropertyÍÍÂÂÂX§LiteralÍÍ¢id¤"id"X§LiteralÍÍÎ  [¨16777307¤initZ¨PropertyÍÍ)ÂÂÂX§LiteralÍÍ"¤type¦"type"X§LiteralÍ$Í)ÍN ¥20000¤initZ¨PropertyÍ+Í5ÂÂÂLªIdentifierÍ+Í1¦paramsV¯ArrayExpressionÍ3Í5¤initZ¨PropertyÍ7Í^ÂÂÂX§LiteralÍ7ÍCªbundleName¬"bundleName"X§LiteralÍEÍ^·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍ`ÍuÂÂÂX§LiteralÍ`ÍlªmoduleName¬"moduleName"X§LiteralÍnÍu¥entry§"entry"¤initW­NewExpressionÍÍ	LªIdentifierÍƒÍ«ProductItem•X§LiteralÍÍ‘¢18X§LiteralÍ“Íœ¯é™å™ªè€³æœºMax±"é™å™ªè€³æœºMax"X§LiteralÍÍ¢Í¯¤1199X§LiteralÍ¤Í§Ë@™™™™™š£4.9Y°ObjectExpressionÍ©Í	•Z¨PropertyÍ«Í¹ÂÂÂX§LiteralÍ«Í¯¢id¤"id"X§LiteralÍ±Í¹Î  X¨16777304¤initZ¨PropertyÍ»ÍÈÂÂÂX§LiteralÍ»ÍÁ¤type¦"type"X§LiteralÍÃÍÈÍN ¥20000¤initZ¨PropertyÍÊÍÔÂÂÂLªIdentifierÍÊÍĞ¦paramsV¯ArrayExpressionÍÒÍÔ¤initZ¨PropertyÍÖÍıÂÂÂX§LiteralÍÖÍâªbundleName¬"bundleName"X§LiteralÍäÍı·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍÿÍ	ÂÂÂX§LiteralÍÿÍ	ªmoduleName¬"moduleName"X§LiteralÍ	Í	¥entry§"entry"¤initW­NewExpressionÍ	Í	µLªIdentifierÍ	"Í	-«ProductItem•X§LiteralÍ	.Í	0¢19X§LiteralÍ	2Í	;¯è¿åŠ¨è€³æœºPro±"è¿åŠ¨è€³æœºPro"X§LiteralÍ	=Í	@Í£399X§LiteralÍ	BÍ	EË@ÌÌÌÌÌÍ£4.7Y°ObjectExpressionÍ	GÍ	´•Z¨PropertyÍ	IÍ	WÂÂÂX§LiteralÍ	IÍ	M¢id¤"id"X§LiteralÍ	OÍ	WÎ  X¨16777304¤initZ¨PropertyÍ	YÍ	fÂÂÂX§LiteralÍ	YÍ	_¤type¦"type"X§LiteralÍ	aÍ	fÍN ¥20000¤initZ¨PropertyÍ	hÍ	rÂÂÂLªIdentifierÍ	hÍ	n¦paramsV¯ArrayExpressionÍ	pÍ	r¤initZ¨PropertyÍ	tÍ	›ÂÂÂX§LiteralÍ	tÍ	€ªbundleName¬"bundleName"X§LiteralÍ	‚Í	›·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍ	Í	²ÂÂÂX§LiteralÍ	Í	©ªmoduleName¬"moduleName"X§LiteralÍ	«Í	²¥entry§"entry"¤initW­NewExpressionÍ	¼Í
-ULªIdentifierÍ	ÀÍ	Ë«ProductItem•X§LiteralÍ	ÌÍ	Î¢20X§LiteralÍ	ĞÍ	Û±æ™ºèƒ½æ‰‹ç¯Ultra³"æ™ºèƒ½æ‰‹ç¯Ultra"X§LiteralÍ	İÍ	àÍó£499X§LiteralÍ	âÍ	åË@333333£4.8Y°ObjectExpressionÍ	çÍ
-T•Z¨PropertyÍ	éÍ	÷ÂÂÂX§LiteralÍ	éÍ	í¢id¤"id"X§LiteralÍ	ïÍ	÷Î  [¨16777307¤initZ¨PropertyÍ	ùÍ
-ÂÂÂX§LiteralÍ	ùÍ	ÿ¤type¦"type"X§LiteralÍ
-Í
-ÍN ¥20000¤initZ¨PropertyÍ
-Í
-ÂÂÂLªIdentifierÍ
-Í
-¦paramsV¯ArrayExpressionÍ
-Í
-¤initZ¨PropertyÍ
-Í
-;ÂÂÂX§LiteralÍ
-Í
- ªbundleName¬"bundleName"X§LiteralÍ
-"Í
-;·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍ
-=Í
-RÂÂÂX§LiteralÍ
-=Í
-IªmoduleName¬"moduleName"X§LiteralÍ
-KÍ
-R¥entry§"entry"¤initW­NewExpressionÍ
-\Í
-ôLªIdentifierÍ
-`Í
-k«ProductItem•X§LiteralÍ
-lÍ
-n¢21X§LiteralÍ
-pÍ
-z°è“ç‰™éŸ³ç®±Mini²"è“ç‰™éŸ³ç®±Mini"X§LiteralÍ
-|Í
-ÌÇ£199X§LiteralÍ
-Í
-„Ë@™™™™™š£4.4Y°ObjectExpressionÍ
-†Í
-ó•Z¨PropertyÍ
-ˆÍ
-–ÂÂÂX§LiteralÍ
-ˆÍ
-Œ¢id¤"id"X§LiteralÍ
-Í
-–Î  h¨16777320¤initZ¨PropertyÍ
-˜Í
-¥ÂÂÂX§LiteralÍ
-˜Í
-¤type¦"type"X§LiteralÍ
- Í
-¥ÍN ¥20000¤initZ¨PropertyÍ
-§Í
-±ÂÂÂLªIdentifierÍ
-§Í
-­¦paramsV¯ArrayExpressionÍ
-¯Í
-±¤initZ¨PropertyÍ
-³Í
-ÚÂÂÂX§LiteralÍ
-³Í
-¿ªbundleName¬"bundleName"X§LiteralÍ
-ÁÍ
-Ú·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍ
-ÜÍ
-ñÂÂÂX§LiteralÍ
-ÜÍ
-èªmoduleName¬"moduleName"X§LiteralÍ
-êÍ
-ñ¥entry§"entry"¤initW­NewExpressionÍ
-ûÍLªIdentifierÍ
-ÿÍ
-«ProductItem•X§LiteralÍÍ¢22X§LiteralÍÍ¬æ™ºèƒ½é—¹é’Ÿ®"æ™ºèƒ½é—¹é’Ÿ"X§LiteralÍÍÌŸ£159X§LiteralÍÍË@333333£4.3Y°ObjectExpressionÍ!Í•Z¨PropertyÍ#Í1ÂÂÂX§LiteralÍ#Í'¢id¤"id"X§LiteralÍ)Í1Î  [¨16777307¤initZ¨PropertyÍ3Í@ÂÂÂX§LiteralÍ3Í9¤type¦"type"X§LiteralÍ;Í@ÍN ¥20000¤initZ¨PropertyÍBÍLÂÂÂLªIdentifierÍBÍH¦paramsV¯ArrayExpressionÍJÍL¤initZ¨PropertyÍNÍuÂÂÂX§LiteralÍNÍZªbundleName¬"bundleName"X§LiteralÍ\Íu·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍwÍŒÂÂÂX§LiteralÍwÍƒªmoduleName¬"moduleName"X§LiteralÍ…ÍŒ¥entry§"entry"¤initW­NewExpressionÍ–Í.LªIdentifierÍšÍ¥«ProductItem•X§LiteralÍ¦Í¨¢23X§LiteralÍªÍ´°é™å™ªè€³æœºPlus²"é™å™ªè€³æœºPlus"X§LiteralÍ¶Í¹ÍW£599X§LiteralÍ»Í¾Ë@ÌÌÌÌÌÍ£4.7Y°ObjectExpressionÍÀÍ-•Z¨PropertyÍÂÍĞÂÂÂX§LiteralÍÂÍÆ¢id¤"id"X§LiteralÍÈÍĞÎ  h¨16777320¤initZ¨PropertyÍÒÍßÂÂÂX§LiteralÍÒÍØ¤type¦"type"X§LiteralÍÚÍßÍN ¥20000¤initZ¨PropertyÍáÍëÂÂÂLªIdentifierÍáÍç¦paramsV¯ArrayExpressionÍéÍë¤initZ¨PropertyÍíÍÂÂÂX§LiteralÍíÍùªbundleName¬"bundleName"X§LiteralÍûÍ·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍÍ+ÂÂÂX§LiteralÍÍ"ªmoduleName¬"moduleName"X§LiteralÍ$Í+¥entry§"entry"¤initW­NewExpressionÍ5ÍÍLªIdentifierÍ9ÍD«ProductItem•X§LiteralÍEÍG¢24X§LiteralÍIÍS°è¿åŠ¨æ‰‹ç¯Lite²"è¿åŠ¨æ‰‹ç¯Lite"X§LiteralÍUÍXÌÇ£199X§LiteralÍZÍ]Ë@ÌÌÌÌÌÍ£4.2Y°ObjectExpressionÍ_ÍÌ•Z¨PropertyÍaÍoÂÂÂX§LiteralÍaÍe¢id¤"id"X§LiteralÍgÍoÎ  m¨16777325¤initZ¨PropertyÍqÍ~ÂÂÂX§LiteralÍqÍw¤type¦"type"X§LiteralÍyÍ~ÍN ¥20000¤initZ¨PropertyÍ€ÍŠÂÂÂLªIdentifierÍ€Í†¦paramsV¯ArrayExpressionÍˆÍŠ¤initZ¨PropertyÍŒÍ³ÂÂÂX§LiteralÍŒÍ˜ªbundleName¬"bundleName"X§LiteralÍšÍ³·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍµÍÊÂÂÂX§LiteralÍµÍÁªmoduleName¬"moduleName"X§LiteralÍÃÍÊ¥entry§"entry"¤initW­NewExpressionÍÔÍkLªIdentifierÍØÍã«ProductItem•X§LiteralÍäÍæ¢25X§LiteralÍèÍñ¯æ— çº¿è€³æœºPro±"æ— çº¿è€³æœºPro"X§LiteralÍóÍöÍó£499X§LiteralÍøÍûË@333333£4.8Y°ObjectExpressionÍıÍj•Z¨PropertyÍÿÍÂÂÂX§LiteralÍÿÍ¢id¤"id"X§LiteralÍÍÎ  h¨16777320¤initZ¨PropertyÍÍÂÂÂX§LiteralÍÍ¤type¦"type"X§LiteralÍÍÍN ¥20000¤initZ¨PropertyÍÍ(ÂÂÂLªIdentifierÍÍ$¦paramsV¯ArrayExpressionÍ&Í(¤initZ¨PropertyÍ*ÍQÂÂÂX§LiteralÍ*Í6ªbundleName¬"bundleName"X§LiteralÍ8ÍQ·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍSÍhÂÂÂX§LiteralÍSÍ_ªmoduleName¬"moduleName"X§LiteralÍaÍh¥entry§"entry"¤initW­NewExpressionÍrÍLªIdentifierÍvÍ«ProductItem•X§LiteralÍ‚Í„¢26X§LiteralÍ†ÍŒ¬æ™ºèƒ½ç¯æ³¡®"æ™ºèƒ½ç¯æ³¡"X§LiteralÍÍÌc¢99X§LiteralÍ’Í•Ë@ffffff£4.1Y°ObjectExpressionÍ—Í•Z¨PropertyÍ™Í§ÂÂÂX§LiteralÍ™Í¢id¤"id"X§LiteralÍŸÍ§Î  l¨16777324¤initZ¨PropertyÍ©Í¶ÂÂÂX§LiteralÍ©Í¯¤type¦"type"X§LiteralÍ±Í¶ÍN ¥20000¤initZ¨PropertyÍ¸ÍÂÂÂÂLªIdentifierÍ¸Í¾¦paramsV¯ArrayExpressionÍÀÍÂ¤initZ¨PropertyÍÄÍëÂÂÂX§LiteralÍÄÍĞªbundleName¬"bundleName"X§LiteralÍÒÍë·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍíÍÂÂÂX§LiteralÍíÍùªmoduleName¬"moduleName"X§LiteralÍûÍ¥entry§"entry"¤initW­NewExpressionÍÍ¢LªIdentifierÍÍ«ProductItem•X§LiteralÍÍ¢27X§LiteralÍ Í(²ä¾¿æºå¼æŠ•å½±ä»ª´"ä¾¿æºå¼æŠ•å½±ä»ª"X§LiteralÍ*Í-Íƒ£899X§LiteralÍ/Í2Ë@ffffff£4.6Y°ObjectExpressionÍ4Í¡•Z¨PropertyÍ6ÍDÂÂÂX§LiteralÍ6Í:¢id¤"id"X§LiteralÍ<ÍDÎ  l¨16777324¤initZ¨PropertyÍFÍSÂÂÂX§LiteralÍFÍL¤type¦"type"X§LiteralÍNÍSÍN ¥20000¤initZ¨PropertyÍUÍ_ÂÂÂLªIdentifierÍUÍ[¦paramsV¯ArrayExpressionÍ]Í_¤initZ¨PropertyÍaÍˆÂÂÂX§LiteralÍaÍmªbundleName¬"bundleName"X§LiteralÍoÍˆ·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍŠÍŸÂÂÂX§LiteralÍŠÍ–ªmoduleName¬"moduleName"X§LiteralÍ˜ÍŸ¥entry§"entry"¤initW­NewExpressionÍ©Í=LªIdentifierÍ­Í¸«ProductItem•X§LiteralÍ¹Í»¢28X§LiteralÍ½ÍÃ¬æ™ºèƒ½é—¨é”®"æ™ºèƒ½é—¨é”"X§LiteralÍÅÍÈÍ»£699X§LiteralÍÊÍÍË@ÌÌÌÌÌÍ£4.7Y°ObjectExpressionÍÏÍ<•Z¨PropertyÍÑÍßÂÂÂX§LiteralÍÑÍÕ¢id¤"id"X§LiteralÍ×ÍßÎ  [¨16777307¤initZ¨PropertyÍáÍîÂÂÂX§LiteralÍáÍç¤type¦"type"X§LiteralÍéÍîÍN ¥20000¤initZ¨PropertyÍğÍúÂÂÂLªIdentifierÍğÍö¦paramsV¯ArrayExpressionÍøÍú¤initZ¨PropertyÍüÍ#ÂÂÂX§LiteralÍüÍªbundleName¬"bundleName"X§LiteralÍ
-Í#·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍ%Í:ÂÂÂX§LiteralÍ%Í1ªmoduleName¬"moduleName"X§LiteralÍ3Í:¥entry§"entry"¤initW­NewExpressionÍDÍØLªIdentifierÍHÍS«ProductItem•X§LiteralÍTÍV¢29X§LiteralÍXÍ^¬ç”µåŠ¨ç‰™åˆ·®"ç”µåŠ¨ç‰™åˆ·"X§LiteralÍ`ÍcÍ+£299X§LiteralÍeÍhË@      £4.5Y°ObjectExpressionÍjÍ×•Z¨PropertyÍlÍzÂÂÂX§LiteralÍlÍp¢id¤"id"X§LiteralÍrÍzÎ  l¨16777324¤initZ¨PropertyÍ|Í‰ÂÂÂX§LiteralÍ|Í‚¤type¦"type"X§LiteralÍ„Í‰ÍN ¥20000¤initZ¨PropertyÍ‹Í•ÂÂÂLªIdentifierÍ‹Í‘¦paramsV¯ArrayExpressionÍ“Í•¤initZ¨PropertyÍ—Í¾ÂÂÂX§LiteralÍ—Í£ªbundleName¬"bundleName"X§LiteralÍ¥Í¾·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍÀÍÕÂÂÂX§LiteralÍÀÍÌªmoduleName¬"moduleName"X§LiteralÍÎÍÕ¥entry§"entry"¤initW­NewExpressionÍßÍvLªIdentifierÍãÍî«ProductItem•X§LiteralÍïÍñ¢30X§LiteralÍóÍüµè½¦è½½ç©ºæ°”å‡€åŒ–å™¨·"è½¦è½½ç©ºæ°”å‡€åŒ–å™¨"X§LiteralÍşÍÍ£399X§LiteralÍÍË@™™™™™š£4.4Y°ObjectExpressionÍÍu•Z¨PropertyÍ
-ÍÂÂÂX§LiteralÍ
-Í¢id¤"id"X§LiteralÍÍÎ  l¨16777324¤initZ¨PropertyÍÍ'ÂÂÂX§LiteralÍÍ ¤type¦"type"X§LiteralÍ"Í'ÍN ¥20000¤initZ¨PropertyÍ)Í3ÂÂÂLªIdentifierÍ)Í/¦paramsV¯ArrayExpressionÍ1Í3¤initZ¨PropertyÍ5Í\ÂÂÂX§LiteralÍ5ÍAªbundleName¬"bundleName"X§LiteralÍCÍ\·com.example.newsrelease¹"com.example.newsrelease"¤initZ¨PropertyÍ^ÍsÂÂÂX§LiteralÍ^ÍjªmoduleName¬"moduleName"X§LiteralÍlÍs¥entry§"entry"¤init¥constÀ‘Ôr[•¤type¥start£endªspecifiers¦source±ImportDeclarationÌ€Ì¢‘Ôr\”¤type¥start£end¥local¶ImportDefaultSpecifierÌ‡ÌLªIdentifierÌ‡Ì¦routerX§LiteralÌ“Ì¡¬@ohos.router®'@ohos.router'
